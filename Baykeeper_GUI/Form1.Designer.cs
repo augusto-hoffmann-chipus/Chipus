@@ -29,6 +29,7 @@ namespace Baykeeper_GUI
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.comboBox_serialPorts = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
@@ -47,8 +48,9 @@ namespace Baykeeper_GUI
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.comboBox_serialPorts);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Baykeeper GUI";
             this.ResumeLayout(false);
 
         }

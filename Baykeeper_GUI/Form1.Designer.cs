@@ -38,6 +38,8 @@ namespace Baykeeper_GUI
             this.button_serialPorts = new System.Windows.Forms.Button();
             this.label_serialPorts = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.button_outputAllOff = new System.Windows.Forms.Button();
+            this.button_outputAllOn = new System.Windows.Forms.Button();
             this.label_outputStatus = new System.Windows.Forms.Label();
             this.label_outputVDCDC2 = new System.Windows.Forms.Label();
             this.label_outputVDCDC1 = new System.Windows.Forms.Label();
@@ -61,8 +63,7 @@ namespace Baykeeper_GUI
             this.label_copyright = new System.Windows.Forms.Label();
             this.pictureBox_chipusLogo = new System.Windows.Forms.PictureBox();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
-            this.button_outputAllOn = new System.Windows.Forms.Button();
-            this.button_outputAllOff = new System.Windows.Forms.Button();
+            this.timer_serialCheck = new System.Windows.Forms.Timer(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -169,6 +170,28 @@ namespace Baykeeper_GUI
             this.tabPage2.Text = "Outputs";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // button_outputAllOff
+            // 
+            this.button_outputAllOff.Enabled = false;
+            this.button_outputAllOff.Location = new System.Drawing.Point(284, 395);
+            this.button_outputAllOff.Name = "button_outputAllOff";
+            this.button_outputAllOff.Size = new System.Drawing.Size(75, 23);
+            this.button_outputAllOff.TabIndex = 17;
+            this.button_outputAllOff.Text = "ALL OFF";
+            this.button_outputAllOff.UseVisualStyleBackColor = true;
+            this.button_outputAllOff.Click += new System.EventHandler(this.button_outputAllOff_Click);
+            // 
+            // button_outputAllOn
+            // 
+            this.button_outputAllOn.Enabled = false;
+            this.button_outputAllOn.Location = new System.Drawing.Point(284, 341);
+            this.button_outputAllOn.Name = "button_outputAllOn";
+            this.button_outputAllOn.Size = new System.Drawing.Size(75, 23);
+            this.button_outputAllOn.TabIndex = 16;
+            this.button_outputAllOn.Text = "ALL ON";
+            this.button_outputAllOn.UseVisualStyleBackColor = true;
+            this.button_outputAllOn.Click += new System.EventHandler(this.button_outputAllOn_Click);
+            // 
             // label_outputStatus
             // 
             this.label_outputStatus.AutoSize = true;
@@ -222,6 +245,7 @@ namespace Baykeeper_GUI
             // 
             // button_outputVDCDC2
             // 
+            this.button_outputVDCDC2.Enabled = false;
             this.button_outputVDCDC2.Location = new System.Drawing.Point(284, 287);
             this.button_outputVDCDC2.Name = "button_outputVDCDC2";
             this.button_outputVDCDC2.Size = new System.Drawing.Size(75, 23);
@@ -232,6 +256,7 @@ namespace Baykeeper_GUI
             // 
             // button_outputVDCDC1
             // 
+            this.button_outputVDCDC1.Enabled = false;
             this.button_outputVDCDC1.Location = new System.Drawing.Point(284, 233);
             this.button_outputVDCDC1.Name = "button_outputVDCDC1";
             this.button_outputVDCDC1.Size = new System.Drawing.Size(75, 23);
@@ -242,6 +267,7 @@ namespace Baykeeper_GUI
             // 
             // button_outputLDO3
             // 
+            this.button_outputLDO3.Enabled = false;
             this.button_outputLDO3.Location = new System.Drawing.Point(284, 179);
             this.button_outputLDO3.Name = "button_outputLDO3";
             this.button_outputLDO3.Size = new System.Drawing.Size(75, 23);
@@ -252,6 +278,7 @@ namespace Baykeeper_GUI
             // 
             // button_outputLDO2
             // 
+            this.button_outputLDO2.Enabled = false;
             this.button_outputLDO2.Location = new System.Drawing.Point(284, 125);
             this.button_outputLDO2.Name = "button_outputLDO2";
             this.button_outputLDO2.Size = new System.Drawing.Size(75, 23);
@@ -308,6 +335,7 @@ namespace Baykeeper_GUI
             // 
             // button_outputLDO1
             // 
+            this.button_outputLDO1.Enabled = false;
             this.button_outputLDO1.Location = new System.Drawing.Point(284, 71);
             this.button_outputLDO1.Name = "button_outputLDO1";
             this.button_outputLDO1.Size = new System.Drawing.Size(75, 23);
@@ -392,25 +420,10 @@ namespace Baykeeper_GUI
             this.pictureBox_chipusLogo.TabIndex = 3;
             this.pictureBox_chipusLogo.TabStop = false;
             // 
-            // button_outputAllOn
+            // timer_serialCheck
             // 
-            this.button_outputAllOn.Location = new System.Drawing.Point(284, 341);
-            this.button_outputAllOn.Name = "button_outputAllOn";
-            this.button_outputAllOn.Size = new System.Drawing.Size(75, 23);
-            this.button_outputAllOn.TabIndex = 16;
-            this.button_outputAllOn.Text = "ALL ON";
-            this.button_outputAllOn.UseVisualStyleBackColor = true;
-            this.button_outputAllOn.Click += new System.EventHandler(this.button_outputAllOn_Click);
-            // 
-            // button_outputAllOff
-            // 
-            this.button_outputAllOff.Location = new System.Drawing.Point(284, 395);
-            this.button_outputAllOff.Name = "button_outputAllOff";
-            this.button_outputAllOff.Size = new System.Drawing.Size(75, 23);
-            this.button_outputAllOff.TabIndex = 17;
-            this.button_outputAllOff.Text = "ALL OFF";
-            this.button_outputAllOff.UseVisualStyleBackColor = true;
-            this.button_outputAllOff.Click += new System.EventHandler(this.button_outputAllOff_Click);
+            this.timer_serialCheck.Interval = 1000;
+            this.timer_serialCheck.Tick += new System.EventHandler(this.timer_serialCheck_Tick);
             // 
             // Form1
             // 
@@ -473,11 +486,12 @@ namespace Baykeeper_GUI
         private System.Windows.Forms.PictureBox pictureBox_statusLDO3;
         private System.Windows.Forms.PictureBox pictureBox_statusLDO2;
         private System.Windows.Forms.Label label_outputLDO1;
-        private System.Windows.Forms.Button button_outputLDO1;
         private System.Windows.Forms.PictureBox pictureBox_statusLDO1;
         private System.Windows.Forms.Label label_outputStatus;
         private System.Windows.Forms.Button button_outputAllOn;
         private System.Windows.Forms.Button button_outputAllOff;
+        private System.Windows.Forms.Button button_outputLDO1;
+        private System.Windows.Forms.Timer timer_serialCheck;
     }
 }
 

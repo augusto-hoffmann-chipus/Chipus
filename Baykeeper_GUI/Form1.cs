@@ -10,14 +10,28 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
 
+
+
 namespace Baykeeper_GUI
 {
+
+    public enum Outputs : int
+    {
+        LDO1 = 0,
+        LDO2 = 1,
+        LDO3 = 2,
+        VDCDC1 = 3,
+        VDCDC2 = 4
+    }
+
     public partial class Form1 : Form
     {
         public Form1()
         {
             InitializeComponent();
         }
+
+
 
         ///////////////////////////////////// Form Events /////////////////////////////////////////
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -29,9 +43,10 @@ namespace Baykeeper_GUI
         private void comboBox_serialPorts_Click(object sender, EventArgs e)
         {
             comboBox_serialPorts.Items.Clear();
-            String[] ports = SerialPort.GetPortNames();
+            String[] ports = null;
+            ports = SerialPort.GetPortNames();//
             comboBox_serialPorts.Items.AddRange(ports);
-
+            ports = null;
         }
 
         private void button_serialPorts_Click(object sender, EventArgs e)
@@ -40,19 +55,7 @@ namespace Baykeeper_GUI
             if (serialPort1.IsOpen)
             {
                 serialDisconnect();
-                button_serialPorts.Text = "Connect";
-                label_serialPortStatus.Text = "Disconnected";
-                label_serialPortStatus.ForeColor = Color.Red;
 
-                comboBox_serialPorts.Items.Clear();
-                String[] ports = SerialPort.GetPortNames();
-                comboBox_serialPorts.Items.AddRange(ports);
-
-
-                if (comboBox_serialPorts.Text != "")
-                    button_serialPorts.Enabled = true;
-                else
-                    button_serialPorts.Enabled = false;
 
             }
             // Connect serial handle
@@ -83,24 +86,73 @@ namespace Baykeeper_GUI
         {
             serialPort1.Dispose();
             serialPort1.PortName = comboBox_serialPorts.Text;
-            serialPort1.Open();
+            try
+            {
+                serialPort1.Open();
+            }
+            catch (Exception ex)
+            {
+                // do nothing
+            }
+
 
             if (serialPort1.IsOpen)
             {
+                button_outputLDO1.Enabled = true;
+                button_outputLDO2.Enabled = true;
+                button_outputLDO3.Enabled = true;
+                button_outputVDCDC1.Enabled = true;
+                button_outputVDCDC2.Enabled = true;
+                button_outputAllOn.Enabled = true;
+                button_outputAllOff.Enabled = true;
+
+                timer_serialCheck.Enabled = true;
+
+                comboBox_serialPorts.Enabled = false;
+
                 return true;
             }
             else
                 return false;
         }
-        public bool serialDisconnect()
+        public void serialDisconnect()
         {
-            serialPort1.Dispose();
-            serialPort1.Close();
+            button_serialPorts.Text = "Connect";
+            label_serialPortStatus.Text = "Disconnected";
+            label_serialPortStatus.ForeColor = Color.Red;
 
-            if (serialPort1.IsOpen)
-                return false;
+            comboBox_serialPorts.Enabled = true;
+
+
+            if (comboBox_serialPorts.Text != "")
+                button_serialPorts.Enabled = true;
             else
-                return true;
+                button_serialPorts.Enabled = false;
+
+
+            comboBox_serialPorts.Items.Remove(comboBox_serialPorts.Text);
+
+            serialPort1.Dispose();
+
+            try
+            {
+                serialPort1.Close();
+            }
+            catch (Exception ex)
+            {
+                // do nothing
+            }
+
+            comboBox_serialPorts.Text = "";
+            button_serialPorts.Enabled = false;
+
+            button_outputLDO1.Enabled = false;
+            button_outputLDO2.Enabled = false;
+            button_outputLDO3.Enabled = false;
+            button_outputVDCDC1.Enabled = false;
+            button_outputVDCDC2.Enabled = false;
+            button_outputAllOn.Enabled = false;
+            button_outputAllOff.Enabled = false;
         }
 
         private void comboBox_serialPorts_SelectedIndexChanged(object sender, EventArgs e)
@@ -120,13 +172,11 @@ namespace Baykeeper_GUI
         {
             if (button_outputLDO1.Text == "ON")
             {
-                button_outputLDO1.Text = "OFF";
-                pictureBox_statusLDO1.Image = Properties.Resources.outputStatusOn;
+                outputOn(Outputs.LDO1);
             }
             else
             {
-                button_outputLDO1.Text = "ON";
-                pictureBox_statusLDO1.Image = Properties.Resources.outputStatusOff;
+                outputOff(Outputs.LDO1);
             }
         }
 
@@ -134,13 +184,11 @@ namespace Baykeeper_GUI
         {
             if (button_outputLDO2.Text == "ON")
             {
-                button_outputLDO2.Text = "OFF";
-                pictureBox_statusLDO2.Image = Properties.Resources.outputStatusOn;
+                outputOn(Outputs.LDO2);
             }
             else
             {
-                button_outputLDO2.Text = "ON";
-                pictureBox_statusLDO2.Image = Properties.Resources.outputStatusOff;
+                outputOff(Outputs.LDO2);
             }
         }
 
@@ -148,13 +196,11 @@ namespace Baykeeper_GUI
         {
             if (button_outputLDO3.Text == "ON")
             {
-                button_outputLDO3.Text = "OFF";
-                pictureBox_statusLDO3.Image = Properties.Resources.outputStatusOn;
+                outputOn(Outputs.LDO3);
             }
             else
             {
-                button_outputLDO3.Text = "ON";
-                pictureBox_statusLDO3.Image = Properties.Resources.outputStatusOff;
+                outputOff(Outputs.LDO3);
             }
         }
 
@@ -162,13 +208,11 @@ namespace Baykeeper_GUI
         {
             if (button_outputVDCDC1.Text == "ON")
             {
-                button_outputVDCDC1.Text = "OFF";
-                pictureBox_statusVDCDC1.Image = Properties.Resources.outputStatusOn;
+                outputOn(Outputs.VDCDC1);
             }
             else
             {
-                button_outputVDCDC1.Text = "ON";
-                pictureBox_statusVDCDC1.Image = Properties.Resources.outputStatusOff;
+                outputOff(Outputs.VDCDC1);
             }
         }
 
@@ -176,50 +220,121 @@ namespace Baykeeper_GUI
         {
             if (button_outputVDCDC2.Text == "ON")
             {
-                button_outputVDCDC2.Text = "OFF";
-                pictureBox_statusVDCDC2.Image = Properties.Resources.outputStatusOn;
+                outputOn(Outputs.VDCDC2);
             }
             else
             {
-                button_outputVDCDC2.Text = "ON";
-                pictureBox_statusVDCDC2.Image = Properties.Resources.outputStatusOff;
+                outputOff(Outputs.VDCDC2);
             }
         }
 
         private void button_outputAllOn_Click(object sender, EventArgs e)
         {
-            button_outputLDO1.Text = "OFF";
-            pictureBox_statusLDO1.Image = Properties.Resources.outputStatusOn;
+            int min = Enum.GetValues(typeof(Outputs)).Cast<int>().Min();
+            int max = Enum.GetValues(typeof(Outputs)).Cast<int>().Max();
 
-            button_outputLDO2.Text = "OFF";
-            pictureBox_statusLDO2.Image = Properties.Resources.outputStatusOn;
-
-            button_outputLDO3.Text = "OFF";
-            pictureBox_statusLDO3.Image = Properties.Resources.outputStatusOn;
-
-            button_outputVDCDC1.Text = "OFF";
-            pictureBox_statusVDCDC1.Image = Properties.Resources.outputStatusOn;
-
-            button_outputVDCDC2.Text = "OFF";
-            pictureBox_statusVDCDC2.Image = Properties.Resources.outputStatusOn;
+            for (int i = min; i <= max; i++)
+            {
+                outputOn((Outputs)i);
+            }
         }
 
         private void button_outputAllOff_Click(object sender, EventArgs e)
         {
-            button_outputLDO1.Text = "ON";
-            pictureBox_statusLDO1.Image = Properties.Resources.outputStatusOff;
+            int min = Enum.GetValues(typeof(Outputs)).Cast<int>().Min();
+            int max = Enum.GetValues(typeof(Outputs)).Cast<int>().Max();
 
-            button_outputLDO2.Text = "ON";
-            pictureBox_statusLDO2.Image = Properties.Resources.outputStatusOff;
+            for (int i = min; i <= max; i++)
+            {
+                outputOff((Outputs)i);
+            }
+        }
 
-            button_outputLDO3.Text = "ON";
-            pictureBox_statusLDO3.Image = Properties.Resources.outputStatusOff;
+        public void outputOff(Outputs outputOff)
+        {
+            switch (outputOff)
+            {
+                case Outputs.LDO1:
+                    {
+                        button_outputLDO1.Text = "ON";
+                        pictureBox_statusLDO1.Image = Properties.Resources.outputStatusOff;
+                        break;
+                    }
+                case Outputs.LDO2:
+                    {
+                        button_outputLDO2.Text = "ON";
+                        pictureBox_statusLDO2.Image = Properties.Resources.outputStatusOff;
+                        break;
+                    }
+                case Outputs.LDO3:
+                    {
+                        button_outputLDO3.Text = "ON";
+                        pictureBox_statusLDO3.Image = Properties.Resources.outputStatusOff;
+                        break;
+                    }
+                case Outputs.VDCDC1:
+                    {
+                        button_outputVDCDC1.Text = "ON";
+                        pictureBox_statusVDCDC1.Image = Properties.Resources.outputStatusOff;
+                        break;
+                    }
+                case Outputs.VDCDC2:
+                    {
+                        button_outputVDCDC2.Text = "ON";
+                        pictureBox_statusVDCDC2.Image = Properties.Resources.outputStatusOff;
+                        break;
+                    }
+                default:
+                    break;
+            }
+        }
 
-            button_outputVDCDC1.Text = "ON";
-            pictureBox_statusVDCDC1.Image = Properties.Resources.outputStatusOff;
+        public void outputOn(Outputs outputOn)
+        {
+            switch (outputOn)
+            {
+                case Outputs.LDO1:
+                    {
+                        button_outputLDO1.Text = "OFF";
+                        pictureBox_statusLDO1.Image = Properties.Resources.outputStatusOn;
+                        break;
+                    }
+                case Outputs.LDO2:
+                    {
+                        button_outputLDO2.Text = "OFF";
+                        pictureBox_statusLDO2.Image = Properties.Resources.outputStatusOn;
+                        break;
+                    }
+                case Outputs.LDO3:
+                    {
+                        button_outputLDO3.Text = "OFF";
+                        pictureBox_statusLDO3.Image = Properties.Resources.outputStatusOn;
+                        break;
+                    }
+                case Outputs.VDCDC1:
+                    {
+                        button_outputVDCDC1.Text = "OFF";
+                        pictureBox_statusVDCDC1.Image = Properties.Resources.outputStatusOn;
+                        break;
+                    }
+                case Outputs.VDCDC2:
+                    {
+                        button_outputVDCDC2.Text = "OFF";
+                        pictureBox_statusVDCDC2.Image = Properties.Resources.outputStatusOn;
+                        break;
+                    }
+                default:
+                    break;
+            }
+        }
 
-            button_outputVDCDC2.Text = "ON";
-            pictureBox_statusVDCDC2.Image = Properties.Resources.outputStatusOff;
+        private void timer_serialCheck_Tick(object sender, EventArgs e)
+        {
+            if (!serialPort1.IsOpen)
+            {
+                timer_serialCheck.Enabled = false;
+                serialDisconnect();
+            }
         }
     }
 }

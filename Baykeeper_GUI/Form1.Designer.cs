@@ -38,6 +38,7 @@ namespace Baykeeper_GUI
             this.button_serialPorts = new System.Windows.Forms.Button();
             this.label_serialPorts = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label_outputStatus = new System.Windows.Forms.Label();
             this.label_outputVDCDC2 = new System.Windows.Forms.Label();
             this.label_outputVDCDC1 = new System.Windows.Forms.Label();
             this.label_outputLDO3 = new System.Windows.Forms.Label();
@@ -60,7 +61,8 @@ namespace Baykeeper_GUI
             this.label_copyright = new System.Windows.Forms.Label();
             this.pictureBox_chipusLogo = new System.Windows.Forms.PictureBox();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
-            this.label_outputStatus = new System.Windows.Forms.Label();
+            this.button_outputAllOn = new System.Windows.Forms.Button();
+            this.button_outputAllOff = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -141,6 +143,8 @@ namespace Baykeeper_GUI
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.button_outputAllOff);
+            this.tabPage2.Controls.Add(this.button_outputAllOn);
             this.tabPage2.Controls.Add(this.label_outputStatus);
             this.tabPage2.Controls.Add(this.label_outputVDCDC2);
             this.tabPage2.Controls.Add(this.label_outputVDCDC1);
@@ -165,11 +169,22 @@ namespace Baykeeper_GUI
             this.tabPage2.Text = "Outputs";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // label_outputStatus
+            // 
+            this.label_outputStatus.AutoSize = true;
+            this.label_outputStatus.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_outputStatus.Location = new System.Drawing.Point(513, 34);
+            this.label_outputStatus.Name = "label_outputStatus";
+            this.label_outputStatus.Size = new System.Drawing.Size(84, 22);
+            this.label_outputStatus.TabIndex = 15;
+            this.label_outputStatus.Text = "STATUS";
+            this.label_outputStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // label_outputVDCDC2
             // 
             this.label_outputVDCDC2.AutoSize = true;
             this.label_outputVDCDC2.Font = new System.Drawing.Font("Arial", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_outputVDCDC2.Location = new System.Drawing.Point(132, 325);
+            this.label_outputVDCDC2.Location = new System.Drawing.Point(132, 281);
             this.label_outputVDCDC2.Name = "label_outputVDCDC2";
             this.label_outputVDCDC2.Size = new System.Drawing.Size(146, 36);
             this.label_outputVDCDC2.TabIndex = 14;
@@ -179,7 +194,7 @@ namespace Baykeeper_GUI
             // 
             this.label_outputVDCDC1.AutoSize = true;
             this.label_outputVDCDC1.Font = new System.Drawing.Font("Arial", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_outputVDCDC1.Location = new System.Drawing.Point(132, 271);
+            this.label_outputVDCDC1.Location = new System.Drawing.Point(132, 227);
             this.label_outputVDCDC1.Name = "label_outputVDCDC1";
             this.label_outputVDCDC1.Size = new System.Drawing.Size(146, 36);
             this.label_outputVDCDC1.TabIndex = 13;
@@ -189,7 +204,7 @@ namespace Baykeeper_GUI
             // 
             this.label_outputLDO3.AutoSize = true;
             this.label_outputLDO3.Font = new System.Drawing.Font("Arial", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_outputLDO3.Location = new System.Drawing.Point(132, 217);
+            this.label_outputLDO3.Location = new System.Drawing.Point(132, 173);
             this.label_outputLDO3.Name = "label_outputLDO3";
             this.label_outputLDO3.Size = new System.Drawing.Size(99, 36);
             this.label_outputLDO3.TabIndex = 12;
@@ -199,7 +214,7 @@ namespace Baykeeper_GUI
             // 
             this.label_outputLDO2.AutoSize = true;
             this.label_outputLDO2.Font = new System.Drawing.Font("Arial", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_outputLDO2.Location = new System.Drawing.Point(132, 163);
+            this.label_outputLDO2.Location = new System.Drawing.Point(132, 119);
             this.label_outputLDO2.Name = "label_outputLDO2";
             this.label_outputLDO2.Size = new System.Drawing.Size(99, 36);
             this.label_outputLDO2.TabIndex = 11;
@@ -207,7 +222,7 @@ namespace Baykeeper_GUI
             // 
             // button_outputVDCDC2
             // 
-            this.button_outputVDCDC2.Location = new System.Drawing.Point(284, 331);
+            this.button_outputVDCDC2.Location = new System.Drawing.Point(284, 287);
             this.button_outputVDCDC2.Name = "button_outputVDCDC2";
             this.button_outputVDCDC2.Size = new System.Drawing.Size(75, 23);
             this.button_outputVDCDC2.TabIndex = 10;
@@ -217,7 +232,7 @@ namespace Baykeeper_GUI
             // 
             // button_outputVDCDC1
             // 
-            this.button_outputVDCDC1.Location = new System.Drawing.Point(284, 277);
+            this.button_outputVDCDC1.Location = new System.Drawing.Point(284, 233);
             this.button_outputVDCDC1.Name = "button_outputVDCDC1";
             this.button_outputVDCDC1.Size = new System.Drawing.Size(75, 23);
             this.button_outputVDCDC1.TabIndex = 9;
@@ -227,7 +242,7 @@ namespace Baykeeper_GUI
             // 
             // button_outputLDO3
             // 
-            this.button_outputLDO3.Location = new System.Drawing.Point(284, 223);
+            this.button_outputLDO3.Location = new System.Drawing.Point(284, 179);
             this.button_outputLDO3.Name = "button_outputLDO3";
             this.button_outputLDO3.Size = new System.Drawing.Size(75, 23);
             this.button_outputLDO3.TabIndex = 8;
@@ -237,7 +252,7 @@ namespace Baykeeper_GUI
             // 
             // button_outputLDO2
             // 
-            this.button_outputLDO2.Location = new System.Drawing.Point(284, 169);
+            this.button_outputLDO2.Location = new System.Drawing.Point(284, 125);
             this.button_outputLDO2.Name = "button_outputLDO2";
             this.button_outputLDO2.Size = new System.Drawing.Size(75, 23);
             this.button_outputLDO2.TabIndex = 7;
@@ -248,7 +263,7 @@ namespace Baykeeper_GUI
             // pictureBox_statusVDCDC2
             // 
             this.pictureBox_statusVDCDC2.Image = global::Baykeeper_GUI.Properties.Resources.outputStatusOff;
-            this.pictureBox_statusVDCDC2.Location = new System.Drawing.Point(532, 319);
+            this.pictureBox_statusVDCDC2.Location = new System.Drawing.Point(532, 275);
             this.pictureBox_statusVDCDC2.Name = "pictureBox_statusVDCDC2";
             this.pictureBox_statusVDCDC2.Size = new System.Drawing.Size(48, 48);
             this.pictureBox_statusVDCDC2.TabIndex = 6;
@@ -257,7 +272,7 @@ namespace Baykeeper_GUI
             // pictureBox_statusVDCDC1
             // 
             this.pictureBox_statusVDCDC1.Image = global::Baykeeper_GUI.Properties.Resources.outputStatusOff;
-            this.pictureBox_statusVDCDC1.Location = new System.Drawing.Point(532, 265);
+            this.pictureBox_statusVDCDC1.Location = new System.Drawing.Point(532, 221);
             this.pictureBox_statusVDCDC1.Name = "pictureBox_statusVDCDC1";
             this.pictureBox_statusVDCDC1.Size = new System.Drawing.Size(48, 48);
             this.pictureBox_statusVDCDC1.TabIndex = 5;
@@ -266,7 +281,7 @@ namespace Baykeeper_GUI
             // pictureBox_statusLDO3
             // 
             this.pictureBox_statusLDO3.Image = global::Baykeeper_GUI.Properties.Resources.outputStatusOff;
-            this.pictureBox_statusLDO3.Location = new System.Drawing.Point(532, 211);
+            this.pictureBox_statusLDO3.Location = new System.Drawing.Point(532, 167);
             this.pictureBox_statusLDO3.Name = "pictureBox_statusLDO3";
             this.pictureBox_statusLDO3.Size = new System.Drawing.Size(48, 48);
             this.pictureBox_statusLDO3.TabIndex = 4;
@@ -275,7 +290,7 @@ namespace Baykeeper_GUI
             // pictureBox_statusLDO2
             // 
             this.pictureBox_statusLDO2.Image = global::Baykeeper_GUI.Properties.Resources.outputStatusOff;
-            this.pictureBox_statusLDO2.Location = new System.Drawing.Point(532, 157);
+            this.pictureBox_statusLDO2.Location = new System.Drawing.Point(532, 113);
             this.pictureBox_statusLDO2.Name = "pictureBox_statusLDO2";
             this.pictureBox_statusLDO2.Size = new System.Drawing.Size(48, 48);
             this.pictureBox_statusLDO2.TabIndex = 3;
@@ -285,7 +300,7 @@ namespace Baykeeper_GUI
             // 
             this.label_outputLDO1.AutoSize = true;
             this.label_outputLDO1.Font = new System.Drawing.Font("Arial", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_outputLDO1.Location = new System.Drawing.Point(132, 109);
+            this.label_outputLDO1.Location = new System.Drawing.Point(132, 65);
             this.label_outputLDO1.Name = "label_outputLDO1";
             this.label_outputLDO1.Size = new System.Drawing.Size(99, 36);
             this.label_outputLDO1.TabIndex = 2;
@@ -293,7 +308,7 @@ namespace Baykeeper_GUI
             // 
             // button_outputLDO1
             // 
-            this.button_outputLDO1.Location = new System.Drawing.Point(284, 115);
+            this.button_outputLDO1.Location = new System.Drawing.Point(284, 71);
             this.button_outputLDO1.Name = "button_outputLDO1";
             this.button_outputLDO1.Size = new System.Drawing.Size(75, 23);
             this.button_outputLDO1.TabIndex = 1;
@@ -304,7 +319,7 @@ namespace Baykeeper_GUI
             // pictureBox_statusLDO1
             // 
             this.pictureBox_statusLDO1.Image = global::Baykeeper_GUI.Properties.Resources.outputStatusOff;
-            this.pictureBox_statusLDO1.Location = new System.Drawing.Point(532, 103);
+            this.pictureBox_statusLDO1.Location = new System.Drawing.Point(532, 59);
             this.pictureBox_statusLDO1.Name = "pictureBox_statusLDO1";
             this.pictureBox_statusLDO1.Size = new System.Drawing.Size(48, 48);
             this.pictureBox_statusLDO1.TabIndex = 0;
@@ -325,7 +340,7 @@ namespace Baykeeper_GUI
             // linkLabel_tabAbout
             // 
             this.linkLabel_tabAbout.AutoSize = true;
-            this.linkLabel_tabAbout.Location = new System.Drawing.Point(333, 276);
+            this.linkLabel_tabAbout.Location = new System.Drawing.Point(330, 276);
             this.linkLabel_tabAbout.Name = "linkLabel_tabAbout";
             this.linkLabel_tabAbout.Size = new System.Drawing.Size(140, 13);
             this.linkLabel_tabAbout.TabIndex = 2;
@@ -337,11 +352,11 @@ namespace Baykeeper_GUI
             // label_tabAbout
             // 
             this.label_tabAbout.AutoSize = true;
-            this.label_tabAbout.Location = new System.Drawing.Point(259, 235);
+            this.label_tabAbout.Location = new System.Drawing.Point(248, 235);
             this.label_tabAbout.Name = "label_tabAbout";
-            this.label_tabAbout.Size = new System.Drawing.Size(283, 26);
+            this.label_tabAbout.Size = new System.Drawing.Size(304, 26);
             this.label_tabAbout.TabIndex = 1;
-            this.label_tabAbout.Text = "This is a GUI developed to use with Baykeeper USB EVM.\r\nAll rights reserved.";
+            this.label_tabAbout.Text = "This is a GUI developed to be used with Baykeeper USB EVM.\r\nAll rights reserved.";
             this.label_tabAbout.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pictureBox_tabAbout
@@ -377,16 +392,25 @@ namespace Baykeeper_GUI
             this.pictureBox_chipusLogo.TabIndex = 3;
             this.pictureBox_chipusLogo.TabStop = false;
             // 
-            // label_outputStatus
+            // button_outputAllOn
             // 
-            this.label_outputStatus.AutoSize = true;
-            this.label_outputStatus.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_outputStatus.Location = new System.Drawing.Point(513, 78);
-            this.label_outputStatus.Name = "label_outputStatus";
-            this.label_outputStatus.Size = new System.Drawing.Size(84, 22);
-            this.label_outputStatus.TabIndex = 15;
-            this.label_outputStatus.Text = "STATUS";
-            this.label_outputStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.button_outputAllOn.Location = new System.Drawing.Point(284, 341);
+            this.button_outputAllOn.Name = "button_outputAllOn";
+            this.button_outputAllOn.Size = new System.Drawing.Size(75, 23);
+            this.button_outputAllOn.TabIndex = 16;
+            this.button_outputAllOn.Text = "ALL ON";
+            this.button_outputAllOn.UseVisualStyleBackColor = true;
+            this.button_outputAllOn.Click += new System.EventHandler(this.button_outputAllOn_Click);
+            // 
+            // button_outputAllOff
+            // 
+            this.button_outputAllOff.Location = new System.Drawing.Point(284, 395);
+            this.button_outputAllOff.Name = "button_outputAllOff";
+            this.button_outputAllOff.Size = new System.Drawing.Size(75, 23);
+            this.button_outputAllOff.TabIndex = 17;
+            this.button_outputAllOff.Text = "ALL OFF";
+            this.button_outputAllOff.UseVisualStyleBackColor = true;
+            this.button_outputAllOff.Click += new System.EventHandler(this.button_outputAllOff_Click);
             // 
             // Form1
             // 
@@ -452,6 +476,8 @@ namespace Baykeeper_GUI
         private System.Windows.Forms.Button button_outputLDO1;
         private System.Windows.Forms.PictureBox pictureBox_statusLDO1;
         private System.Windows.Forms.Label label_outputStatus;
+        private System.Windows.Forms.Button button_outputAllOn;
+        private System.Windows.Forms.Button button_outputAllOff;
     }
 }
 

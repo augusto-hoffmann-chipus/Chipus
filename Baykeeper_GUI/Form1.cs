@@ -185,5 +185,41 @@ namespace Baykeeper_GUI
                 pictureBox_statusVDCDC2.Image = Properties.Resources.outputStatusOff;
             }
         }
+
+        private void button_outputAllOn_Click(object sender, EventArgs e)
+        {
+            button_outputLDO1.Text = "OFF";
+            pictureBox_statusLDO1.Image = Properties.Resources.outputStatusOn;
+
+            button_outputLDO2.Text = "OFF";
+            pictureBox_statusLDO2.Image = Properties.Resources.outputStatusOn;
+
+            button_outputLDO3.Text = "OFF";
+            pictureBox_statusLDO3.Image = Properties.Resources.outputStatusOn;
+
+            button_outputVDCDC1.Text = "OFF";
+            pictureBox_statusVDCDC1.Image = Properties.Resources.outputStatusOn;
+
+            button_outputVDCDC2.Text = "OFF";
+            pictureBox_statusVDCDC2.Image = Properties.Resources.outputStatusOn;
+        }
+
+        private void button_outputAllOff_Click(object sender, EventArgs e)
+        {
+            button_outputLDO1.Text = "ON";
+            pictureBox_statusLDO1.Image = Properties.Resources.outputStatusOff;
+
+            button_outputLDO2.Text = "ON";
+            pictureBox_statusLDO2.Image = Properties.Resources.outputStatusOff;
+
+            button_outputLDO3.Text = "ON";
+            pictureBox_statusLDO3.Image = Properties.Resources.outputStatusOff;
+
+            button_outputVDCDC1.Text = "ON";
+            pictureBox_statusVDCDC1.Image = Properties.Resources.outputStatusOff;
+
+            button_outputVDCDC2.Text = "ON";
+            pictureBox_statusVDCDC2.Image = Properties.Resources.outputStatusOff;
+        }
     }
 }

@@ -22,6 +22,7 @@ namespace Baykeeper_GUI
         LDO3 = 2,
         VDCDC1 = 3,
         VDCDC2 = 4
+
     }
 
     public partial class Form1 : Form

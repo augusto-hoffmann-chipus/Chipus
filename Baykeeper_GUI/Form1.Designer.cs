@@ -125,7 +125,7 @@ namespace Baykeeper_GUI
             // button_serialPorts
             // 
             this.button_serialPorts.Enabled = false;
-            this.button_serialPorts.Location = new System.Drawing.Point(135, 28);
+            this.button_serialPorts.Location = new System.Drawing.Point(136, 28);
             this.button_serialPorts.Name = "button_serialPorts";
             this.button_serialPorts.Size = new System.Drawing.Size(75, 23);
             this.button_serialPorts.TabIndex = 2;

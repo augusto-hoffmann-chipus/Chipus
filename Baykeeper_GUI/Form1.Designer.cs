@@ -31,7 +31,6 @@ namespace Baykeeper_GUI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.comboBox_serialPorts = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label_serialPortStatus = new System.Windows.Forms.Label();
@@ -62,8 +61,9 @@ namespace Baykeeper_GUI
             this.pictureBox_tabAbout = new System.Windows.Forms.PictureBox();
             this.label_copyright = new System.Windows.Forms.Label();
             this.pictureBox_chipusLogo = new System.Windows.Forms.PictureBox();
-            this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.timer_serialCheck = new System.Windows.Forms.Timer(this.components);
+            this.label1 = new System.Windows.Forms.Label();
+            this.button_readI2C = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -76,16 +76,6 @@ namespace Baykeeper_GUI
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_tabAbout)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_chipusLogo)).BeginInit();
             this.SuspendLayout();
-            // 
-            // comboBox_serialPorts
-            // 
-            this.comboBox_serialPorts.FormattingEnabled = true;
-            this.comboBox_serialPorts.Location = new System.Drawing.Point(8, 30);
-            this.comboBox_serialPorts.Name = "comboBox_serialPorts";
-            this.comboBox_serialPorts.Size = new System.Drawing.Size(121, 21);
-            this.comboBox_serialPorts.TabIndex = 0;
-            this.comboBox_serialPorts.SelectedIndexChanged += new System.EventHandler(this.comboBox_serialPorts_SelectedIndexChanged);
-            this.comboBox_serialPorts.Click += new System.EventHandler(this.comboBox_serialPorts_Click);
             // 
             // tabControl1
             // 
@@ -103,7 +93,6 @@ namespace Baykeeper_GUI
             this.tabPage1.Controls.Add(this.label_serialPortStatus);
             this.tabPage1.Controls.Add(this.button_serialPorts);
             this.tabPage1.Controls.Add(this.label_serialPorts);
-            this.tabPage1.Controls.Add(this.comboBox_serialPorts);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -124,7 +113,6 @@ namespace Baykeeper_GUI
             // 
             // button_serialPorts
             // 
-            this.button_serialPorts.Enabled = false;
             this.button_serialPorts.Location = new System.Drawing.Point(136, 28);
             this.button_serialPorts.Name = "button_serialPorts";
             this.button_serialPorts.Size = new System.Drawing.Size(75, 23);
@@ -144,6 +132,8 @@ namespace Baykeeper_GUI
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.button_readI2C);
+            this.tabPage2.Controls.Add(this.label1);
             this.tabPage2.Controls.Add(this.button_outputAllOff);
             this.tabPage2.Controls.Add(this.button_outputAllOn);
             this.tabPage2.Controls.Add(this.label_outputStatus);
@@ -425,6 +415,27 @@ namespace Baykeeper_GUI
             this.timer_serialCheck.Interval = 1000;
             this.timer_serialCheck.Tick += new System.EventHandler(this.timer_serialCheck_Tick);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(538, 437);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(115, 20);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "0bXXXXXXXX";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // button_readI2C
+            // 
+            this.button_readI2C.Location = new System.Drawing.Point(558, 411);
+            this.button_readI2C.Name = "button_readI2C";
+            this.button_readI2C.Size = new System.Drawing.Size(75, 23);
+            this.button_readI2C.TabIndex = 19;
+            this.button_readI2C.Text = "Read I2C";
+            this.button_readI2C.UseVisualStyleBackColor = true;
+            this.button_readI2C.Click += new System.EventHandler(this.button_readI2C_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -458,8 +469,6 @@ namespace Baykeeper_GUI
         }
 
         #endregion
-
-        private System.Windows.Forms.ComboBox comboBox_serialPorts;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Label label_serialPortStatus;
@@ -472,7 +481,6 @@ namespace Baykeeper_GUI
         private System.Windows.Forms.LinkLabel linkLabel_tabAbout;
         private System.Windows.Forms.Label label_tabAbout;
         private System.Windows.Forms.PictureBox pictureBox_tabAbout;
-        private System.IO.Ports.SerialPort serialPort1;
         private System.Windows.Forms.Label label_outputVDCDC2;
         private System.Windows.Forms.Label label_outputVDCDC1;
         private System.Windows.Forms.Label label_outputLDO3;
@@ -492,6 +500,8 @@ namespace Baykeeper_GUI
         private System.Windows.Forms.Button button_outputAllOff;
         private System.Windows.Forms.Button button_outputLDO1;
         private System.Windows.Forms.Timer timer_serialCheck;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button_readI2C;
     }
 }
 

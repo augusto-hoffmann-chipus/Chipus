@@ -83,6 +83,12 @@ namespace Baykeeper_GUI
         static byte ADbusReadVal = 0;
         static byte ACbusReadVal = 0;
 
+
+        // ###### Baykeeper defines ######
+        public const byte BKP_ADDRESS = 0x29;
+        //public const byte reg = 0x29; // add registers here
+        uint devcount = 0;
+
         // Create new instance of the FTDI device class
         FTDI myFtdiDevice = new FTDI();
 
@@ -96,40 +102,106 @@ namespace Baykeeper_GUI
         ///////////////////////////////////// Form Events /////////////////////////////////////////
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            serialPort1.Close();
             System.Windows.Forms.Application.Exit();
         }
 
-        private void comboBox_serialPorts_Click(object sender, EventArgs e)
-        {
-            comboBox_serialPorts.Items.Clear();
-            String[] ports = null;
-            ports = SerialPort.GetPortNames();//
-            comboBox_serialPorts.Items.AddRange(ports);
-            ports = null;
-        }
+        //###################################################################################################################################
+        // Code for the INITIALISE button...
 
         private void button_serialPorts_Click(object sender, EventArgs e)
         {
-            // Disconnect serial handle
-            if (serialPort1.IsOpen)
+            bool DeviceInit = false;
+            button_serialPorts.Enabled = false;
+
+            try
             {
-                serialDisconnect();
-
-
+                ftStatus = myFtdiDevice.GetNumberOfDevices(ref devcount);
             }
-            // Connect serial handle
-            else
-                if (serialConnect() == true)
+            catch
             {
-
-                button_serialPorts.Text = "Disconnect";
-                label_serialPortStatus.Text = "Connected";
-                label_serialPortStatus.ForeColor = Color.Lime;
-            }
-            else
                 // error message
-                MessageBox.Show("Connection attempt failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Driver not loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            // e.g. open a UM232H Module by it's description
+            //ftStatus = myFtdiDevice.OpenByDescription("UM232H");  // could replace line below
+            ftStatus = myFtdiDevice.OpenByIndex(0);
+
+            // Update the Status text line
+            if (ftStatus == FTDI.FT_STATUS.FT_OK)
+            {
+                DeviceOpen = true;
+                button_outputLDO1.Enabled = true;
+                button_outputLDO2.Enabled = true;
+                button_outputLDO3.Enabled = true;
+                button_outputVDCDC1.Enabled = true;
+                button_outputVDCDC2.Enabled = true;
+                button_outputAllOn.Enabled = true;
+                button_outputAllOff.Enabled = true;
+            }
+            else
+            {
+                DeviceOpen = false;
+                // error message
+                MessageBox.Show("No device found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+
+            // If the device opened successfully, initialise MPSSE and then configure prox and colour sensors over I2C 
+            if (DeviceOpen == true)
+            {
+                DeviceInit = true;
+
+                AppStatus = I2C_ConfigureMpsse();
+                if (AppStatus != 0)
+                {
+                    MessageBox.Show("Failed to config MPSSE.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    DeviceInit = false;
+                }
+
+                //if (DeviceInit == true)
+                //{
+                //    AppStatus = ProximitySensorConfig();
+                //    if (AppStatus != 0)
+                //    {
+                //        label4.Text = "Failed ProxInit";
+                //        DeviceInit = false;
+                //    }
+                //}
+
+                //if (DeviceInit == true)
+                //{
+                //    AppStatus = ColourSensorConfig();
+                //    if (AppStatus != 0)
+                //    {
+                //        label4.Text = "Failed ColorInit";
+                //        DeviceInit = false;
+                //    }
+                //}
+
+                if (DeviceInit == true)
+                {
+                    // allow user to start or exit
+                    button_serialPorts.Text = "Disconnect";
+                    label_serialPortStatus.Text = "Connected";
+                    label_serialPortStatus.ForeColor = Color.Lime;
+                }
+                else
+                {
+                    MessageBox.Show("Connection attempt failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    myFtdiDevice.Close();
+                }
+
+            }
+            else
+            {
+                // allow re-init or exit
+                //buttonInit.Enabled = true;
+                //buttonStart.Enabled = false;
+                //buttonClose.Enabled = true;
+
+
+            }
         }
 
         private void linkLabel_tabAbout_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -141,89 +213,6 @@ namespace Baykeeper_GUI
             System.Diagnostics.Process.Start("https://www.chipus-ip.com/");
         }
 
-        ///////////////////////////////////// Serial Events /////////////////////////////////////////
-        public bool serialConnect()
-        {
-            serialPort1.Dispose();
-            serialPort1.PortName = comboBox_serialPorts.Text;
-            try
-            {
-                serialPort1.Open();
-            }
-            catch (Exception ex)
-            {
-                // do nothing
-            }
-
-
-            if (serialPort1.IsOpen)
-            {
-                button_outputLDO1.Enabled = true;
-                button_outputLDO2.Enabled = true;
-                button_outputLDO3.Enabled = true;
-                button_outputVDCDC1.Enabled = true;
-                button_outputVDCDC2.Enabled = true;
-                button_outputAllOn.Enabled = true;
-                button_outputAllOff.Enabled = true;
-
-                timer_serialCheck.Enabled = true;
-
-                comboBox_serialPorts.Enabled = false;
-
-                FT232H_config();
-
-                return true;
-            }
-            else
-                return false;
-        }
-        public void serialDisconnect()
-        {
-            button_serialPorts.Text = "Connect";
-            label_serialPortStatus.Text = "Disconnected";
-            label_serialPortStatus.ForeColor = Color.Red;
-
-            comboBox_serialPorts.Enabled = true;
-
-
-            if (comboBox_serialPorts.Text != "")
-                button_serialPorts.Enabled = true;
-            else
-                button_serialPorts.Enabled = false;
-
-
-            comboBox_serialPorts.Items.Remove(comboBox_serialPorts.Text);
-
-            serialPort1.Dispose();
-
-            try
-            {
-                serialPort1.Close();
-            }
-            catch (Exception ex)
-            {
-                // do nothing
-            }
-
-            comboBox_serialPorts.Text = "";
-            button_serialPorts.Enabled = false;
-
-            button_outputLDO1.Enabled = false;
-            button_outputLDO2.Enabled = false;
-            button_outputLDO3.Enabled = false;
-            button_outputVDCDC1.Enabled = false;
-            button_outputVDCDC2.Enabled = false;
-            button_outputAllOn.Enabled = false;
-            button_outputAllOff.Enabled = false;
-        }
-
-        private void comboBox_serialPorts_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboBox_serialPorts.Text != "")
-                button_serialPorts.Enabled = true;
-            else
-                button_serialPorts.Enabled = false;
-        }
 
 
 
@@ -235,7 +224,6 @@ namespace Baykeeper_GUI
             if (button_outputLDO1.Text == "ON")
             {
                 outputOn(Outputs.LDO1);
-                //serialPort1.Write("0.25A");
             }
             else
             {
@@ -314,36 +302,41 @@ namespace Baykeeper_GUI
             }
         }
 
-        public void outputOff(Outputs outputOff)
+        private void outputOff(Outputs outputOff)
         {
             switch (outputOff)
             {
                 case Outputs.LDO1:
                     {
+                        i2c_LDO1_off();
                         button_outputLDO1.Text = "ON";
                         pictureBox_statusLDO1.Image = Properties.Resources.outputStatusOff;
                         break;
                     }
                 case Outputs.LDO2:
                     {
+                        i2c_LDO2_off();
                         button_outputLDO2.Text = "ON";
                         pictureBox_statusLDO2.Image = Properties.Resources.outputStatusOff;
                         break;
                     }
                 case Outputs.LDO3:
                     {
+                        i2c_LDO3_off();
                         button_outputLDO3.Text = "ON";
                         pictureBox_statusLDO3.Image = Properties.Resources.outputStatusOff;
                         break;
                     }
                 case Outputs.VDCDC1:
                     {
+                        i2c_VDCDC1_off();
                         button_outputVDCDC1.Text = "ON";
                         pictureBox_statusVDCDC1.Image = Properties.Resources.outputStatusOff;
                         break;
                     }
                 case Outputs.VDCDC2:
                     {
+                        i2c_VDCDC2_off();
                         button_outputVDCDC2.Text = "ON";
                         pictureBox_statusVDCDC2.Image = Properties.Resources.outputStatusOff;
                         break;
@@ -359,30 +352,35 @@ namespace Baykeeper_GUI
             {
                 case Outputs.LDO1:
                     {
+                        i2c_LDO1_on();
                         button_outputLDO1.Text = "OFF";
                         pictureBox_statusLDO1.Image = Properties.Resources.outputStatusOn;
                         break;
                     }
                 case Outputs.LDO2:
                     {
+                        i2c_LDO2_on();
                         button_outputLDO2.Text = "OFF";
                         pictureBox_statusLDO2.Image = Properties.Resources.outputStatusOn;
                         break;
                     }
                 case Outputs.LDO3:
                     {
+                        i2c_LDO3_on();
                         button_outputLDO3.Text = "OFF";
                         pictureBox_statusLDO3.Image = Properties.Resources.outputStatusOn;
                         break;
                     }
                 case Outputs.VDCDC1:
                     {
+                        i2c_VDCDC1_on();
                         button_outputVDCDC1.Text = "OFF";
                         pictureBox_statusVDCDC1.Image = Properties.Resources.outputStatusOn;
                         break;
                     }
                 case Outputs.VDCDC2:
                     {
+                        i2c_VDCDC2_on();
                         button_outputVDCDC2.Text = "OFF";
                         pictureBox_statusVDCDC2.Image = Properties.Resources.outputStatusOn;
                         break;
@@ -394,20 +392,293 @@ namespace Baykeeper_GUI
 
         private void timer_serialCheck_Tick(object sender, EventArgs e)
         {
-            if (!serialPort1.IsOpen)
-            {
-                timer_serialCheck.Enabled = false;
-                serialDisconnect();
-            }
+            //if (!serialPort1.IsOpen)
+            //{
+                //timer_serialCheck.Enabled = false;
+                //serialDisconnect();
+            //}
         }
 
-        public void FT232H_config()
+        private byte i2c_LDO1_on()
         {
-            serialPort1.Write("0.50A");
+            byte mask = 0x01;
+            byte curValue = i2c_read();
+            int newValue = curValue | mask;
+
+            // Write value 0x to XXX register
+            AppStatus = I2C_SetStart();                                                     // I2C START
+            if (AppStatus != 0) return 1;
+            AppStatus = I2C_SendDeviceAddrAndCheckACK((byte)(0x70), false);        // I2C ADDRESS (for write)
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            //AppStatus = I2C_SendByteAndCheckACK((byte)(0x02));                           // SEND REGISTER ID
+            //if (AppStatus != 0) return 1;
+            //if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            AppStatus = I2C_SendByteAndCheckACK((byte)(newValue));                              // SEND VALUE TO WRITE    
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            AppStatus = I2C_SetStop();                                                      // I2C STOP
+            if (AppStatus != 0) return 1;
+
+
+            return 0;    // can indicate other error codes if preferred
+        }
+        private byte i2c_LDO2_on()
+        {
+            byte mask = 0x02;
+            byte curValue = i2c_read();
+            int newValue = curValue | mask;
+
+            // Write value 0x to XXX register
+            AppStatus = I2C_SetStart();                                                     // I2C START
+            if (AppStatus != 0) return 1;
+            AppStatus = I2C_SendDeviceAddrAndCheckACK((byte)(0x70), false);        // I2C ADDRESS (for write)
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            //AppStatus = I2C_SendByteAndCheckACK((byte)(0x02));                           // SEND REGISTER ID
+            //if (AppStatus != 0) return 1;
+            //if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            AppStatus = I2C_SendByteAndCheckACK((byte)(newValue));                              // SEND VALUE TO WRITE    
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            AppStatus = I2C_SetStop();                                                      // I2C STOP
+            if (AppStatus != 0) return 1;
+
+
+            return 0;    // can indicate other error codes if preferred
+        }
+        private byte i2c_LDO3_on()
+        {
+            byte mask = 0x04;
+            byte curValue = i2c_read();
+            int newValue = curValue | mask;
+
+            // Write value 0x to XXX register
+            AppStatus = I2C_SetStart();                                                     // I2C START
+            if (AppStatus != 0) return 1;
+            AppStatus = I2C_SendDeviceAddrAndCheckACK((byte)(0x70), false);        // I2C ADDRESS (for write)
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            //AppStatus = I2C_SendByteAndCheckACK((byte)(0x02));                           // SEND REGISTER ID
+            //if (AppStatus != 0) return 1;
+            //if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            AppStatus = I2C_SendByteAndCheckACK((byte)(newValue));                              // SEND VALUE TO WRITE    
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            AppStatus = I2C_SetStop();                                                      // I2C STOP
+            if (AppStatus != 0) return 1;
+
+
+            return 0;    // can indicate other error codes if preferred
+        }
+        private byte i2c_VDCDC1_on()
+        {
+            byte mask = 0x08;
+            byte curValue = i2c_read();
+            int newValue = curValue | mask;
+
+            // Write value 0x to XXX register
+            AppStatus = I2C_SetStart();                                                     // I2C START
+            if (AppStatus != 0) return 1;
+            AppStatus = I2C_SendDeviceAddrAndCheckACK((byte)(0x70), false);        // I2C ADDRESS (for write)
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            //AppStatus = I2C_SendByteAndCheckACK((byte)(0x02));                           // SEND REGISTER ID
+            //if (AppStatus != 0) return 1;
+            //if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            AppStatus = I2C_SendByteAndCheckACK((byte)(newValue));                              // SEND VALUE TO WRITE    
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            AppStatus = I2C_SetStop();                                                      // I2C STOP
+            if (AppStatus != 0) return 1;
+
+
+            return 0;    // can indicate other error codes if preferred
+        }
+        private byte i2c_VDCDC2_on()
+        {
+            byte mask = 0x10;
+            byte curValue = i2c_read();
+            int newValue = curValue | mask;
+
+            // Write value 0x to XXX register
+            AppStatus = I2C_SetStart();                                                     // I2C START
+            if (AppStatus != 0) return 1;
+            AppStatus = I2C_SendDeviceAddrAndCheckACK((byte)(0x70), false);        // I2C ADDRESS (for write)
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            //AppStatus = I2C_SendByteAndCheckACK((byte)(0x02));                           // SEND REGISTER ID
+            //if (AppStatus != 0) return 1;
+            //if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            AppStatus = I2C_SendByteAndCheckACK((byte)(newValue));                              // SEND VALUE TO WRITE    
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            AppStatus = I2C_SetStop();                                                      // I2C STOP
+            if (AppStatus != 0) return 1;
+
+
+            return 0;    // can indicate other error codes if preferred
+        }
+
+        private byte i2c_LDO1_off()
+        {
+            byte mask = 0b11111110;
+            byte curValue = i2c_read();
+            int newValue = curValue & mask;
+
+            // Write value 0x to XXX register
+            AppStatus = I2C_SetStart();                                                     // I2C START
+            if (AppStatus != 0) return 1;
+            AppStatus = I2C_SendDeviceAddrAndCheckACK((byte)(0x70), false);        // I2C ADDRESS (for write)
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            //AppStatus = I2C_SendByteAndCheckACK((byte)(0x02));                           // SEND REGISTER ID
+            //if (AppStatus != 0) return 1;
+            //if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            AppStatus = I2C_SendByteAndCheckACK((byte)(newValue));                              // SEND VALUE TO WRITE    
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            AppStatus = I2C_SetStop();                                                      // I2C STOP
+            if (AppStatus != 0) return 1;
+
+
+            return 0;    // can indicate other error codes if preferred
+        }
+
+        private byte i2c_LDO2_off()
+        {
+            byte mask = 0b11111101;
+            byte curValue = i2c_read();
+            int newValue = curValue & mask;
+
+            // Write value 0x to XXX register
+            AppStatus = I2C_SetStart();                                                     // I2C START
+            if (AppStatus != 0) return 1;
+            AppStatus = I2C_SendDeviceAddrAndCheckACK((byte)(0x70), false);        // I2C ADDRESS (for write)
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            //AppStatus = I2C_SendByteAndCheckACK((byte)(0x02));                           // SEND REGISTER ID
+            //if (AppStatus != 0) return 1;
+            //if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            AppStatus = I2C_SendByteAndCheckACK((byte)(newValue));                              // SEND VALUE TO WRITE    
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            AppStatus = I2C_SetStop();                                                      // I2C STOP
+            if (AppStatus != 0) return 1;
+
+
+            return 0;    // can indicate other error codes if preferred
+        }
+
+        private byte i2c_LDO3_off()
+        {
+            byte mask = 0b11111011;
+            byte curValue = i2c_read();
+            int newValue = curValue & mask;
+
+            // Write value 0x to XXX register
+            AppStatus = I2C_SetStart();                                                     // I2C START
+            if (AppStatus != 0) return 1;
+            AppStatus = I2C_SendDeviceAddrAndCheckACK((byte)(0x70), false);        // I2C ADDRESS (for write)
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            //AppStatus = I2C_SendByteAndCheckACK((byte)(0x02));                           // SEND REGISTER ID
+            //if (AppStatus != 0) return 1;
+            //if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            AppStatus = I2C_SendByteAndCheckACK((byte)(newValue));                              // SEND VALUE TO WRITE    
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            AppStatus = I2C_SetStop();                                                      // I2C STOP
+            if (AppStatus != 0) return 1;
+
+
+            return 0;    // can indicate other error codes if preferred
+        }
+
+        private byte i2c_VDCDC1_off()
+        {
+            byte mask = 0b11110111;
+            byte curValue = i2c_read();
+            int newValue = curValue & mask;
+
+            // Write value 0x to XXX register
+            AppStatus = I2C_SetStart();                                                     // I2C START
+            if (AppStatus != 0) return 1;
+            AppStatus = I2C_SendDeviceAddrAndCheckACK((byte)(0x70), false);        // I2C ADDRESS (for write)
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            //AppStatus = I2C_SendByteAndCheckACK((byte)(0x02));                           // SEND REGISTER ID
+            //if (AppStatus != 0) return 1;
+            //if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            AppStatus = I2C_SendByteAndCheckACK((byte)(newValue));                              // SEND VALUE TO WRITE    
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            AppStatus = I2C_SetStop();                                                      // I2C STOP
+            if (AppStatus != 0) return 1;
+
+
+            return 0;    // can indicate other error codes if preferred
+        }
+
+        private byte i2c_VDCDC2_off()
+        {
+            byte mask = 0b11101111;
+            byte curValue = i2c_read();
+            int newValue = curValue & mask;
+
+            // Write value 0x to XXX register
+            AppStatus = I2C_SetStart();                                                     // I2C START
+            if (AppStatus != 0) return 1;
+            AppStatus = I2C_SendDeviceAddrAndCheckACK((byte)(0x70), false);        // I2C ADDRESS (for write)
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            //AppStatus = I2C_SendByteAndCheckACK((byte)(0x02));                           // SEND REGISTER ID
+            //if (AppStatus != 0) return 1;
+            //if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            AppStatus = I2C_SendByteAndCheckACK((byte)(newValue));                              // SEND VALUE TO WRITE    
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            AppStatus = I2C_SetStop();                                                      // I2C STOP
+            if (AppStatus != 0) return 1;
+
+
+            return 0;    // can indicate other error codes if preferred
+        }
+
+        private byte i2c_read()
+        {
+            byte i2c_return = 0;
+
+            // Do a multi-byte read of all four colour value registers (8 bytes in total)
+            AppStatus = I2C_SetStart();                                                     // I2C START
+            if (AppStatus != 0) return 1;
+            AppStatus = I2C_SendDeviceAddrAndCheckACK((byte)(0x70), true);        // I2C ADDRESS (for write)
+            if (AppStatus != 0) return 1;
+            //if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            //AppStatus = I2C_SendByteAndCheckACK((byte)(0xB4));                              // SEND REGISTER ID
+            //if (AppStatus != 0) return 1;
+            //if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            //AppStatus = I2C_SetStart();                                                     // REPEAT START
+            //if (AppStatus != 0) return 1;
+            //AppStatus = I2C_SendDeviceAddrAndCheckACK((byte)(COLOR_ADDRESS), true);         // I2C ADDRESS (for read)
+            //if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+            AppStatus = I2C_ReadByte(false);                                                 // I2C READ (send Ack)
+            if (AppStatus != 0) return 1;
+            i2c_return = InputBuffer2[0];                                              // Get the byte read
+            AppStatus = I2C_SetStop();                                                      // I2C STOP
+            if (AppStatus != 0) return 1;
+
+
+            return i2c_return;
+
         }
 
 
-
+        private void button_readI2C_Click(object sender, EventArgs e)
+        {
+            label1.Text = "0b" + Convert.ToString(i2c_read(), 2).PadLeft(8, '0'); ;
+        }
 
 
 
@@ -1377,13 +1648,6 @@ namespace Baykeeper_GUI
                 return 0;           // there were no bytes to read
             }
         }
-
-
-
-
-
-
-
 
     }
 }

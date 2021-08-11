@@ -113,95 +113,102 @@ namespace Baykeeper_GUI
             bool DeviceInit = false;
             button_serialPorts.Enabled = false;
 
-            try
+            if (DeviceOpen == false)
             {
-                ftStatus = myFtdiDevice.GetNumberOfDevices(ref devcount);
-            }
-            catch
-            {
-                // error message
-                MessageBox.Show("Driver not loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            // e.g. open a UM232H Module by it's description
-            //ftStatus = myFtdiDevice.OpenByDescription("UM232H");  // could replace line below
-            ftStatus = myFtdiDevice.OpenByIndex(0);
-
-            // Update the Status text line
-            if (ftStatus == FTDI.FT_STATUS.FT_OK)
-            {
-                DeviceOpen = true;
-                button_outputLDO1.Enabled = true;
-                button_outputLDO2.Enabled = true;
-                button_outputLDO3.Enabled = true;
-                button_outputVDCDC1.Enabled = true;
-                button_outputVDCDC2.Enabled = true;
-                button_outputAllOn.Enabled = true;
-                button_outputAllOff.Enabled = true;
-            }
-            else
-            {
-                DeviceOpen = false;
-                // error message
-                MessageBox.Show("No device found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-
-            // If the device opened successfully, initialise MPSSE and then configure prox and colour sensors over I2C 
-            if (DeviceOpen == true)
-            {
-                DeviceInit = true;
-
-                AppStatus = I2C_ConfigureMpsse();
-                if (AppStatus != 0)
+                try
                 {
-                    MessageBox.Show("Failed to config MPSSE.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    DeviceInit = false;
+                    ftStatus = myFtdiDevice.GetNumberOfDevices(ref devcount);
+                }
+                catch
+                {
+                    // error message
+                    MessageBox.Show("Driver not loaded.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                //if (DeviceInit == true)
-                //{
-                //    AppStatus = ProximitySensorConfig();
-                //    if (AppStatus != 0)
-                //    {
-                //        label4.Text = "Failed ProxInit";
-                //        DeviceInit = false;
-                //    }
-                //}
+                // e.g. open a UM232H Module by it's description
+                //ftStatus = myFtdiDevice.OpenByDescription("UM232H");  // could replace line below
+                ftStatus = myFtdiDevice.OpenByIndex(0);
 
-                //if (DeviceInit == true)
-                //{
-                //    AppStatus = ColourSensorConfig();
-                //    if (AppStatus != 0)
-                //    {
-                //        label4.Text = "Failed ColorInit";
-                //        DeviceInit = false;
-                //    }
-                //}
-
-                if (DeviceInit == true)
+                // Update the Status text line
+                if (ftStatus == FTDI.FT_STATUS.FT_OK)
                 {
-                    // allow user to start or exit
-                    button_serialPorts.Text = "Disconnect";
-                    label_serialPortStatus.Text = "Connected";
-                    label_serialPortStatus.ForeColor = Color.Lime;
+                    DeviceOpen = true;
+                    button_outputLDO1.Enabled = true;
+                    button_outputLDO2.Enabled = true;
+                    button_outputLDO3.Enabled = true;
+                    button_outputVDCDC1.Enabled = true;
+                    button_outputVDCDC2.Enabled = true;
+                    button_outputAllOn.Enabled = true;
+                    button_outputAllOff.Enabled = true;
                 }
                 else
                 {
-                    MessageBox.Show("Connection attempt failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    myFtdiDevice.Close();
+                    DeviceOpen = false;
+                    // error message
+                    MessageBox.Show("No device found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
+
+                // If the device opened successfully, initialise MPSSE and then configure prox and colour sensors over I2C 
+                if (DeviceOpen == true)
+                {
+                    DeviceInit = true;
+
+                    AppStatus = I2C_ConfigureMpsse();
+                    if (AppStatus != 0)
+                    {
+                        MessageBox.Show("Failed to config MPSSE.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        DeviceInit = false;
+                    }
+
+                    if (DeviceInit == true)
+                    {
+                        // allow user to start or exit
+                        button_serialPorts.Text = "Disconnect";
+                        button_serialPorts.Enabled = true;
+                        label_serialPortStatus.Text = "Connected";
+                        label_serialPortStatus.ForeColor = Color.Lime;
+                        timer_serialCheck.Enabled = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Connection attempt failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        myFtdiDevice.Close();
+                    }
+
+                }
+                else
+                {
+                    // allow re-init or exit
+                    //buttonInit.Enabled = true;
+                    //buttonStart.Enabled = false;
+                    //buttonClose.Enabled = true;
+
+
+                }
             }
-            else
+            else // if DeviceOpen == true
             {
-                // allow re-init or exit
-                //buttonInit.Enabled = true;
-                //buttonStart.Enabled = false;
-                //buttonClose.Enabled = true;
+                // Close the FTDI device and then close the window
+                myFtdiDevice.Close();
+                //Thread.Sleep(1000);
+                DeviceOpen = false;
+                button_outputLDO1.Enabled = false;
+                button_outputLDO2.Enabled = false;
+                button_outputLDO3.Enabled = false;
+                button_outputVDCDC1.Enabled = false;
+                button_outputVDCDC2.Enabled = false;
+                button_outputAllOn.Enabled = false;
+                button_outputAllOff.Enabled = false;
 
-
+                // allow user to start or exit
+                button_serialPorts.Text = "Connect";
+                button_serialPorts.Enabled = true;
+                label_serialPortStatus.Text = "Disconnected";
+                label_serialPortStatus.ForeColor = Color.Red;
             }
+
+
         }
 
         private void linkLabel_tabAbout_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -390,14 +397,6 @@ namespace Baykeeper_GUI
             }
         }
 
-        private void timer_serialCheck_Tick(object sender, EventArgs e)
-        {
-            //if (!serialPort1.IsOpen)
-            //{
-                //timer_serialCheck.Enabled = false;
-                //serialDisconnect();
-            //}
-        }
 
         private byte i2c_LDO1_on()
         {

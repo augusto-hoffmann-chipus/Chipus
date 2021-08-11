@@ -29,7 +29,6 @@ namespace Baykeeper_GUI
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -37,6 +36,8 @@ namespace Baykeeper_GUI
             this.button_serialPorts = new System.Windows.Forms.Button();
             this.label_serialPorts = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.button_readI2C = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.button_outputAllOff = new System.Windows.Forms.Button();
             this.button_outputAllOn = new System.Windows.Forms.Button();
             this.label_outputStatus = new System.Windows.Forms.Label();
@@ -61,9 +62,6 @@ namespace Baykeeper_GUI
             this.pictureBox_tabAbout = new System.Windows.Forms.PictureBox();
             this.label_copyright = new System.Windows.Forms.Label();
             this.pictureBox_chipusLogo = new System.Windows.Forms.PictureBox();
-            this.timer_serialCheck = new System.Windows.Forms.Timer(this.components);
-            this.label1 = new System.Windows.Forms.Label();
-            this.button_readI2C = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -104,18 +102,21 @@ namespace Baykeeper_GUI
             // label_serialPortStatus
             // 
             this.label_serialPortStatus.AutoSize = true;
+            this.label_serialPortStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_serialPortStatus.ForeColor = System.Drawing.Color.Red;
-            this.label_serialPortStatus.Location = new System.Drawing.Point(8, 54);
+            this.label_serialPortStatus.Location = new System.Drawing.Point(335, 289);
             this.label_serialPortStatus.Name = "label_serialPortStatus";
-            this.label_serialPortStatus.Size = new System.Drawing.Size(73, 13);
+            this.label_serialPortStatus.Size = new System.Drawing.Size(107, 20);
             this.label_serialPortStatus.TabIndex = 3;
             this.label_serialPortStatus.Text = "Disconnected";
+            this.label_serialPortStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // button_serialPorts
             // 
-            this.button_serialPorts.Location = new System.Drawing.Point(136, 28);
+            this.button_serialPorts.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_serialPorts.Location = new System.Drawing.Point(264, 211);
             this.button_serialPorts.Name = "button_serialPorts";
-            this.button_serialPorts.Size = new System.Drawing.Size(75, 23);
+            this.button_serialPorts.Size = new System.Drawing.Size(250, 50);
             this.button_serialPorts.TabIndex = 2;
             this.button_serialPorts.Text = "Connect";
             this.button_serialPorts.UseVisualStyleBackColor = true;
@@ -124,11 +125,13 @@ namespace Baykeeper_GUI
             // label_serialPorts
             // 
             this.label_serialPorts.AutoSize = true;
-            this.label_serialPorts.Location = new System.Drawing.Point(8, 14);
+            this.label_serialPorts.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_serialPorts.Location = new System.Drawing.Point(238, 143);
             this.label_serialPorts.Name = "label_serialPorts";
-            this.label_serialPorts.Size = new System.Drawing.Size(88, 13);
+            this.label_serialPorts.Size = new System.Drawing.Size(313, 40);
             this.label_serialPorts.TabIndex = 1;
-            this.label_serialPorts.Text = "Select serial port:";
+            this.label_serialPorts.Text = "Connect USB cable between EVM and PC.\r\nThen, click in Connect.";
+            this.label_serialPorts.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tabPage2
             // 
@@ -159,6 +162,27 @@ namespace Baykeeper_GUI
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Outputs";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // button_readI2C
+            // 
+            this.button_readI2C.Location = new System.Drawing.Point(558, 411);
+            this.button_readI2C.Name = "button_readI2C";
+            this.button_readI2C.Size = new System.Drawing.Size(75, 23);
+            this.button_readI2C.TabIndex = 19;
+            this.button_readI2C.Text = "Read I2C";
+            this.button_readI2C.UseVisualStyleBackColor = true;
+            this.button_readI2C.Click += new System.EventHandler(this.button_readI2C_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(538, 437);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(115, 20);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "0bXXXXXXXX";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // button_outputAllOff
             // 
@@ -217,7 +241,7 @@ namespace Baykeeper_GUI
             // 
             this.label_outputLDO3.AutoSize = true;
             this.label_outputLDO3.Font = new System.Drawing.Font("Arial", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_outputLDO3.Location = new System.Drawing.Point(132, 173);
+            this.label_outputLDO3.Location = new System.Drawing.Point(179, 173);
             this.label_outputLDO3.Name = "label_outputLDO3";
             this.label_outputLDO3.Size = new System.Drawing.Size(99, 36);
             this.label_outputLDO3.TabIndex = 12;
@@ -227,7 +251,7 @@ namespace Baykeeper_GUI
             // 
             this.label_outputLDO2.AutoSize = true;
             this.label_outputLDO2.Font = new System.Drawing.Font("Arial", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_outputLDO2.Location = new System.Drawing.Point(132, 119);
+            this.label_outputLDO2.Location = new System.Drawing.Point(179, 119);
             this.label_outputLDO2.Name = "label_outputLDO2";
             this.label_outputLDO2.Size = new System.Drawing.Size(99, 36);
             this.label_outputLDO2.TabIndex = 11;
@@ -317,7 +341,7 @@ namespace Baykeeper_GUI
             // 
             this.label_outputLDO1.AutoSize = true;
             this.label_outputLDO1.Font = new System.Drawing.Font("Arial", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_outputLDO1.Location = new System.Drawing.Point(132, 65);
+            this.label_outputLDO1.Location = new System.Drawing.Point(179, 65);
             this.label_outputLDO1.Name = "label_outputLDO1";
             this.label_outputLDO1.Size = new System.Drawing.Size(99, 36);
             this.label_outputLDO1.TabIndex = 2;
@@ -358,7 +382,7 @@ namespace Baykeeper_GUI
             // linkLabel_tabAbout
             // 
             this.linkLabel_tabAbout.AutoSize = true;
-            this.linkLabel_tabAbout.Location = new System.Drawing.Point(330, 276);
+            this.linkLabel_tabAbout.Location = new System.Drawing.Point(310, 276);
             this.linkLabel_tabAbout.Name = "linkLabel_tabAbout";
             this.linkLabel_tabAbout.Size = new System.Drawing.Size(140, 13);
             this.linkLabel_tabAbout.TabIndex = 2;
@@ -370,7 +394,7 @@ namespace Baykeeper_GUI
             // label_tabAbout
             // 
             this.label_tabAbout.AutoSize = true;
-            this.label_tabAbout.Location = new System.Drawing.Point(248, 235);
+            this.label_tabAbout.Location = new System.Drawing.Point(228, 235);
             this.label_tabAbout.Name = "label_tabAbout";
             this.label_tabAbout.Size = new System.Drawing.Size(304, 26);
             this.label_tabAbout.TabIndex = 1;
@@ -381,10 +405,10 @@ namespace Baykeeper_GUI
             // 
             this.pictureBox_tabAbout.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pictureBox_tabAbout.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox_tabAbout.Image")));
-            this.pictureBox_tabAbout.Location = new System.Drawing.Point(250, 150);
+            this.pictureBox_tabAbout.Location = new System.Drawing.Point(230, 150);
             this.pictureBox_tabAbout.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox_tabAbout.Name = "pictureBox_tabAbout";
-            this.pictureBox_tabAbout.Size = new System.Drawing.Size(300, 80);
+            this.pictureBox_tabAbout.Size = new System.Drawing.Size(313, 80);
             this.pictureBox_tabAbout.TabIndex = 0;
             this.pictureBox_tabAbout.TabStop = false;
             // 
@@ -409,32 +433,6 @@ namespace Baykeeper_GUI
             this.pictureBox_chipusLogo.Size = new System.Drawing.Size(100, 26);
             this.pictureBox_chipusLogo.TabIndex = 3;
             this.pictureBox_chipusLogo.TabStop = false;
-            // 
-            // timer_serialCheck
-            // 
-            this.timer_serialCheck.Interval = 1000;
-            this.timer_serialCheck.Tick += new System.EventHandler(this.timer_serialCheck_Tick);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(538, 437);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(115, 20);
-            this.label1.TabIndex = 18;
-            this.label1.Text = "0bXXXXXXXX";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // button_readI2C
-            // 
-            this.button_readI2C.Location = new System.Drawing.Point(558, 411);
-            this.button_readI2C.Name = "button_readI2C";
-            this.button_readI2C.Size = new System.Drawing.Size(75, 23);
-            this.button_readI2C.TabIndex = 19;
-            this.button_readI2C.Text = "Read I2C";
-            this.button_readI2C.UseVisualStyleBackColor = true;
-            this.button_readI2C.Click += new System.EventHandler(this.button_readI2C_Click);
             // 
             // Form1
             // 
@@ -499,7 +497,6 @@ namespace Baykeeper_GUI
         private System.Windows.Forms.Button button_outputAllOn;
         private System.Windows.Forms.Button button_outputAllOff;
         private System.Windows.Forms.Button button_outputLDO1;
-        private System.Windows.Forms.Timer timer_serialCheck;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button_readI2C;
     }

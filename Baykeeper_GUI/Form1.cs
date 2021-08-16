@@ -168,7 +168,9 @@ namespace Baykeeper_GUI
                         button_serialPorts.Enabled = true;
                         label_serialPortStatus.Text = "Connected";
                         label_serialPortStatus.ForeColor = Color.Lime;
-                        timer_serialCheck.Enabled = true;
+                        //timer_serialCheck.Enabled = true;
+
+
                     }
                     else
                     {
@@ -236,6 +238,7 @@ namespace Baykeeper_GUI
             {
                 outputOff(Outputs.LDO1);
             }
+            i2c_refresh();
         }
 
         private void button_outputLDO2_Click(object sender, EventArgs e)
@@ -249,6 +252,7 @@ namespace Baykeeper_GUI
             {
                 outputOff(Outputs.LDO2);
             }
+            i2c_refresh();
         }
 
         private void button_outputLDO3_Click(object sender, EventArgs e)
@@ -261,6 +265,7 @@ namespace Baykeeper_GUI
             {
                 outputOff(Outputs.LDO3);
             }
+            i2c_refresh();
         }
 
         private void button_outputVDCDC1_Click(object sender, EventArgs e)
@@ -273,6 +278,7 @@ namespace Baykeeper_GUI
             {
                 outputOff(Outputs.VDCDC1);
             }
+            i2c_refresh();
         }
 
         private void button_outputVDCDC2_Click(object sender, EventArgs e)
@@ -285,6 +291,7 @@ namespace Baykeeper_GUI
             {
                 outputOff(Outputs.VDCDC2);
             }
+            i2c_refresh();
         }
 
         private void button_outputAllOn_Click(object sender, EventArgs e)
@@ -296,6 +303,7 @@ namespace Baykeeper_GUI
             {
                 outputOn((Outputs)i);
             }
+            i2c_refresh();
         }
 
         private void button_outputAllOff_Click(object sender, EventArgs e)
@@ -307,6 +315,7 @@ namespace Baykeeper_GUI
             {
                 outputOff((Outputs)i);
             }
+            i2c_refresh();
         }
 
         private void outputOff(Outputs outputOff)
@@ -674,9 +683,15 @@ namespace Baykeeper_GUI
         }
 
 
-        private void button_readI2C_Click(object sender, EventArgs e)
+        private void i2c_refresh()
         {
-            label1.Text = "0b" + Convert.ToString(i2c_read(), 2).PadLeft(8, '0'); ;
+            byte i2c_return = i2c_read();
+            label1.Text = "0b" + Convert.ToString(i2c_return, 2).PadLeft(8, '0');
+
+            label_battery.Text = Convert.ToString(3 * i2c_return) + "%";
+            progressBar1.Value = 3 * i2c_return;
+
+
         }
 
 

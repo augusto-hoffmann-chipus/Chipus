@@ -31,11 +31,11 @@ namespace Baykeeper_GUI
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage_config = new System.Windows.Forms.TabPage();
             this.label_serialPortStatus = new System.Windows.Forms.Label();
             this.button_serialPorts = new System.Windows.Forms.Button();
             this.label_serialPorts = new System.Windows.Forms.Label();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPage_outputs = new System.Windows.Forms.TabPage();
             this.button_readI2C = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.button_outputAllOff = new System.Windows.Forms.Button();
@@ -56,48 +56,53 @@ namespace Baykeeper_GUI
             this.label_outputLDO1 = new System.Windows.Forms.Label();
             this.button_outputLDO1 = new System.Windows.Forms.Button();
             this.pictureBox_statusLDO1 = new System.Windows.Forms.PictureBox();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabPage_about = new System.Windows.Forms.TabPage();
             this.linkLabel_tabAbout = new System.Windows.Forms.LinkLabel();
             this.label_tabAbout = new System.Windows.Forms.Label();
             this.pictureBox_tabAbout = new System.Windows.Forms.PictureBox();
             this.label_copyright = new System.Windows.Forms.Label();
             this.pictureBox_chipusLogo = new System.Windows.Forms.PictureBox();
+            this.tabPage_battery = new System.Windows.Forms.TabPage();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.label_battery = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.tabPage_config.SuspendLayout();
+            this.tabPage_outputs.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_statusVDCDC2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_statusVDCDC1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_statusLDO3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_statusLDO2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_statusLDO1)).BeginInit();
-            this.tabPage3.SuspendLayout();
+            this.tabPage_about.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_tabAbout)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_chipusLogo)).BeginInit();
+            this.tabPage_battery.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage_config);
+            this.tabControl1.Controls.Add(this.tabPage_outputs);
+            this.tabControl1.Controls.Add(this.tabPage_battery);
+            this.tabControl1.Controls.Add(this.tabPage_about);
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(786, 533);
             this.tabControl1.TabIndex = 1;
             // 
-            // tabPage1
+            // tabPage_config
             // 
-            this.tabPage1.Controls.Add(this.label_serialPortStatus);
-            this.tabPage1.Controls.Add(this.button_serialPorts);
-            this.tabPage1.Controls.Add(this.label_serialPorts);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(778, 507);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Configuration";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabPage_config.Controls.Add(this.label_serialPortStatus);
+            this.tabPage_config.Controls.Add(this.button_serialPorts);
+            this.tabPage_config.Controls.Add(this.label_serialPorts);
+            this.tabPage_config.Location = new System.Drawing.Point(4, 22);
+            this.tabPage_config.Name = "tabPage_config";
+            this.tabPage_config.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage_config.Size = new System.Drawing.Size(778, 507);
+            this.tabPage_config.TabIndex = 0;
+            this.tabPage_config.Text = "Configuration";
+            this.tabPage_config.UseVisualStyleBackColor = true;
             // 
             // label_serialPortStatus
             // 
@@ -133,35 +138,35 @@ namespace Baykeeper_GUI
             this.label_serialPorts.Text = "Connect USB cable between EVM and PC.\r\nThen, click in Connect.";
             this.label_serialPorts.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // tabPage2
+            // tabPage_outputs
             // 
-            this.tabPage2.Controls.Add(this.button_readI2C);
-            this.tabPage2.Controls.Add(this.label1);
-            this.tabPage2.Controls.Add(this.button_outputAllOff);
-            this.tabPage2.Controls.Add(this.button_outputAllOn);
-            this.tabPage2.Controls.Add(this.label_outputStatus);
-            this.tabPage2.Controls.Add(this.label_outputVDCDC2);
-            this.tabPage2.Controls.Add(this.label_outputVDCDC1);
-            this.tabPage2.Controls.Add(this.label_outputLDO3);
-            this.tabPage2.Controls.Add(this.label_outputLDO2);
-            this.tabPage2.Controls.Add(this.button_outputVDCDC2);
-            this.tabPage2.Controls.Add(this.button_outputVDCDC1);
-            this.tabPage2.Controls.Add(this.button_outputLDO3);
-            this.tabPage2.Controls.Add(this.button_outputLDO2);
-            this.tabPage2.Controls.Add(this.pictureBox_statusVDCDC2);
-            this.tabPage2.Controls.Add(this.pictureBox_statusVDCDC1);
-            this.tabPage2.Controls.Add(this.pictureBox_statusLDO3);
-            this.tabPage2.Controls.Add(this.pictureBox_statusLDO2);
-            this.tabPage2.Controls.Add(this.label_outputLDO1);
-            this.tabPage2.Controls.Add(this.button_outputLDO1);
-            this.tabPage2.Controls.Add(this.pictureBox_statusLDO1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(778, 507);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Outputs";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tabPage_outputs.Controls.Add(this.button_readI2C);
+            this.tabPage_outputs.Controls.Add(this.label1);
+            this.tabPage_outputs.Controls.Add(this.button_outputAllOff);
+            this.tabPage_outputs.Controls.Add(this.button_outputAllOn);
+            this.tabPage_outputs.Controls.Add(this.label_outputStatus);
+            this.tabPage_outputs.Controls.Add(this.label_outputVDCDC2);
+            this.tabPage_outputs.Controls.Add(this.label_outputVDCDC1);
+            this.tabPage_outputs.Controls.Add(this.label_outputLDO3);
+            this.tabPage_outputs.Controls.Add(this.label_outputLDO2);
+            this.tabPage_outputs.Controls.Add(this.button_outputVDCDC2);
+            this.tabPage_outputs.Controls.Add(this.button_outputVDCDC1);
+            this.tabPage_outputs.Controls.Add(this.button_outputLDO3);
+            this.tabPage_outputs.Controls.Add(this.button_outputLDO2);
+            this.tabPage_outputs.Controls.Add(this.pictureBox_statusVDCDC2);
+            this.tabPage_outputs.Controls.Add(this.pictureBox_statusVDCDC1);
+            this.tabPage_outputs.Controls.Add(this.pictureBox_statusLDO3);
+            this.tabPage_outputs.Controls.Add(this.pictureBox_statusLDO2);
+            this.tabPage_outputs.Controls.Add(this.label_outputLDO1);
+            this.tabPage_outputs.Controls.Add(this.button_outputLDO1);
+            this.tabPage_outputs.Controls.Add(this.pictureBox_statusLDO1);
+            this.tabPage_outputs.Location = new System.Drawing.Point(4, 22);
+            this.tabPage_outputs.Name = "tabPage_outputs";
+            this.tabPage_outputs.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage_outputs.Size = new System.Drawing.Size(778, 507);
+            this.tabPage_outputs.TabIndex = 1;
+            this.tabPage_outputs.Text = "Outputs";
+            this.tabPage_outputs.UseVisualStyleBackColor = true;
             // 
             // button_readI2C
             // 
@@ -171,7 +176,6 @@ namespace Baykeeper_GUI
             this.button_readI2C.TabIndex = 19;
             this.button_readI2C.Text = "Read I2C";
             this.button_readI2C.UseVisualStyleBackColor = true;
-            this.button_readI2C.Click += new System.EventHandler(this.button_readI2C_Click);
             // 
             // label1
             // 
@@ -367,17 +371,17 @@ namespace Baykeeper_GUI
             this.pictureBox_statusLDO1.TabIndex = 0;
             this.pictureBox_statusLDO1.TabStop = false;
             // 
-            // tabPage3
+            // tabPage_about
             // 
-            this.tabPage3.Controls.Add(this.linkLabel_tabAbout);
-            this.tabPage3.Controls.Add(this.label_tabAbout);
-            this.tabPage3.Controls.Add(this.pictureBox_tabAbout);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(778, 507);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "About";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.tabPage_about.Controls.Add(this.linkLabel_tabAbout);
+            this.tabPage_about.Controls.Add(this.label_tabAbout);
+            this.tabPage_about.Controls.Add(this.pictureBox_tabAbout);
+            this.tabPage_about.Location = new System.Drawing.Point(4, 22);
+            this.tabPage_about.Name = "tabPage_about";
+            this.tabPage_about.Size = new System.Drawing.Size(778, 507);
+            this.tabPage_about.TabIndex = 2;
+            this.tabPage_about.Text = "About";
+            this.tabPage_about.UseVisualStyleBackColor = true;
             // 
             // linkLabel_tabAbout
             // 
@@ -434,6 +438,36 @@ namespace Baykeeper_GUI
             this.pictureBox_chipusLogo.TabIndex = 3;
             this.pictureBox_chipusLogo.TabStop = false;
             // 
+            // tabPage_battery
+            // 
+            this.tabPage_battery.Controls.Add(this.label_battery);
+            this.tabPage_battery.Controls.Add(this.progressBar1);
+            this.tabPage_battery.Location = new System.Drawing.Point(4, 22);
+            this.tabPage_battery.Name = "tabPage_battery";
+            this.tabPage_battery.Size = new System.Drawing.Size(778, 507);
+            this.tabPage_battery.TabIndex = 3;
+            this.tabPage_battery.Text = "Battery Charger";
+            this.tabPage_battery.UseVisualStyleBackColor = true;
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(185, 217);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(400, 50);
+            this.progressBar1.TabIndex = 0;
+            this.progressBar1.Value = 50;
+            // 
+            // label_battery
+            // 
+            this.label_battery.AutoSize = true;
+            this.label_battery.Font = new System.Drawing.Font("Arial", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_battery.Location = new System.Drawing.Point(348, 307);
+            this.label_battery.Name = "label_battery";
+            this.label_battery.Size = new System.Drawing.Size(79, 36);
+            this.label_battery.TabIndex = 1;
+            this.label_battery.Text = "50%";
+            this.label_battery.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -448,19 +482,21 @@ namespace Baykeeper_GUI
             this.Text = "Baykeeper GUI";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
+            this.tabPage_config.ResumeLayout(false);
+            this.tabPage_config.PerformLayout();
+            this.tabPage_outputs.ResumeLayout(false);
+            this.tabPage_outputs.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_statusVDCDC2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_statusVDCDC1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_statusLDO3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_statusLDO2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_statusLDO1)).EndInit();
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
+            this.tabPage_about.ResumeLayout(false);
+            this.tabPage_about.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_tabAbout)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_chipusLogo)).EndInit();
+            this.tabPage_battery.ResumeLayout(false);
+            this.tabPage_battery.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -468,14 +504,14 @@ namespace Baykeeper_GUI
 
         #endregion
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage_config;
         private System.Windows.Forms.Label label_serialPortStatus;
         private System.Windows.Forms.Button button_serialPorts;
         private System.Windows.Forms.Label label_serialPorts;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPage_outputs;
         private System.Windows.Forms.Label label_copyright;
         private System.Windows.Forms.PictureBox pictureBox_chipusLogo;
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tabPage_about;
         private System.Windows.Forms.LinkLabel linkLabel_tabAbout;
         private System.Windows.Forms.Label label_tabAbout;
         private System.Windows.Forms.PictureBox pictureBox_tabAbout;
@@ -499,6 +535,9 @@ namespace Baykeeper_GUI
         private System.Windows.Forms.Button button_outputLDO1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button_readI2C;
+        private System.Windows.Forms.TabPage tabPage_battery;
+        private System.Windows.Forms.Label label_battery;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 

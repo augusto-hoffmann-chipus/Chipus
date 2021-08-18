@@ -29,6 +29,7 @@ namespace Baykeeper_GUI
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage_config = new System.Windows.Forms.TabPage();
@@ -36,6 +37,9 @@ namespace Baykeeper_GUI
             this.button_serialPorts = new System.Windows.Forms.Button();
             this.label_serialPorts = new System.Windows.Forms.Label();
             this.tabPage_outputs = new System.Windows.Forms.TabPage();
+            this.label_ADRL = new System.Windows.Forms.Label();
+            this.label_ADRM = new System.Windows.Forms.Label();
+            this.label_ADRH = new System.Windows.Forms.Label();
             this.button_readI2C = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.button_outputAllOff = new System.Windows.Forms.Button();
@@ -56,15 +60,16 @@ namespace Baykeeper_GUI
             this.label_outputLDO1 = new System.Windows.Forms.Label();
             this.button_outputLDO1 = new System.Windows.Forms.Button();
             this.pictureBox_statusLDO1 = new System.Windows.Forms.PictureBox();
+            this.tabPage_battery = new System.Windows.Forms.TabPage();
+            this.label_battery = new System.Windows.Forms.Label();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.tabPage_about = new System.Windows.Forms.TabPage();
             this.linkLabel_tabAbout = new System.Windows.Forms.LinkLabel();
             this.label_tabAbout = new System.Windows.Forms.Label();
             this.pictureBox_tabAbout = new System.Windows.Forms.PictureBox();
             this.label_copyright = new System.Windows.Forms.Label();
             this.pictureBox_chipusLogo = new System.Windows.Forms.PictureBox();
-            this.tabPage_battery = new System.Windows.Forms.TabPage();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.label_battery = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage_config.SuspendLayout();
             this.tabPage_outputs.SuspendLayout();
@@ -73,10 +78,10 @@ namespace Baykeeper_GUI
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_statusLDO3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_statusLDO2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_statusLDO1)).BeginInit();
+            this.tabPage_battery.SuspendLayout();
             this.tabPage_about.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_tabAbout)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_chipusLogo)).BeginInit();
-            this.tabPage_battery.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -140,6 +145,9 @@ namespace Baykeeper_GUI
             // 
             // tabPage_outputs
             // 
+            this.tabPage_outputs.Controls.Add(this.label_ADRL);
+            this.tabPage_outputs.Controls.Add(this.label_ADRM);
+            this.tabPage_outputs.Controls.Add(this.label_ADRH);
             this.tabPage_outputs.Controls.Add(this.button_readI2C);
             this.tabPage_outputs.Controls.Add(this.label1);
             this.tabPage_outputs.Controls.Add(this.button_outputAllOff);
@@ -168,6 +176,33 @@ namespace Baykeeper_GUI
             this.tabPage_outputs.Text = "Outputs";
             this.tabPage_outputs.UseVisualStyleBackColor = true;
             // 
+            // label_ADRL
+            // 
+            this.label_ADRL.AutoSize = true;
+            this.label_ADRL.Location = new System.Drawing.Point(72, 416);
+            this.label_ADRL.Name = "label_ADRL";
+            this.label_ADRL.Size = new System.Drawing.Size(116, 13);
+            this.label_ADRL.TabIndex = 22;
+            this.label_ADRL.Text = "ADRL = 0bXXXXXXXX";
+            // 
+            // label_ADRM
+            // 
+            this.label_ADRM.AutoSize = true;
+            this.label_ADRM.Location = new System.Drawing.Point(72, 400);
+            this.label_ADRM.Name = "label_ADRM";
+            this.label_ADRM.Size = new System.Drawing.Size(119, 13);
+            this.label_ADRM.TabIndex = 21;
+            this.label_ADRM.Text = "ADRM = 0bXXXXXXXX";
+            // 
+            // label_ADRH
+            // 
+            this.label_ADRH.AutoSize = true;
+            this.label_ADRH.Location = new System.Drawing.Point(72, 385);
+            this.label_ADRH.Name = "label_ADRH";
+            this.label_ADRH.Size = new System.Drawing.Size(118, 13);
+            this.label_ADRH.TabIndex = 20;
+            this.label_ADRH.Text = "ADRH = 0bXXXXXXXX";
+            // 
             // button_readI2C
             // 
             this.button_readI2C.Location = new System.Drawing.Point(558, 411);
@@ -176,6 +211,7 @@ namespace Baykeeper_GUI
             this.button_readI2C.TabIndex = 19;
             this.button_readI2C.Text = "Read I2C";
             this.button_readI2C.UseVisualStyleBackColor = true;
+            this.button_readI2C.Click += new System.EventHandler(this.button_readI2C_Click);
             // 
             // label1
             // 
@@ -371,6 +407,36 @@ namespace Baykeeper_GUI
             this.pictureBox_statusLDO1.TabIndex = 0;
             this.pictureBox_statusLDO1.TabStop = false;
             // 
+            // tabPage_battery
+            // 
+            this.tabPage_battery.Controls.Add(this.label_battery);
+            this.tabPage_battery.Controls.Add(this.progressBar1);
+            this.tabPage_battery.Location = new System.Drawing.Point(4, 22);
+            this.tabPage_battery.Name = "tabPage_battery";
+            this.tabPage_battery.Size = new System.Drawing.Size(778, 507);
+            this.tabPage_battery.TabIndex = 3;
+            this.tabPage_battery.Text = "Battery Charger";
+            this.tabPage_battery.UseVisualStyleBackColor = true;
+            // 
+            // label_battery
+            // 
+            this.label_battery.AutoSize = true;
+            this.label_battery.Font = new System.Drawing.Font("Arial", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_battery.Location = new System.Drawing.Point(348, 307);
+            this.label_battery.Name = "label_battery";
+            this.label_battery.Size = new System.Drawing.Size(79, 36);
+            this.label_battery.TabIndex = 1;
+            this.label_battery.Text = "50%";
+            this.label_battery.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(185, 217);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(400, 50);
+            this.progressBar1.TabIndex = 0;
+            this.progressBar1.Value = 50;
+            // 
             // tabPage_about
             // 
             this.tabPage_about.Controls.Add(this.linkLabel_tabAbout);
@@ -438,35 +504,10 @@ namespace Baykeeper_GUI
             this.pictureBox_chipusLogo.TabIndex = 3;
             this.pictureBox_chipusLogo.TabStop = false;
             // 
-            // tabPage_battery
+            // timer1
             // 
-            this.tabPage_battery.Controls.Add(this.label_battery);
-            this.tabPage_battery.Controls.Add(this.progressBar1);
-            this.tabPage_battery.Location = new System.Drawing.Point(4, 22);
-            this.tabPage_battery.Name = "tabPage_battery";
-            this.tabPage_battery.Size = new System.Drawing.Size(778, 507);
-            this.tabPage_battery.TabIndex = 3;
-            this.tabPage_battery.Text = "Battery Charger";
-            this.tabPage_battery.UseVisualStyleBackColor = true;
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(185, 217);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(400, 50);
-            this.progressBar1.TabIndex = 0;
-            this.progressBar1.Value = 50;
-            // 
-            // label_battery
-            // 
-            this.label_battery.AutoSize = true;
-            this.label_battery.Font = new System.Drawing.Font("Arial", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_battery.Location = new System.Drawing.Point(348, 307);
-            this.label_battery.Name = "label_battery";
-            this.label_battery.Size = new System.Drawing.Size(79, 36);
-            this.label_battery.TabIndex = 1;
-            this.label_battery.Text = "50%";
-            this.label_battery.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Form1
             // 
@@ -491,12 +532,12 @@ namespace Baykeeper_GUI
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_statusLDO3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_statusLDO2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_statusLDO1)).EndInit();
+            this.tabPage_battery.ResumeLayout(false);
+            this.tabPage_battery.PerformLayout();
             this.tabPage_about.ResumeLayout(false);
             this.tabPage_about.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_tabAbout)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_chipusLogo)).EndInit();
-            this.tabPage_battery.ResumeLayout(false);
-            this.tabPage_battery.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -538,6 +579,10 @@ namespace Baykeeper_GUI
         private System.Windows.Forms.TabPage tabPage_battery;
         private System.Windows.Forms.Label label_battery;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Label label_ADRH;
+        private System.Windows.Forms.Label label_ADRL;
+        private System.Windows.Forms.Label label_ADRM;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

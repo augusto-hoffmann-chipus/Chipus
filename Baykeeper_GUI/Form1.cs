@@ -85,7 +85,7 @@ namespace Baykeeper_GUI
 
 
         // ###### Baykeeper defines ######
-        public const byte BKP_ADDRESS = 0x29;
+        public const byte BKP_ADDRESS = 0xd0;
         //public const byte reg = 0x29; // add registers here
         uint devcount = 0;
 
@@ -1663,5 +1663,92 @@ namespace Baykeeper_GUI
             }
         }
 
+        private void button_readI2C_Click(object sender, EventArgs e)
+        {
+            i2c_write_BH45B1224(BKP_ADDRESS, 0x00, 0x80);
+            i2c_write_BH45B1224(BKP_ADDRESS, 0x07, 0x00);
+            i2c_write_BH45B1224(BKP_ADDRESS, 0x07, 0x80);
+            i2c_write_BH45B1224(BKP_ADDRESS, 0x07, 0x00);
+
+            byte ADRH = i2c_read_BH45B1224(BKP_ADDRESS, 0x06);
+            byte ADRM = i2c_read_BH45B1224(BKP_ADDRESS, 0x00);
+            byte ADRL = i2c_read_BH45B1224(BKP_ADDRESS, 0x07);
+
+            label_ADRH.Text = "0b" + Convert.ToString(ADRH, 2).PadLeft(8, '0');
+            label_ADRM.Text = "0b" + Convert.ToString(ADRM, 2).PadLeft(8, '0');
+            label_ADRL.Text = "0b" + Convert.ToString(ADRL, 2).PadLeft(8, '0');
+            timer1.Enabled = true;
+        }
+
+        private byte i2c_read_BH45B1224(byte ADDR, byte REG)
+        {
+            byte i2c_return = 0;
+
+            AppStatus = I2C_SetStart();                                                     // I2C START
+            if (AppStatus != 0) return 1;
+
+            AppStatus = I2C_SendDeviceAddrAndCheckACK((byte)(ADDR), false);        // I2C ADDRESS (for write)
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+
+            AppStatus = I2C_SendByteAndCheckACK((byte)(REG));                              // SEND REGISTER ID
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+
+            AppStatus = I2C_SetStart();                                                     // REPEAT START
+            if (AppStatus != 0) return 1;
+
+            AppStatus = I2C_SendDeviceAddrAndCheckACK((byte)(ADDR), true);                      // I2C ADDRESS (for read)
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+
+            AppStatus = I2C_ReadByte(false);                                                 // I2C READ (send Ack)
+            if (AppStatus != 0) return 1;
+
+            i2c_return = InputBuffer2[0];                                              // Get the byte read
+
+            AppStatus = I2C_SetStop();                                                      // I2C STOP
+            if (AppStatus != 0) return 1;
+
+
+            return i2c_return;
+
+        }
+
+        private byte i2c_write_BH45B1224(byte ADDR, byte REG, byte DATA)
+        {
+
+            AppStatus = I2C_SetStart();                                                     // I2C START
+            if (AppStatus != 0) return 1;
+
+            AppStatus = I2C_SendDeviceAddrAndCheckACK((byte)(ADDR), false);        // I2C ADDRESS (for write)
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+
+            AppStatus = I2C_SendByteAndCheckACK((byte)(REG));                              // SEND REGISTER ID
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+
+            AppStatus = I2C_SendByteAndCheckACK((byte)(DATA));                              // SEND REGISTER DATA
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+
+
+            AppStatus = I2C_SetStop();                                                      // I2C STOP
+            if (AppStatus != 0) return 1;
+
+            return 0;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            byte ADRH = i2c_read_BH45B1224(BKP_ADDRESS, 0x06);
+            byte ADRM = i2c_read_BH45B1224(BKP_ADDRESS, 0x05);
+            byte ADRL = i2c_read_BH45B1224(BKP_ADDRESS, 0x04);
+
+            label_ADRH.Text = "0b" + Convert.ToString(ADRH, 2).PadLeft(8, '0');
+            label_ADRM.Text = "0b" + Convert.ToString(ADRM, 2).PadLeft(8, '0');
+            label_ADRL.Text = "0b" + Convert.ToString(ADRL, 2).PadLeft(8, '0');
+        }
     }
 }

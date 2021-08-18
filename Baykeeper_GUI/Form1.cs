@@ -83,6 +83,9 @@ namespace Baykeeper_GUI
         static byte ADbusReadVal = 0;
         static byte ACbusReadVal = 0;
 
+        static byte[] ADCData = new byte[500];
+        static Int16 ADCvalue = 0;
+
 
         // ###### Baykeeper defines ######
         public const byte BKP_ADDRESS = 0xd0;
@@ -1742,13 +1745,114 @@ namespace Baykeeper_GUI
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            byte ADRH = i2c_read_BH45B1224(BKP_ADDRESS, 0x06);
-            byte ADRM = i2c_read_BH45B1224(BKP_ADDRESS, 0x05);
-            byte ADRL = i2c_read_BH45B1224(BKP_ADDRESS, 0x04);
+            i2c_read_ADS112C04(0x40, 0x10);
+            textBox6.Text = Convert.ToString(ADCData[0], 2).PadLeft(8, '0');
+            textBox5.Text = Convert.ToString(ADCData[1], 2).PadLeft(8, '0');
 
-            label_ADRH.Text = "0b" + Convert.ToString(ADRH, 2).PadLeft(8, '0');
-            label_ADRM.Text = "0b" + Convert.ToString(ADRM, 2).PadLeft(8, '0');
-            label_ADRL.Text = "0b" + Convert.ToString(ADRL, 2).PadLeft(8, '0');
+
+            int gain = 1;
+            try
+            {
+                gain = Convert.ToUInt16(textBox7.Text);
+            }
+            catch
+            { }
+
+
+            double vref = 2.048;
+            try
+            {
+                vref = Convert.ToDouble(textBox8.Text);
+            }
+            catch
+            { }
+            double voltage = ((2 * vref / gain) / Math.Pow(2, 16)) * ADCvalue;
+
+
+            label_voltage.Text = (1000 * voltage).ToString() + " mV";
+
+
+            i2c_write_BH45B1224(0x40, 0x08, 0x00);
         }
+
+        private void button_writeADS_Click(object sender, EventArgs e)
+        {
+            byte data0x40 = Convert.ToByte(textBox_ADS0x40.Text, 16);
+            byte data0x44 = Convert.ToByte(textBox_ADS0x44.Text, 16);
+            byte data0x48 = Convert.ToByte(textBox_ADS0x48.Text, 16);
+            byte data0x4c = Convert.ToByte(textBox_ADS0x4c.Text, 16);
+
+            i2c_write_BH45B1224(0x40, 0x40, data0x40);
+            i2c_write_BH45B1224(0x40, 0x44, data0x44);
+            i2c_write_BH45B1224(0x40, 0x48, data0x48);
+            i2c_write_BH45B1224(0x40, 0x4c, data0x4c);
+
+
+            i2c_write_BH45B1224(0x40, 0x08, data0x4c);
+
+
+
+        }
+
+        private void button_readADS_Click(object sender, EventArgs e)
+        {
+            byte data0x40 = i2c_read_BH45B1224(0x40, 0x20);
+            byte data0x44 = i2c_read_BH45B1224(0x40, 0x24);
+            byte data0x48 = i2c_read_BH45B1224(0x40, 0x28);
+            byte data0x4c = i2c_read_BH45B1224(0x40, 0x2c);
+
+
+
+            textBox4.Text = data0x40.ToString("X").PadLeft(2, '0');
+            textBox3.Text = data0x44.ToString("X").PadLeft(2, '0');
+            textBox2.Text = data0x48.ToString("X").PadLeft(2, '0');
+            textBox1.Text = data0x4c.ToString("X").PadLeft(2, '0');
+        }
+
+        private void button_readData_Click(object sender, EventArgs e)
+        {
+            timer1.Enabled = true;
+        }
+
+        private byte i2c_read_ADS112C04(byte ADDR, byte REG)
+        {
+
+            AppStatus = I2C_SetStart();                                                     // I2C START
+            if (AppStatus != 0) return 1;
+
+            AppStatus = I2C_SendDeviceAddrAndCheckACK((byte)(ADDR), false);        // I2C ADDRESS (for write)
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+
+            AppStatus = I2C_SendByteAndCheckACK((byte)(REG));                              // SEND REGISTER ID
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+
+            AppStatus = I2C_SetStart();                                                     // REPEAT START
+            if (AppStatus != 0) return 1;
+
+            AppStatus = I2C_SendDeviceAddrAndCheckACK((byte)(ADDR), true);                      // I2C ADDRESS (for read)
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
+
+            AppStatus = I2C_ReadByte(true);                                                 // I2C READ (send Ack)
+            if (AppStatus != 0) return 1;
+
+            ADCData[0] = InputBuffer2[0];                                              // Get the byte read
+
+            AppStatus = I2C_ReadByte(false);                                                 // I2C READ (send Ack)
+            if (AppStatus != 0) return 1;
+
+            ADCData[1] = InputBuffer2[0];                                              // Get the byte read
+
+            AppStatus = I2C_SetStop();                                                      // I2C STOP
+            if (AppStatus != 0) return 1;
+
+            ADCvalue = (Int16)((ADCData[0] << 8) | ADCData[1]);
+
+            return 0;
+
+        }
+
     }
 }

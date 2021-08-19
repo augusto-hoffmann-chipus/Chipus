@@ -98,6 +98,8 @@ namespace Baykeeper_GUI
         public Form1()
         {
             InitializeComponent();
+
+            device_disconnected();
         }
 
 
@@ -114,7 +116,6 @@ namespace Baykeeper_GUI
         private void button_serialPorts_Click(object sender, EventArgs e)
         {
             bool DeviceInit = false;
-            button_serialPorts.Enabled = false;
 
             if (DeviceOpen == false)
             {
@@ -136,13 +137,6 @@ namespace Baykeeper_GUI
                 if (ftStatus == FTDI.FT_STATUS.FT_OK)
                 {
                     DeviceOpen = true;
-                    button_outputLDO1.Enabled = true;
-                    button_outputLDO2.Enabled = true;
-                    button_outputLDO3.Enabled = true;
-                    button_outputVDCDC1.Enabled = true;
-                    button_outputVDCDC2.Enabled = true;
-                    button_outputAllOn.Enabled = true;
-                    button_outputAllOff.Enabled = true;
                 }
                 else
                 {
@@ -166,19 +160,13 @@ namespace Baykeeper_GUI
 
                     if (DeviceInit == true)
                     {
-                        // allow user to start or exit
-                        button_serialPorts.Text = "Disconnect";
-                        button_serialPorts.Enabled = true;
-                        label_serialPortStatus.Text = "Connected";
-                        label_serialPortStatus.ForeColor = Color.Lime;
-                        //timer_serialCheck.Enabled = true;
-
-
+                        device_connected();
                     }
                     else
                     {
                         MessageBox.Show("Connection attempt failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         myFtdiDevice.Close();
+                        device_disconnected();
                     }
 
                 }
@@ -194,23 +182,8 @@ namespace Baykeeper_GUI
             }
             else // if DeviceOpen == true
             {
-                // Close the FTDI device and then close the window
                 myFtdiDevice.Close();
-                //Thread.Sleep(1000);
-                DeviceOpen = false;
-                button_outputLDO1.Enabled = false;
-                button_outputLDO2.Enabled = false;
-                button_outputLDO3.Enabled = false;
-                button_outputVDCDC1.Enabled = false;
-                button_outputVDCDC2.Enabled = false;
-                button_outputAllOn.Enabled = false;
-                button_outputAllOff.Enabled = false;
-
-                // allow user to start or exit
-                button_serialPorts.Text = "Connect";
-                button_serialPorts.Enabled = true;
-                label_serialPortStatus.Text = "Disconnected";
-                label_serialPortStatus.ForeColor = Color.Red;
+                device_disconnected();
             }
 
 
@@ -1854,5 +1827,176 @@ namespace Baykeeper_GUI
 
         }
 
+        private void timer_disconnect_Tick(object sender, EventArgs e)
+        {
+            AppStatus = I2C_SetGPIOValuesHigh(0x40, 0x40);  // set direction of AC6 as output, value is 1 (high) for LED off
+
+            //If write to MPSSE failed (e.g. device unplugged) then stop running
+            if (AppStatus != 0)
+            {
+                myFtdiDevice.Close();
+                device_disconnected();
+                MessageBox.Show("Device connection lost.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+        private void device_disconnected()
+        {
+            // Close the FTDI device and then close the window
+            timer1.Enabled = false;
+            timer_disconnect.Enabled = false;
+
+
+            DeviceOpen = false;
+
+            ///////////////////////////////////////////////////////////////////
+            /// TAB "Configuration"
+            ///////////////////////////////////////////////////////////////////
+            button_serialPorts.Text = "Connect";
+            label_serialPortStatus.Text = "Disconnected";
+            label_serialPortStatus.ForeColor = Color.Red;
+
+            ///////////////////////////////////////////////////////////////////
+            /// TAB "Outputs"
+            ///////////////////////////////////////////////////////////////////
+            button_outputLDO1.Enabled = false;
+            button_outputLDO2.Enabled = false;
+            button_outputLDO3.Enabled = false;
+            button_outputVDCDC1.Enabled = false;
+            button_outputVDCDC2.Enabled = false;
+            button_outputAllOn.Enabled = false;
+            button_outputAllOff.Enabled = false;
+            pictureBox_statusLDO1.Image = Properties.Resources.outputStatusOff;
+            pictureBox_statusLDO2.Image = Properties.Resources.outputStatusOff;
+            pictureBox_statusLDO3.Image = Properties.Resources.outputStatusOff;
+            pictureBox_statusVDCDC1.Image = Properties.Resources.outputStatusOff;
+            pictureBox_statusVDCDC2.Image = Properties.Resources.outputStatusOff;
+
+
+
+            ///////////////////////////////////////////////////////////////////
+            /// TAB "Battery Charger"
+            ///////////////////////////////////////////////////////////////////
+            progressBar1.Value = 0;
+            label_battery.Text = "0%";
+
+
+            ///////////////////////////////////////////////////////////////////
+            /// TAB "About"
+            ///////////////////////////////////////////////////////////////////
+            // do nothing
+
+
+            ///////////////////////////////////////////////////////////////////
+            /// TAB "ADS112C04"
+            ///////////////////////////////////////////////////////////////////
+            textBox_ADS0x40.Text = "00";
+            textBox_ADS0x40.Enabled = false;
+            textBox_ADS0x44.Text = "00";
+            textBox_ADS0x44.Enabled = false;
+            textBox_ADS0x48.Text = "00";
+            textBox_ADS0x48.Enabled = false;
+            textBox_ADS0x4c.Text = "00";
+            textBox_ADS0x4c.Enabled = false;
+
+            button_writeADS.Enabled = false;
+
+
+            textBox4.Text = "00";
+            textBox3.Text = "00";
+            textBox2.Text = "00";
+            textBox1.Text = "00";
+
+            button_readADS.Enabled = false;
+
+            button_readData.Enabled = false;
+
+            textBox5.Text = "XXXXXXXX";
+            textBox6.Text = "XXXXXXXX";
+            textBox7.Text = "128";
+            textBox8.Text = "2,048";
+            label_voltage.Text = "X,XX mV";
+
+
+
+
+
+
+        }
+        private void device_connected()
+        {
+            timer_disconnect.Enabled = true;
+
+            ///////////////////////////////////////////////////////////////////
+            /// TAB "Configuration"
+            ///////////////////////////////////////////////////////////////////
+            button_serialPorts.Text = "Disconnect";
+            label_serialPortStatus.Text = "Connected";
+            label_serialPortStatus.ForeColor = Color.Lime;
+
+            ///////////////////////////////////////////////////////////////////
+            /// TAB "Outputs"
+            ///////////////////////////////////////////////////////////////////
+            button_outputLDO1.Enabled = true;
+            button_outputLDO2.Enabled = true;
+            button_outputLDO3.Enabled = true;
+            button_outputVDCDC1.Enabled = true;
+            button_outputVDCDC2.Enabled = true;
+            button_outputAllOn.Enabled = true;
+            button_outputAllOff.Enabled = true;
+            pictureBox_statusLDO1.Image = Properties.Resources.outputStatusOff;
+            pictureBox_statusLDO2.Image = Properties.Resources.outputStatusOff;
+            pictureBox_statusLDO3.Image = Properties.Resources.outputStatusOff;
+            pictureBox_statusVDCDC1.Image = Properties.Resources.outputStatusOff;
+            pictureBox_statusVDCDC2.Image = Properties.Resources.outputStatusOff;
+
+
+
+            ///////////////////////////////////////////////////////////////////
+            /// TAB "Battery Charger"
+            ///////////////////////////////////////////////////////////////////
+            progressBar1.Value = 50;
+            label_battery.Text = "50%";
+
+
+            ///////////////////////////////////////////////////////////////////
+            /// TAB "About"
+            ///////////////////////////////////////////////////////////////////
+            // do nothing
+
+
+            ///////////////////////////////////////////////////////////////////
+            /// TAB "ADS112C04"
+            ///////////////////////////////////////////////////////////////////
+            textBox_ADS0x40.Text = "00";
+            textBox_ADS0x40.Enabled = true;
+            textBox_ADS0x44.Text = "00";
+            textBox_ADS0x44.Enabled = true;
+            textBox_ADS0x48.Text = "00";
+            textBox_ADS0x48.Enabled = true;
+            textBox_ADS0x4c.Text = "00";
+            textBox_ADS0x4c.Enabled = true;
+
+            button_writeADS.Enabled = true;
+
+
+            textBox4.Text = "00";
+            textBox3.Text = "00";
+            textBox2.Text = "00";
+            textBox1.Text = "00";
+
+            button_readADS.Enabled = true;
+
+            button_readData.Enabled = true;
+
+            textBox5.Text = "XXXXXXXX";
+            textBox6.Text = "XXXXXXXX";
+            textBox7.Text = "128";
+            textBox8.Text = "2,048";
+            label_voltage.Text = "X,XX mV";
+
+
+        }
     }
 }

@@ -99,6 +99,8 @@ namespace Baykeeper_GUI
             this.label_copyright = new System.Windows.Forms.Label();
             this.pictureBox_chipusLogo = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timer_disconnect = new System.Windows.Forms.Timer(this.components);
+            this.label10 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage_config.SuspendLayout();
             this.tabPage_outputs.SuspendLayout();
@@ -142,7 +144,6 @@ namespace Baykeeper_GUI
             // 
             // label_serialPortStatus
             // 
-            this.label_serialPortStatus.AutoSize = true;
             this.label_serialPortStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_serialPortStatus.ForeColor = System.Drawing.Color.Red;
             this.label_serialPortStatus.Location = new System.Drawing.Point(335, 289);
@@ -470,6 +471,7 @@ namespace Baykeeper_GUI
             // 
             // tabPage_about
             // 
+            this.tabPage_about.Controls.Add(this.label10);
             this.tabPage_about.Controls.Add(this.linkLabel_tabAbout);
             this.tabPage_about.Controls.Add(this.label_tabAbout);
             this.tabPage_about.Controls.Add(this.pictureBox_tabAbout);
@@ -483,7 +485,7 @@ namespace Baykeeper_GUI
             // linkLabel_tabAbout
             // 
             this.linkLabel_tabAbout.AutoSize = true;
-            this.linkLabel_tabAbout.Location = new System.Drawing.Point(310, 276);
+            this.linkLabel_tabAbout.Location = new System.Drawing.Point(314, 276);
             this.linkLabel_tabAbout.Name = "linkLabel_tabAbout";
             this.linkLabel_tabAbout.Size = new System.Drawing.Size(140, 13);
             this.linkLabel_tabAbout.TabIndex = 2;
@@ -495,7 +497,7 @@ namespace Baykeeper_GUI
             // label_tabAbout
             // 
             this.label_tabAbout.AutoSize = true;
-            this.label_tabAbout.Location = new System.Drawing.Point(228, 235);
+            this.label_tabAbout.Location = new System.Drawing.Point(237, 240);
             this.label_tabAbout.Name = "label_tabAbout";
             this.label_tabAbout.Size = new System.Drawing.Size(304, 26);
             this.label_tabAbout.TabIndex = 1;
@@ -840,6 +842,21 @@ namespace Baykeeper_GUI
             this.timer1.Interval = 1500;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // timer_disconnect
+            // 
+            this.timer_disconnect.Interval = 1000;
+            this.timer_disconnect.Tick += new System.EventHandler(this.timer_disconnect_Tick);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(333, 309);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(103, 13);
+            this.label10.TabIndex = 3;
+            this.label10.Text = "Author: A. Hoffmann";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -945,6 +962,8 @@ namespace Baykeeper_GUI
         private System.Windows.Forms.Label label_voltage;
         private System.Windows.Forms.TextBox textBox8;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Timer timer_disconnect;
+        private System.Windows.Forms.Label label10;
     }
 }
 

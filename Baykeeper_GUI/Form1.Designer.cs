@@ -37,11 +37,6 @@ namespace Baykeeper_GUI
             this.button_serialPorts = new System.Windows.Forms.Button();
             this.label_serialPorts = new System.Windows.Forms.Label();
             this.tabPage_outputs = new System.Windows.Forms.TabPage();
-            this.label_ADRL = new System.Windows.Forms.Label();
-            this.label_ADRM = new System.Windows.Forms.Label();
-            this.label_ADRH = new System.Windows.Forms.Label();
-            this.button_readI2C = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.button_outputAllOff = new System.Windows.Forms.Button();
             this.button_outputAllOn = new System.Windows.Forms.Button();
             this.label_outputStatus = new System.Windows.Forms.Label();
@@ -64,6 +59,7 @@ namespace Baykeeper_GUI
             this.label_battery = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.tabPage_about = new System.Windows.Forms.TabPage();
+            this.label10 = new System.Windows.Forms.Label();
             this.linkLabel_tabAbout = new System.Windows.Forms.LinkLabel();
             this.label_tabAbout = new System.Windows.Forms.Label();
             this.pictureBox_tabAbout = new System.Windows.Forms.PictureBox();
@@ -100,7 +96,6 @@ namespace Baykeeper_GUI
             this.pictureBox_chipusLogo = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timer_disconnect = new System.Windows.Forms.Timer(this.components);
-            this.label10 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage_config.SuspendLayout();
             this.tabPage_outputs.SuspendLayout();
@@ -177,11 +172,6 @@ namespace Baykeeper_GUI
             // 
             // tabPage_outputs
             // 
-            this.tabPage_outputs.Controls.Add(this.label_ADRL);
-            this.tabPage_outputs.Controls.Add(this.label_ADRM);
-            this.tabPage_outputs.Controls.Add(this.label_ADRH);
-            this.tabPage_outputs.Controls.Add(this.button_readI2C);
-            this.tabPage_outputs.Controls.Add(this.label1);
             this.tabPage_outputs.Controls.Add(this.button_outputAllOff);
             this.tabPage_outputs.Controls.Add(this.button_outputAllOn);
             this.tabPage_outputs.Controls.Add(this.label_outputStatus);
@@ -207,54 +197,6 @@ namespace Baykeeper_GUI
             this.tabPage_outputs.TabIndex = 1;
             this.tabPage_outputs.Text = "Outputs";
             this.tabPage_outputs.UseVisualStyleBackColor = true;
-            // 
-            // label_ADRL
-            // 
-            this.label_ADRL.AutoSize = true;
-            this.label_ADRL.Location = new System.Drawing.Point(72, 416);
-            this.label_ADRL.Name = "label_ADRL";
-            this.label_ADRL.Size = new System.Drawing.Size(116, 13);
-            this.label_ADRL.TabIndex = 22;
-            this.label_ADRL.Text = "ADRL = 0bXXXXXXXX";
-            // 
-            // label_ADRM
-            // 
-            this.label_ADRM.AutoSize = true;
-            this.label_ADRM.Location = new System.Drawing.Point(72, 400);
-            this.label_ADRM.Name = "label_ADRM";
-            this.label_ADRM.Size = new System.Drawing.Size(119, 13);
-            this.label_ADRM.TabIndex = 21;
-            this.label_ADRM.Text = "ADRM = 0bXXXXXXXX";
-            // 
-            // label_ADRH
-            // 
-            this.label_ADRH.AutoSize = true;
-            this.label_ADRH.Location = new System.Drawing.Point(72, 385);
-            this.label_ADRH.Name = "label_ADRH";
-            this.label_ADRH.Size = new System.Drawing.Size(118, 13);
-            this.label_ADRH.TabIndex = 20;
-            this.label_ADRH.Text = "ADRH = 0bXXXXXXXX";
-            // 
-            // button_readI2C
-            // 
-            this.button_readI2C.Location = new System.Drawing.Point(558, 411);
-            this.button_readI2C.Name = "button_readI2C";
-            this.button_readI2C.Size = new System.Drawing.Size(75, 23);
-            this.button_readI2C.TabIndex = 19;
-            this.button_readI2C.Text = "Read I2C";
-            this.button_readI2C.UseVisualStyleBackColor = true;
-            this.button_readI2C.Click += new System.EventHandler(this.button_readI2C_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(538, 437);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(115, 20);
-            this.label1.TabIndex = 18;
-            this.label1.Text = "0bXXXXXXXX";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // button_outputAllOff
             // 
@@ -481,6 +423,16 @@ namespace Baykeeper_GUI
             this.tabPage_about.TabIndex = 2;
             this.tabPage_about.Text = "About";
             this.tabPage_about.UseVisualStyleBackColor = true;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(333, 309);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(103, 13);
+            this.label10.TabIndex = 3;
+            this.label10.Text = "Author: A. Hoffmann";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // linkLabel_tabAbout
             // 
@@ -847,16 +799,6 @@ namespace Baykeeper_GUI
             this.timer_disconnect.Interval = 1000;
             this.timer_disconnect.Tick += new System.EventHandler(this.timer_disconnect_Tick);
             // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(333, 309);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(103, 13);
-            this.label10.TabIndex = 3;
-            this.label10.Text = "Author: A. Hoffmann";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -924,14 +866,9 @@ namespace Baykeeper_GUI
         private System.Windows.Forms.Button button_outputAllOn;
         private System.Windows.Forms.Button button_outputAllOff;
         private System.Windows.Forms.Button button_outputLDO1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button_readI2C;
         private System.Windows.Forms.TabPage tabPage_battery;
         private System.Windows.Forms.Label label_battery;
         private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.Label label_ADRH;
-        private System.Windows.Forms.Label label_ADRL;
-        private System.Windows.Forms.Label label_ADRM;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.TabPage tabPage_ADS112C04;
         private System.Windows.Forms.TextBox textBox1;

@@ -182,6 +182,9 @@ namespace Baykeeper_GUI
         {
             InitializeComponent();
 
+            // Tab do debug Dubbel ADC, removed in this application
+            tabControl1.TabPages.Remove(tabPage_ADS112C04);
+
             device_disconnected();
         }
 
@@ -275,6 +278,7 @@ namespace Baykeeper_GUI
 
         private void linkLabel_tabAbout_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            
             // Specify that the link was visited.
             this.linkLabel_tabAbout.LinkVisited = true;
 
@@ -914,6 +918,17 @@ namespace Baykeeper_GUI
 
             return 0;
         }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

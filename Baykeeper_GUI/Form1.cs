@@ -52,7 +52,8 @@ namespace Baykeeper_GUI
         const byte MSB_RISING_EDGE_CLOCK_BIT_IN = 0x22;
         const byte MSB_FALLING_EDGE_CLOCK_BIT_OUT = 0x13;
         // Clock
-        const uint ClockDivisor = 49;      //          = 199;// for 100KHz
+        //const uint ClockDivisor = 49;  // for 400 kHz // frequency clock divider
+        const uint ClockDivisor = 199;  // for 100 kHz
         // Sending and receiving
         static uint NumBytesToSend = 0;
         static uint NumBytesToRead = 0;
@@ -81,7 +82,10 @@ namespace Baykeeper_GUI
         // ###### Baykeeper defines ######
 
 
-        const byte BKP_ADDRESS = 0xd0;
+        static uint ACKCounter = 0;
+
+
+        const byte BKP_ADDRESS = 0x44;
 
         // COMMAND
         const byte BKP_TASK0 = 0X00;
@@ -569,7 +573,7 @@ namespace Baykeeper_GUI
             if (AppStatus != 0) return 1;
             if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
 
-            AppStatus = I2C_ReadByte(true);                                                 // I2C READ (send Ack)
+            AppStatus = I2C_ReadByte(false);                                                 // I2C READ (send Ack)
             if (AppStatus != 0) return 1;
 
             i2c_return = InputBuffer2[0];                                              // Get the byte read
@@ -1893,6 +1897,194 @@ namespace Baykeeper_GUI
             else
             {
                 return 0;           // there were no bytes to read
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            textBox_i2c_Readback.Text = "";
+            byte i2c_addr = Convert.ToByte(textBox_i2c_SlaveAddr.Text, 16);
+            byte i2c_reg = Convert.ToByte(textBox_i2c_WriteReg.Text, 16);
+            byte i2c_data = Convert.ToByte(textBox_i2c_WriteData.Text, 16);
+
+            byte ack = i2c_write(i2c_addr, i2c_reg, i2c_data);
+            if (ack == 0)
+            {
+                label_i2c_WriteACK.Text = "ACK";
+                label_i2c_WriteACK.ForeColor = Color.Green;
+                byte readback = i2c_read(i2c_addr, i2c_reg);
+                if (readback == 0)
+                {
+                    label_i2c_ReadbackACK.Text = "ACK";
+                    label_i2c_ReadbackACK.ForeColor = Color.Green;
+                    textBox_i2c_Readback.Text = i2c_return.ToString("X").PadLeft(2, '0');
+                }
+                else
+                {
+                    /***** Flush the buffer *****/
+                    I2C_Status = FlushBuffer();
+
+                    textBox_i2c_Readback.Text = "";
+                    label_i2c_ReadbackACK.Text = "Not ACK";
+                    label_i2c_ReadbackACK.ForeColor = Color.Red;
+                }
+
+                
+            }
+            else
+            {
+                /***** Flush the buffer *****/
+                I2C_Status = FlushBuffer();
+
+                label_i2c_WriteACK.Text = "Not ACK";
+                label_i2c_WriteACK.ForeColor = Color.Red;
+            }
+               
+
+
+            
+            
+
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            byte i2c_addr = Convert.ToByte(textBox_i2c_SlaveAddr.Text, 16);
+            byte i2c_reg = Convert.ToByte(textBox_i2c_ReadReg.Text, 16);
+
+
+            //while(true)
+            //{
+                byte ack = i2c_read(i2c_addr, i2c_reg);
+                if (ack == 0)
+                {
+                    label_i2c_ReadACK.Text = "ACK";
+                    label_i2c_ReadACK.ForeColor = Color.Green;
+                    textBox_i2c_ReadData.Text = i2c_return.ToString("X").PadLeft(2, '0');
+                    ACKCounter++;
+                    label_ACKCounter.Text = "ACK Counter: " + ACKCounter.ToString();
+                }
+                else
+                {
+                    /***** Flush the buffer *****/
+                    I2C_Status = FlushBuffer();
+
+                    label_i2c_ReadACK.Text = "Not ACK";
+                    label_i2c_ReadACK.ForeColor = Color.Red;
+                    textBox_i2c_ReadData.Text = "";
+                    ACKCounter = 0;
+                    //break;
+                }
+                if (ACKCounter >= 500)
+                {
+                    ACKCounter = 0;
+                    //break;
+                }
+            //}
+
+        }
+
+        private void button_FG_task_Click(object sender, EventArgs e)
+        {
+            byte i2c_addr = Convert.ToByte(textBox_FGtask_addr.Text, 16);
+            byte i2c_reg = Convert.ToByte(textBox_FGtask_reg.Text, 16);
+            byte i2c_data = Convert.ToByte(textBox_FGtask_data.Text, 16);
+
+            byte ack = i2c_write(i2c_addr, i2c_reg, i2c_data);
+            if (ack == 0)
+            {
+                label20.Text = "ACK";
+                label20.ForeColor = Color.Green;
+                timer_FG.Enabled = true;
+            }
+            else
+            {
+                label20.Text = "Not ACK";
+                label20.ForeColor = Color.Red;
+            }
+            
+            
+        }
+
+        private void timer_FG_Tick(object sender, EventArgs e)
+        {
+            timer_FG.Enabled = false;
+
+            byte i2c_addr = Convert.ToByte(textBox_FGtask_addr.Text, 16);
+            byte i2c_reg = Convert.ToByte(textBox_mode0MSB_reg.Text, 16);
+            byte ack = i2c_read(i2c_addr, i2c_reg);
+            if (ack == 0)
+            {
+                label_mode0MSB_ack.Text = "ACK";
+                label_mode0MSB_ack.ForeColor = Color.Green;
+                textBox_mode0MSB_data.Text = i2c_return.ToString("X").PadLeft(2, '0');
+            }
+            else
+            {
+                label_mode0MSB_ack.Text = "Not ACK";
+                label_mode0MSB_ack.ForeColor = Color.Red;
+                textBox_mode0MSB_data.Text = "";
+            }
+
+            i2c_addr = Convert.ToByte(textBox_FGtask_addr.Text, 16);
+            i2c_reg = Convert.ToByte(textBox_mode0LSB_reg.Text, 16);
+            ack = i2c_read(i2c_addr, i2c_reg);
+            if (ack == 0)
+            {
+                label_mode0LSB_ack.Text = "ACK";
+                label_mode0LSB_ack.ForeColor = Color.Green;
+                textBox_mode0LSB_data.Text = i2c_return.ToString("X").PadLeft(2, '0');
+            }
+            else
+            {
+                label_mode0LSB_ack.Text = "Not ACK";
+                label_mode0LSB_ack.ForeColor = Color.Red;
+                textBox_mode0LSB_data.Text = "";
+            }
+
+            i2c_addr = Convert.ToByte(textBox_FGtask_addr.Text, 16);
+            i2c_reg = Convert.ToByte(textBox_mode1MSB_reg.Text, 16);
+            ack = i2c_read(i2c_addr, i2c_reg);
+            if (ack == 0)
+            {
+                label_mode1MSB_ack.Text = "ACK";
+                label_mode1MSB_ack.ForeColor = Color.Green;
+                textBox_mode1MSB_data.Text = i2c_return.ToString("X").PadLeft(2, '0');
+            }
+            else
+            {
+                label_mode1MSB_ack.Text = "Not ACK";
+                label_mode1MSB_ack.ForeColor = Color.Red;
+                textBox_mode1MSB_data.Text = "";
+            }
+
+            i2c_addr = Convert.ToByte(textBox_FGtask_addr.Text, 16);
+            i2c_reg = Convert.ToByte(textBox_mode1LSB_reg.Text, 16);
+            ack = i2c_read(i2c_addr, i2c_reg);
+            if (ack == 0)
+            {
+                label_mode1LSB_ack.Text = "ACK";
+                label_mode1LSB_ack.ForeColor = Color.Green;
+                textBox_mode1LSB_data.Text = i2c_return.ToString("X").PadLeft(2, '0');
+            }
+            else
+            {
+                label_mode1LSB_ack.Text = "Not ACK";
+                label_mode1LSB_ack.ForeColor = Color.Red;
+                textBox_mode1LSB_data.Text = "";
+            }
+
+
+            i2c_write(i2c_addr, 0x01, 0x00);
+        }
+
+        private void textBox_i2c_WriteData_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                button1.PerformClick();
+
             }
         }
 

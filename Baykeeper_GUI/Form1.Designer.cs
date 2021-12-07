@@ -871,6 +871,7 @@ namespace Baykeeper_GUI
             this.label_ACKCounter.TabIndex = 18;
             this.label_ACKCounter.Text = "ACK Counter: 0";
             this.label_ACKCounter.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.label_ACKCounter.Visible = false;
             // 
             // label_i2c_ReadbackACK
             // 
@@ -905,9 +906,10 @@ namespace Baykeeper_GUI
             // label16
             // 
             this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label16.Location = new System.Drawing.Point(715, 285);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(53, 208);
+            this.label16.Size = new System.Drawing.Size(55, 208);
             this.label16.TabIndex = 14;
             this.label16.Text = "0 - 0000\r\n1 - 0001\r\n2 - 0010\r\n3 - 0011\r\n4 - 0100\r\n5 - 0101\r\n6 - 0110\r\n7 - 0111\r\n8" +
     " - 1000\r\n9 - 1001\r\na - 1010\r\nb - 1011\r\nc - 1100\r\nd - 1101\r\ne - 1110\r\nf - 1111";
@@ -931,6 +933,7 @@ namespace Baykeeper_GUI
             // textBox_i2c_ReadReg
             // 
             this.textBox_i2c_ReadReg.Location = new System.Drawing.Point(551, 108);
+            this.textBox_i2c_ReadReg.MaxLength = 2;
             this.textBox_i2c_ReadReg.Name = "textBox_i2c_ReadReg";
             this.textBox_i2c_ReadReg.Size = new System.Drawing.Size(100, 20);
             this.textBox_i2c_ReadReg.TabIndex = 11;
@@ -938,16 +941,19 @@ namespace Baykeeper_GUI
             // 
             // textBox_i2c_WriteData
             // 
+            this.textBox_i2c_WriteData.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBox_i2c_WriteData.Location = new System.Drawing.Point(180, 134);
+            this.textBox_i2c_WriteData.MaxLength = 8;
             this.textBox_i2c_WriteData.Name = "textBox_i2c_WriteData";
             this.textBox_i2c_WriteData.Size = new System.Drawing.Size(100, 20);
             this.textBox_i2c_WriteData.TabIndex = 10;
-            this.textBox_i2c_WriteData.Text = "00";
+            this.textBox_i2c_WriteData.Text = "00000000";
             this.textBox_i2c_WriteData.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_i2c_WriteData_KeyDown);
             // 
             // textBox_i2c_WriteReg
             // 
             this.textBox_i2c_WriteReg.Location = new System.Drawing.Point(180, 108);
+            this.textBox_i2c_WriteReg.MaxLength = 2;
             this.textBox_i2c_WriteReg.Name = "textBox_i2c_WriteReg";
             this.textBox_i2c_WriteReg.Size = new System.Drawing.Size(100, 20);
             this.textBox_i2c_WriteReg.TabIndex = 9;
@@ -956,6 +962,7 @@ namespace Baykeeper_GUI
             // textBox_i2c_SlaveAddr
             // 
             this.textBox_i2c_SlaveAddr.Location = new System.Drawing.Point(180, 82);
+            this.textBox_i2c_SlaveAddr.MaxLength = 2;
             this.textBox_i2c_SlaveAddr.Name = "textBox_i2c_SlaveAddr";
             this.textBox_i2c_SlaveAddr.Size = new System.Drawing.Size(100, 20);
             this.textBox_i2c_SlaveAddr.TabIndex = 8;
@@ -986,9 +993,9 @@ namespace Baykeeper_GUI
             this.label15.AutoSize = true;
             this.label15.Location = new System.Drawing.Point(490, 141);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(55, 13);
+            this.label15.Size = new System.Drawing.Size(56, 13);
             this.label15.TabIndex = 5;
-            this.label15.Text = "Data (0x):";
+            this.label15.Text = "Data (0b):";
             // 
             // label14
             // 
@@ -1013,9 +1020,9 @@ namespace Baykeeper_GUI
             this.label12.AutoSize = true;
             this.label12.Location = new System.Drawing.Point(119, 141);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(55, 13);
+            this.label12.Size = new System.Drawing.Size(56, 13);
             this.label12.TabIndex = 2;
-            this.label12.Text = "Data (0x):";
+            this.label12.Text = "Data (0b):";
             // 
             // label11
             // 

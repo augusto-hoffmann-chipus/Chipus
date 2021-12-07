@@ -819,6 +819,247 @@ namespace Baykeeper_GUI
 
         }
 
+        //###################################################################################################################################
+        // Write button on I2C tab
+        private void button1_Click(object sender, EventArgs e)
+        {
+            textBox_i2c_Readback.Text = "";
+
+            byte i2c_addr = 0x00;
+            byte i2c_reg = 0x00;
+            byte i2c_data = 0x00;
+
+            try
+            {
+                i2c_addr = Convert.ToByte(textBox_i2c_SlaveAddr.Text, 16);
+            }
+            catch
+            {
+                // error message
+                MessageBox.Show("Please insert a valid slave address.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                textBox_i2c_SlaveAddr.Text = "00";
+                return;
+            }
+
+            try
+            {
+                i2c_reg = Convert.ToByte(textBox_i2c_WriteReg.Text, 16);
+            }
+            catch
+            {
+                // error message
+                MessageBox.Show("Please insert a valid register address.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                textBox_i2c_WriteReg.Text = "00";
+                return;
+            }
+
+            try
+            {
+                i2c_data = Convert.ToByte(textBox_i2c_WriteData.Text, 2);
+            }
+            catch
+            {
+                // error message
+                MessageBox.Show("Please insert a valid data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                textBox_i2c_WriteData.Text = "00000000";
+                return;
+            }
+
+
+
+
+            byte ack = i2c_write(i2c_addr, i2c_reg, i2c_data);
+
+
+            if (ack == 0)
+            {
+                label_i2c_WriteACK.Text = "ACK";
+                label_i2c_WriteACK.ForeColor = Color.Green;
+                byte readback = i2c_read(i2c_addr, i2c_reg);
+                if (readback == 0)
+                {
+                    label_i2c_ReadbackACK.Text = "ACK";
+                    label_i2c_ReadbackACK.ForeColor = Color.Green;
+                    textBox_i2c_Readback.Text = i2c_return.ToString("X").PadLeft(2, '0');
+                }
+                else
+                {
+                    /***** Flush the buffer *****/
+                    I2C_Status = FlushBuffer();
+
+                    textBox_i2c_Readback.Text = "";
+                    label_i2c_ReadbackACK.Text = "Not ACK";
+                    label_i2c_ReadbackACK.ForeColor = Color.Red;
+                }
+
+
+            }
+            else
+            {
+                /***** Flush the buffer *****/
+                I2C_Status = FlushBuffer();
+
+                label_i2c_WriteACK.Text = "Not ACK";
+                label_i2c_WriteACK.ForeColor = Color.Red;
+            }
+
+
+
+
+
+
+
+        }
+
+        //###################################################################################################################################
+        // Read button on I2C tab
+        private void button2_Click(object sender, EventArgs e)
+        {
+            byte i2c_addr = Convert.ToByte(textBox_i2c_SlaveAddr.Text, 16);
+            byte i2c_reg = Convert.ToByte(textBox_i2c_ReadReg.Text, 16);
+
+
+            //while(true)
+            //{
+            byte ack = i2c_read(i2c_addr, i2c_reg);
+            if (ack == 0)
+            {
+                label_i2c_ReadACK.Text = "ACK";
+                label_i2c_ReadACK.ForeColor = Color.Green;
+                textBox_i2c_ReadData.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
+                ACKCounter++;
+                label_ACKCounter.Text = "ACK Counter: " + ACKCounter.ToString();
+            }
+            else
+            {
+                /***** Flush the buffer *****/
+                I2C_Status = FlushBuffer();
+
+                label_i2c_ReadACK.Text = "Not ACK";
+                label_i2c_ReadACK.ForeColor = Color.Red;
+                textBox_i2c_ReadData.Text = "";
+                ACKCounter = 0;
+                //break;
+            }
+            if (ACKCounter >= 500)
+            {
+                ACKCounter = 0;
+                //break;
+            }
+            //}
+
+        }
+        
+        
+        //###################################################################################################################################
+        // 10 ms timer for FG task
+        private void button_FG_task_Click(object sender, EventArgs e)
+        {
+            byte i2c_addr = Convert.ToByte(textBox_FGtask_addr.Text, 16);
+            byte i2c_reg = Convert.ToByte(textBox_FGtask_reg.Text, 16);
+            byte i2c_data = Convert.ToByte(textBox_FGtask_data.Text, 16);
+
+            byte ack = i2c_write(i2c_addr, i2c_reg, i2c_data);
+            if (ack == 0)
+            {
+                label20.Text = "ACK";
+                label20.ForeColor = Color.Green;
+                timer_FG.Enabled = true;
+            }
+            else
+            {
+                label20.Text = "Not ACK";
+                label20.ForeColor = Color.Red;
+            }
+
+
+        }
+
+        //###################################################################################################################################
+        // Button to run FG task
+        private void timer_FG_Tick(object sender, EventArgs e)
+        {
+            timer_FG.Enabled = false;
+
+            byte i2c_addr = Convert.ToByte(textBox_FGtask_addr.Text, 16);
+            byte i2c_reg = Convert.ToByte(textBox_mode0MSB_reg.Text, 16);
+            byte ack = i2c_read(i2c_addr, i2c_reg);
+            if (ack == 0)
+            {
+                label_mode0MSB_ack.Text = "ACK";
+                label_mode0MSB_ack.ForeColor = Color.Green;
+                textBox_mode0MSB_data.Text = i2c_return.ToString("X").PadLeft(2, '0');
+            }
+            else
+            {
+                label_mode0MSB_ack.Text = "Not ACK";
+                label_mode0MSB_ack.ForeColor = Color.Red;
+                textBox_mode0MSB_data.Text = "";
+            }
+
+            i2c_addr = Convert.ToByte(textBox_FGtask_addr.Text, 16);
+            i2c_reg = Convert.ToByte(textBox_mode0LSB_reg.Text, 16);
+            ack = i2c_read(i2c_addr, i2c_reg);
+            if (ack == 0)
+            {
+                label_mode0LSB_ack.Text = "ACK";
+                label_mode0LSB_ack.ForeColor = Color.Green;
+                textBox_mode0LSB_data.Text = i2c_return.ToString("X").PadLeft(2, '0');
+            }
+            else
+            {
+                label_mode0LSB_ack.Text = "Not ACK";
+                label_mode0LSB_ack.ForeColor = Color.Red;
+                textBox_mode0LSB_data.Text = "";
+            }
+
+            i2c_addr = Convert.ToByte(textBox_FGtask_addr.Text, 16);
+            i2c_reg = Convert.ToByte(textBox_mode1MSB_reg.Text, 16);
+            ack = i2c_read(i2c_addr, i2c_reg);
+            if (ack == 0)
+            {
+                label_mode1MSB_ack.Text = "ACK";
+                label_mode1MSB_ack.ForeColor = Color.Green;
+                textBox_mode1MSB_data.Text = i2c_return.ToString("X").PadLeft(2, '0');
+            }
+            else
+            {
+                label_mode1MSB_ack.Text = "Not ACK";
+                label_mode1MSB_ack.ForeColor = Color.Red;
+                textBox_mode1MSB_data.Text = "";
+            }
+
+            i2c_addr = Convert.ToByte(textBox_FGtask_addr.Text, 16);
+            i2c_reg = Convert.ToByte(textBox_mode1LSB_reg.Text, 16);
+            ack = i2c_read(i2c_addr, i2c_reg);
+            if (ack == 0)
+            {
+                label_mode1LSB_ack.Text = "ACK";
+                label_mode1LSB_ack.ForeColor = Color.Green;
+                textBox_mode1LSB_data.Text = i2c_return.ToString("X").PadLeft(2, '0');
+            }
+            else
+            {
+                label_mode1LSB_ack.Text = "Not ACK";
+                label_mode1LSB_ack.ForeColor = Color.Red;
+                textBox_mode1LSB_data.Text = "";
+            }
+
+
+            i2c_write(i2c_addr, 0x01, 0x00);
+        }
+
+        //###################################################################################################################################
+        // Run Write button on I2C tab if press enter
+        private void textBox_i2c_WriteData_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                button1.PerformClick();
+
+            }
+        }
+
 
         //###################################################################################################################################
         // Configure itens in all tabs when device is connected
@@ -1900,193 +2141,7 @@ namespace Baykeeper_GUI
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            textBox_i2c_Readback.Text = "";
-            byte i2c_addr = Convert.ToByte(textBox_i2c_SlaveAddr.Text, 16);
-            byte i2c_reg = Convert.ToByte(textBox_i2c_WriteReg.Text, 16);
-            byte i2c_data = Convert.ToByte(textBox_i2c_WriteData.Text, 16);
 
-            byte ack = i2c_write(i2c_addr, i2c_reg, i2c_data);
-            if (ack == 0)
-            {
-                label_i2c_WriteACK.Text = "ACK";
-                label_i2c_WriteACK.ForeColor = Color.Green;
-                byte readback = i2c_read(i2c_addr, i2c_reg);
-                if (readback == 0)
-                {
-                    label_i2c_ReadbackACK.Text = "ACK";
-                    label_i2c_ReadbackACK.ForeColor = Color.Green;
-                    textBox_i2c_Readback.Text = i2c_return.ToString("X").PadLeft(2, '0');
-                }
-                else
-                {
-                    /***** Flush the buffer *****/
-                    I2C_Status = FlushBuffer();
-
-                    textBox_i2c_Readback.Text = "";
-                    label_i2c_ReadbackACK.Text = "Not ACK";
-                    label_i2c_ReadbackACK.ForeColor = Color.Red;
-                }
-
-                
-            }
-            else
-            {
-                /***** Flush the buffer *****/
-                I2C_Status = FlushBuffer();
-
-                label_i2c_WriteACK.Text = "Not ACK";
-                label_i2c_WriteACK.ForeColor = Color.Red;
-            }
-               
-
-
-            
-            
-
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            byte i2c_addr = Convert.ToByte(textBox_i2c_SlaveAddr.Text, 16);
-            byte i2c_reg = Convert.ToByte(textBox_i2c_ReadReg.Text, 16);
-
-
-            //while(true)
-            //{
-                byte ack = i2c_read(i2c_addr, i2c_reg);
-                if (ack == 0)
-                {
-                    label_i2c_ReadACK.Text = "ACK";
-                    label_i2c_ReadACK.ForeColor = Color.Green;
-                    textBox_i2c_ReadData.Text = i2c_return.ToString("X").PadLeft(2, '0');
-                    ACKCounter++;
-                    label_ACKCounter.Text = "ACK Counter: " + ACKCounter.ToString();
-                }
-                else
-                {
-                    /***** Flush the buffer *****/
-                    I2C_Status = FlushBuffer();
-
-                    label_i2c_ReadACK.Text = "Not ACK";
-                    label_i2c_ReadACK.ForeColor = Color.Red;
-                    textBox_i2c_ReadData.Text = "";
-                    ACKCounter = 0;
-                    //break;
-                }
-                if (ACKCounter >= 500)
-                {
-                    ACKCounter = 0;
-                    //break;
-                }
-            //}
-
-        }
-
-        private void button_FG_task_Click(object sender, EventArgs e)
-        {
-            byte i2c_addr = Convert.ToByte(textBox_FGtask_addr.Text, 16);
-            byte i2c_reg = Convert.ToByte(textBox_FGtask_reg.Text, 16);
-            byte i2c_data = Convert.ToByte(textBox_FGtask_data.Text, 16);
-
-            byte ack = i2c_write(i2c_addr, i2c_reg, i2c_data);
-            if (ack == 0)
-            {
-                label20.Text = "ACK";
-                label20.ForeColor = Color.Green;
-                timer_FG.Enabled = true;
-            }
-            else
-            {
-                label20.Text = "Not ACK";
-                label20.ForeColor = Color.Red;
-            }
-            
-            
-        }
-
-        private void timer_FG_Tick(object sender, EventArgs e)
-        {
-            timer_FG.Enabled = false;
-
-            byte i2c_addr = Convert.ToByte(textBox_FGtask_addr.Text, 16);
-            byte i2c_reg = Convert.ToByte(textBox_mode0MSB_reg.Text, 16);
-            byte ack = i2c_read(i2c_addr, i2c_reg);
-            if (ack == 0)
-            {
-                label_mode0MSB_ack.Text = "ACK";
-                label_mode0MSB_ack.ForeColor = Color.Green;
-                textBox_mode0MSB_data.Text = i2c_return.ToString("X").PadLeft(2, '0');
-            }
-            else
-            {
-                label_mode0MSB_ack.Text = "Not ACK";
-                label_mode0MSB_ack.ForeColor = Color.Red;
-                textBox_mode0MSB_data.Text = "";
-            }
-
-            i2c_addr = Convert.ToByte(textBox_FGtask_addr.Text, 16);
-            i2c_reg = Convert.ToByte(textBox_mode0LSB_reg.Text, 16);
-            ack = i2c_read(i2c_addr, i2c_reg);
-            if (ack == 0)
-            {
-                label_mode0LSB_ack.Text = "ACK";
-                label_mode0LSB_ack.ForeColor = Color.Green;
-                textBox_mode0LSB_data.Text = i2c_return.ToString("X").PadLeft(2, '0');
-            }
-            else
-            {
-                label_mode0LSB_ack.Text = "Not ACK";
-                label_mode0LSB_ack.ForeColor = Color.Red;
-                textBox_mode0LSB_data.Text = "";
-            }
-
-            i2c_addr = Convert.ToByte(textBox_FGtask_addr.Text, 16);
-            i2c_reg = Convert.ToByte(textBox_mode1MSB_reg.Text, 16);
-            ack = i2c_read(i2c_addr, i2c_reg);
-            if (ack == 0)
-            {
-                label_mode1MSB_ack.Text = "ACK";
-                label_mode1MSB_ack.ForeColor = Color.Green;
-                textBox_mode1MSB_data.Text = i2c_return.ToString("X").PadLeft(2, '0');
-            }
-            else
-            {
-                label_mode1MSB_ack.Text = "Not ACK";
-                label_mode1MSB_ack.ForeColor = Color.Red;
-                textBox_mode1MSB_data.Text = "";
-            }
-
-            i2c_addr = Convert.ToByte(textBox_FGtask_addr.Text, 16);
-            i2c_reg = Convert.ToByte(textBox_mode1LSB_reg.Text, 16);
-            ack = i2c_read(i2c_addr, i2c_reg);
-            if (ack == 0)
-            {
-                label_mode1LSB_ack.Text = "ACK";
-                label_mode1LSB_ack.ForeColor = Color.Green;
-                textBox_mode1LSB_data.Text = i2c_return.ToString("X").PadLeft(2, '0');
-            }
-            else
-            {
-                label_mode1LSB_ack.Text = "Not ACK";
-                label_mode1LSB_ack.ForeColor = Color.Red;
-                textBox_mode1LSB_data.Text = "";
-            }
-
-
-            i2c_write(i2c_addr, 0x01, 0x00);
-        }
-
-        private void textBox_i2c_WriteData_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                button1.PerformClick();
-
-            }
-        }
 
         //###################################################################################################################################
         //##################                                     End of D2xx Layer                                      #####################

@@ -875,21 +875,26 @@ namespace Baykeeper_GUI
             {
                 label_i2c_WriteACK.Text = "ACK";
                 label_i2c_WriteACK.ForeColor = Color.Green;
-                byte readback = i2c_read(i2c_addr, i2c_reg);
-                if (readback == 0)
-                {
-                    label_i2c_ReadbackACK.Text = "ACK";
-                    label_i2c_ReadbackACK.ForeColor = Color.Green;
-                    textBox_i2c_Readback.Text = i2c_return.ToString("X").PadLeft(2, '0');
-                }
-                else
-                {
-                    /***** Flush the buffer *****/
-                    I2C_Status = FlushBuffer();
 
-                    textBox_i2c_Readback.Text = "";
-                    label_i2c_ReadbackACK.Text = "Not ACK";
-                    label_i2c_ReadbackACK.ForeColor = Color.Red;
+                if (checkBox_readback.Checked)
+                {
+
+                    byte readback = i2c_read(i2c_addr, i2c_reg);
+                    if (readback == 0)
+                    {
+                        label_i2c_ReadbackACK.Text = "ACK";
+                        label_i2c_ReadbackACK.ForeColor = Color.Green;
+                        textBox_i2c_Readback.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
+                    }
+                    else
+                    {
+                        /***** Flush the buffer *****/
+                        I2C_Status = FlushBuffer();
+
+                        textBox_i2c_Readback.Text = "";
+                        label_i2c_ReadbackACK.Text = "Not ACK";
+                        label_i2c_ReadbackACK.ForeColor = Color.Red;
+                    }
                 }
 
 
@@ -901,6 +906,10 @@ namespace Baykeeper_GUI
 
                 label_i2c_WriteACK.Text = "Not ACK";
                 label_i2c_WriteACK.ForeColor = Color.Red;
+
+                label_i2c_ReadbackACK.Text = "---";
+                label_i2c_ReadbackACK.ForeColor = Color.Black;
+                textBox_i2c_Readback.Text = "";
             }
 
 
@@ -2138,6 +2147,29 @@ namespace Baykeeper_GUI
             else
             {
                 return 0;           // there were no bytes to read
+            }
+        }
+
+        private void checkBox_readback_CheckedChanged(object sender, EventArgs e)
+        {
+            textBox_i2c_Readback.Text = "";
+            label_i2c_ReadbackACK.Text = "---";
+            label_i2c_ReadbackACK.ForeColor = Color.Black;
+        }
+
+        private void textBox_i2c_ReadReg_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                button2.PerformClick();
+            }
+        }
+
+        private void textBox_i2c_WriteReg_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                button1.PerformClick();
             }
         }
 

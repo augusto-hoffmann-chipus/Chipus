@@ -108,7 +108,6 @@ namespace Baykeeper_GUI
             this.button1 = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -147,6 +146,7 @@ namespace Baykeeper_GUI
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timer_disconnect = new System.Windows.Forms.Timer(this.components);
             this.timer_FG = new System.Windows.Forms.Timer(this.components);
+            this.checkBox_readback = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage_config.SuspendLayout();
             this.tabPage_outputs.SuspendLayout();
@@ -836,6 +836,7 @@ namespace Baykeeper_GUI
             // 
             // tabPage_i2c
             // 
+            this.tabPage_i2c.Controls.Add(this.checkBox_readback);
             this.tabPage_i2c.Controls.Add(this.label_ACKCounter);
             this.tabPage_i2c.Controls.Add(this.label_i2c_ReadbackACK);
             this.tabPage_i2c.Controls.Add(this.label_i2c_ReadACK);
@@ -851,7 +852,6 @@ namespace Baykeeper_GUI
             this.tabPage_i2c.Controls.Add(this.button1);
             this.tabPage_i2c.Controls.Add(this.label15);
             this.tabPage_i2c.Controls.Add(this.label14);
-            this.tabPage_i2c.Controls.Add(this.label13);
             this.tabPage_i2c.Controls.Add(this.label12);
             this.tabPage_i2c.Controls.Add(this.label11);
             this.tabPage_i2c.Controls.Add(this.label1);
@@ -875,32 +875,32 @@ namespace Baykeeper_GUI
             // 
             // label_i2c_ReadbackACK
             // 
-            this.label_i2c_ReadbackACK.ForeColor = System.Drawing.Color.Red;
-            this.label_i2c_ReadbackACK.Location = new System.Drawing.Point(206, 289);
+            this.label_i2c_ReadbackACK.ForeColor = System.Drawing.Color.Black;
+            this.label_i2c_ReadbackACK.Location = new System.Drawing.Point(206, 229);
             this.label_i2c_ReadbackACK.Name = "label_i2c_ReadbackACK";
             this.label_i2c_ReadbackACK.Size = new System.Drawing.Size(74, 13);
             this.label_i2c_ReadbackACK.TabIndex = 17;
-            this.label_i2c_ReadbackACK.Text = "Not ACK";
+            this.label_i2c_ReadbackACK.Text = "---";
             this.label_i2c_ReadbackACK.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label_i2c_ReadACK
             // 
-            this.label_i2c_ReadACK.ForeColor = System.Drawing.Color.Red;
+            this.label_i2c_ReadACK.ForeColor = System.Drawing.Color.Black;
             this.label_i2c_ReadACK.Location = new System.Drawing.Point(593, 190);
             this.label_i2c_ReadACK.Name = "label_i2c_ReadACK";
             this.label_i2c_ReadACK.Size = new System.Drawing.Size(57, 13);
             this.label_i2c_ReadACK.TabIndex = 16;
-            this.label_i2c_ReadACK.Text = "Not ACK";
+            this.label_i2c_ReadACK.Text = "---";
             this.label_i2c_ReadACK.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label_i2c_WriteACK
             // 
-            this.label_i2c_WriteACK.ForeColor = System.Drawing.Color.Red;
+            this.label_i2c_WriteACK.ForeColor = System.Drawing.Color.Black;
             this.label_i2c_WriteACK.Location = new System.Drawing.Point(205, 190);
             this.label_i2c_WriteACK.Name = "label_i2c_WriteACK";
             this.label_i2c_WriteACK.Size = new System.Drawing.Size(74, 13);
             this.label_i2c_WriteACK.TabIndex = 15;
-            this.label_i2c_WriteACK.Text = "Not ACK";
+            this.label_i2c_WriteACK.Text = "---";
             this.label_i2c_WriteACK.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label16
@@ -917,7 +917,8 @@ namespace Baykeeper_GUI
             // textBox_i2c_Readback
             // 
             this.textBox_i2c_Readback.Enabled = false;
-            this.textBox_i2c_Readback.Location = new System.Drawing.Point(180, 266);
+            this.textBox_i2c_Readback.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_i2c_Readback.Location = new System.Drawing.Point(180, 206);
             this.textBox_i2c_Readback.Name = "textBox_i2c_Readback";
             this.textBox_i2c_Readback.Size = new System.Drawing.Size(100, 20);
             this.textBox_i2c_Readback.TabIndex = 13;
@@ -925,6 +926,7 @@ namespace Baykeeper_GUI
             // textBox_i2c_ReadData
             // 
             this.textBox_i2c_ReadData.Enabled = false;
+            this.textBox_i2c_ReadData.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox_i2c_ReadData.Location = new System.Drawing.Point(551, 134);
             this.textBox_i2c_ReadData.Name = "textBox_i2c_ReadData";
             this.textBox_i2c_ReadData.Size = new System.Drawing.Size(100, 20);
@@ -932,16 +934,19 @@ namespace Baykeeper_GUI
             // 
             // textBox_i2c_ReadReg
             // 
+            this.textBox_i2c_ReadReg.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox_i2c_ReadReg.Location = new System.Drawing.Point(551, 108);
             this.textBox_i2c_ReadReg.MaxLength = 2;
             this.textBox_i2c_ReadReg.Name = "textBox_i2c_ReadReg";
             this.textBox_i2c_ReadReg.Size = new System.Drawing.Size(100, 20);
             this.textBox_i2c_ReadReg.TabIndex = 11;
             this.textBox_i2c_ReadReg.Text = "00";
+            this.textBox_i2c_ReadReg.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_i2c_ReadReg_KeyDown);
             // 
             // textBox_i2c_WriteData
             // 
             this.textBox_i2c_WriteData.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.textBox_i2c_WriteData.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox_i2c_WriteData.Location = new System.Drawing.Point(180, 134);
             this.textBox_i2c_WriteData.MaxLength = 8;
             this.textBox_i2c_WriteData.Name = "textBox_i2c_WriteData";
@@ -952,15 +957,18 @@ namespace Baykeeper_GUI
             // 
             // textBox_i2c_WriteReg
             // 
+            this.textBox_i2c_WriteReg.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox_i2c_WriteReg.Location = new System.Drawing.Point(180, 108);
             this.textBox_i2c_WriteReg.MaxLength = 2;
             this.textBox_i2c_WriteReg.Name = "textBox_i2c_WriteReg";
             this.textBox_i2c_WriteReg.Size = new System.Drawing.Size(100, 20);
             this.textBox_i2c_WriteReg.TabIndex = 9;
             this.textBox_i2c_WriteReg.Text = "00";
+            this.textBox_i2c_WriteReg.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_i2c_WriteReg_KeyDown);
             // 
             // textBox_i2c_SlaveAddr
             // 
+            this.textBox_i2c_SlaveAddr.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox_i2c_SlaveAddr.Location = new System.Drawing.Point(180, 82);
             this.textBox_i2c_SlaveAddr.MaxLength = 2;
             this.textBox_i2c_SlaveAddr.Name = "textBox_i2c_SlaveAddr";
@@ -1005,15 +1013,6 @@ namespace Baykeeper_GUI
             this.label14.Size = new System.Drawing.Size(75, 13);
             this.label14.TabIndex = 4;
             this.label14.Text = "Register (0x):";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(91, 273);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(83, 13);
-            this.label13.TabIndex = 3;
-            this.label13.Text = "Readback (0x):";
             // 
             // label12
             // 
@@ -1380,6 +1379,19 @@ namespace Baykeeper_GUI
             this.timer_FG.Interval = 10;
             this.timer_FG.Tick += new System.EventHandler(this.timer_FG_Tick);
             // 
+            // checkBox_readback
+            // 
+            this.checkBox_readback.Checked = true;
+            this.checkBox_readback.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_readback.Location = new System.Drawing.Point(72, 209);
+            this.checkBox_readback.Name = "checkBox_readback";
+            this.checkBox_readback.Size = new System.Drawing.Size(103, 17);
+            this.checkBox_readback.TabIndex = 19;
+            this.checkBox_readback.Text = "Readback (0b):";
+            this.checkBox_readback.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.checkBox_readback.UseVisualStyleBackColor = true;
+            this.checkBox_readback.CheckedChanged += new System.EventHandler(this.checkBox_readback_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1497,7 +1509,6 @@ namespace Baykeeper_GUI
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label1;
@@ -1538,6 +1549,7 @@ namespace Baykeeper_GUI
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Timer timer_FG;
+        private System.Windows.Forms.CheckBox checkBox_readback;
     }
 }
 

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Deployment.Application;
 using System.Drawing;
 using System.IO.Ports;
 using System.Linq;
@@ -182,16 +183,25 @@ namespace Baykeeper_GUI
         // Create new instance of the FTDI device class
         FTDI myFtdiDevice = new FTDI();
 
+
+
+
         public Form1()
         {
-            InitializeComponent();
+            InitializeComponent(); 
+            if (ApplicationDeployment.IsNetworkDeployed)
+            {
+                this.Text = string.Format("Chipus - Baykeeper GUI (" +
+                    ApplicationDeployment.CurrentDeployment.CurrentVersion) + ")";
+            }
+
+
 
             // Tab do debug Dubbel ADC, removed in this application
             tabControl1.TabPages.Remove(tabPage_ADS112C04);
 
             device_disconnected();
         }
-
 
 
         ///////////////////////////////////// Form Events /////////////////////////////////////////
@@ -1068,6 +1078,37 @@ namespace Baykeeper_GUI
 
             }
         }
+
+        //###################################################################################################################################
+        // Checkbox state
+        private void checkBox_readback_CheckedChanged(object sender, EventArgs e)
+        {
+            textBox_i2c_Readback.Text = "";
+            label_i2c_ReadbackACK.Text = "---";
+            label_i2c_ReadbackACK.ForeColor = Color.Black;
+        }
+
+        //###################################################################################################################################
+        // Run Read button on I2C tab if press enter
+        private void textBox_i2c_ReadReg_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                button2.PerformClick();
+            }
+        }
+
+        //###################################################################################################################################
+        // Run Write button on I2C tab if press enter
+        private void textBox_i2c_WriteReg_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                button1.PerformClick();
+            }
+        }
+
+
 
 
         //###################################################################################################################################
@@ -2149,30 +2190,6 @@ namespace Baykeeper_GUI
                 return 0;           // there were no bytes to read
             }
         }
-
-        private void checkBox_readback_CheckedChanged(object sender, EventArgs e)
-        {
-            textBox_i2c_Readback.Text = "";
-            label_i2c_ReadbackACK.Text = "---";
-            label_i2c_ReadbackACK.ForeColor = Color.Black;
-        }
-
-        private void textBox_i2c_ReadReg_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                button2.PerformClick();
-            }
-        }
-
-        private void textBox_i2c_WriteReg_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                button1.PerformClick();
-            }
-        }
-
 
 
         //###################################################################################################################################

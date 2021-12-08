@@ -1404,7 +1404,7 @@ namespace Baykeeper_GUI
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = "Chipus - Baykeeper GUI";
+            this.Text = "Chipus - Baykeeper GUI (x.x.x.x)";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.tabControl1.ResumeLayout(false);
             this.tabPage_config.ResumeLayout(false);

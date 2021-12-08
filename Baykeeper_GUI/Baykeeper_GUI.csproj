@@ -28,7 +28,7 @@
     <ProductName>Baykeeper GUI</ProductName>
     <PublisherName>Chipus Microelectronics</PublisherName>
     <SuiteName>Chipus Microelectronics</SuiteName>
-    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationRevision>6</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>

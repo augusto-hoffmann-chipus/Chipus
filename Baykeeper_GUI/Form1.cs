@@ -1797,22 +1797,47 @@ namespace Baykeeper_GUI
                 MPSSEbuffer[NumBytesToSend++] = ADbusDir;	// Set direction
             }
 
-            // SDA lo, SCL high
-            ADbusVal = (byte)(0x00 | I2C_Data_SDAlo_SCLhi | (GPIO_Low_Dat & 0xF8));
-
-            for (Count = 0; Count < 6; Count++)	// Repeat commands to ensure the minimum period of the start setup time ie 600ns is achieved
+            for (Count = 0; Count < 6; Count++)
             {
                 MPSSEbuffer[NumBytesToSend++] = 0x80;	    // ADbus GPIO command
                 MPSSEbuffer[NumBytesToSend++] = ADbusVal;   // Set data value
                 MPSSEbuffer[NumBytesToSend++] = ADbusDir;	// Set direction
             }
 
+            for (Count = 0; Count < 6; Count++)
+            {
+                MPSSEbuffer[NumBytesToSend++] = 0x80;	    // ADbus GPIO command
+                MPSSEbuffer[NumBytesToSend++] = ADbusVal;   // Set data value
+                MPSSEbuffer[NumBytesToSend++] = ADbusDir;	// Set direction
+            }
+
+
+
+
+
+            // SDA lo, SCL high
+            ADbusVal = (byte)(0x00 | I2C_Data_SDAlo_SCLhi | (GPIO_Low_Dat & 0xF8));
+
+            //for (Count = 0; Count < 6; Count++)    // Repeat commands to ensure the minimum period of the start setup time ie 600ns is achieved
+            for (Count = 0; Count < 18; Count++)    // counter increased to work with Baykeeper - A. Hoffmann
+            {
+                MPSSEbuffer[NumBytesToSend++] = 0x80;	    // ADbus GPIO command
+                MPSSEbuffer[NumBytesToSend++] = ADbusVal;   // Set data value
+                MPSSEbuffer[NumBytesToSend++] = ADbusDir;	// Set direction
+            }
+
+
+
+
+
             // SDA lo, SCL lo
             ADbusVal = (byte)(0x00 | I2C_Data_SDAlo_SCLlo | (GPIO_Low_Dat & 0xF8));
 
-            for (Count = 0; Count < 6; Count++)	// Repeat commands to ensure the minimum period of the start setup time ie 600ns is achieved
-            {
-                MPSSEbuffer[NumBytesToSend++] = 0x80;	    // ADbus GPIO command
+            //for (Count = 0; Count < 6; Count++)    // Repeat commands to ensure the minimum period of the start setup time ie 600ns is achieved
+            for (Count = 0; Count < 18; Count++)    // counter increased to work with Baykeeper - A. Hoffmann
+
+                {
+                    MPSSEbuffer[NumBytesToSend++] = 0x80;	    // ADbus GPIO command
                 MPSSEbuffer[NumBytesToSend++] = ADbusVal;   // Set data value
                 MPSSEbuffer[NumBytesToSend++] = ADbusDir;	// Set direction
             }

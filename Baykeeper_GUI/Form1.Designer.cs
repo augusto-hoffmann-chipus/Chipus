@@ -93,6 +93,7 @@ namespace Baykeeper_GUI
             this.label_tabAbout = new System.Windows.Forms.Label();
             this.pictureBox_tabAbout = new System.Windows.Forms.PictureBox();
             this.tabPage_i2c = new System.Windows.Forms.TabPage();
+            this.checkBox_readback = new System.Windows.Forms.CheckBox();
             this.label_ACKCounter = new System.Windows.Forms.Label();
             this.label_i2c_ReadbackACK = new System.Windows.Forms.Label();
             this.label_i2c_ReadACK = new System.Windows.Forms.Label();
@@ -146,7 +147,6 @@ namespace Baykeeper_GUI
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timer_disconnect = new System.Windows.Forms.Timer(this.components);
             this.timer_FG = new System.Windows.Forms.Timer(this.components);
-            this.checkBox_readback = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage_config.SuspendLayout();
             this.tabPage_outputs.SuspendLayout();
@@ -862,6 +862,19 @@ namespace Baykeeper_GUI
             this.tabPage_i2c.Text = "I2C";
             this.tabPage_i2c.UseVisualStyleBackColor = true;
             // 
+            // checkBox_readback
+            // 
+            this.checkBox_readback.Checked = true;
+            this.checkBox_readback.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_readback.Location = new System.Drawing.Point(72, 209);
+            this.checkBox_readback.Name = "checkBox_readback";
+            this.checkBox_readback.Size = new System.Drawing.Size(103, 17);
+            this.checkBox_readback.TabIndex = 19;
+            this.checkBox_readback.Text = "Readback (0b):";
+            this.checkBox_readback.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.checkBox_readback.UseVisualStyleBackColor = true;
+            this.checkBox_readback.CheckedChanged += new System.EventHandler(this.checkBox_readback_CheckedChanged);
+            // 
             // label_ACKCounter
             // 
             this.label_ACKCounter.ForeColor = System.Drawing.Color.Black;
@@ -1378,19 +1391,6 @@ namespace Baykeeper_GUI
             // 
             this.timer_FG.Interval = 10;
             this.timer_FG.Tick += new System.EventHandler(this.timer_FG_Tick);
-            // 
-            // checkBox_readback
-            // 
-            this.checkBox_readback.Checked = true;
-            this.checkBox_readback.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_readback.Location = new System.Drawing.Point(72, 209);
-            this.checkBox_readback.Name = "checkBox_readback";
-            this.checkBox_readback.Size = new System.Drawing.Size(103, 17);
-            this.checkBox_readback.TabIndex = 19;
-            this.checkBox_readback.Text = "Readback (0b):";
-            this.checkBox_readback.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.checkBox_readback.UseVisualStyleBackColor = true;
-            this.checkBox_readback.CheckedChanged += new System.EventHandler(this.checkBox_readback_CheckedChanged);
             // 
             // Form1
             // 

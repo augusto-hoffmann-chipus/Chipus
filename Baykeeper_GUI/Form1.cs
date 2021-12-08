@@ -842,6 +842,7 @@ namespace Baykeeper_GUI
             try
             {
                 i2c_addr = Convert.ToByte(textBox_i2c_SlaveAddr.Text, 16);
+                textBox_i2c_SlaveAddr.Text = i2c_addr.ToString("X").PadLeft(2, '0');
             }
             catch
             {
@@ -854,6 +855,7 @@ namespace Baykeeper_GUI
             try
             {
                 i2c_reg = Convert.ToByte(textBox_i2c_WriteReg.Text, 16);
+                textBox_i2c_WriteReg.Text = i2c_reg.ToString("X").PadLeft(2, '0');
             }
             catch
             {
@@ -866,6 +868,7 @@ namespace Baykeeper_GUI
             try
             {
                 i2c_data = Convert.ToByte(textBox_i2c_WriteData.Text, 2);
+                textBox_i2c_WriteData.Text = Convert.ToString(i2c_data, 2).PadLeft(8, '0');
             }
             catch
             {
@@ -934,8 +937,34 @@ namespace Baykeeper_GUI
         // Read button on I2C tab
         private void button2_Click(object sender, EventArgs e)
         {
-            byte i2c_addr = Convert.ToByte(textBox_i2c_SlaveAddr.Text, 16);
-            byte i2c_reg = Convert.ToByte(textBox_i2c_ReadReg.Text, 16);
+            byte i2c_addr = 0x00;
+            byte i2c_reg = 0x00;
+
+            try
+            {
+                i2c_addr = Convert.ToByte(textBox_i2c_SlaveAddr.Text, 16);
+                textBox_i2c_SlaveAddr.Text = i2c_addr.ToString("X").PadLeft(2, '0');
+            }
+            catch
+            {
+                // error message
+                MessageBox.Show("Please insert a valid slave address.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                textBox_i2c_SlaveAddr.Text = "00";
+                return;
+            }
+
+            try
+            {
+                i2c_reg = Convert.ToByte(textBox_i2c_ReadReg.Text, 16);
+                textBox_i2c_ReadReg.Text = i2c_reg.ToString("X").PadLeft(2, '0');
+            }
+            catch
+            {
+                // error message
+                MessageBox.Show("Please insert a valid register address.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                textBox_i2c_ReadReg.Text = "00";
+                return;
+            }
 
 
             //while(true)

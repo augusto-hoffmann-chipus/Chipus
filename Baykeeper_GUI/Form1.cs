@@ -908,6 +908,244 @@ namespace Baykeeper_GUI
                         label_i2c_ReadbackACK.Text = "Not ACK";
                         label_i2c_ReadbackACK.ForeColor = Color.Red;
                     }
+
+                    byte readback0x90 = i2c_read(i2c_addr, 0x90);
+                    if (readback0x90 == 0)
+                    {
+                        label_i2c_ReadbackACK0x90.Text = "ACK";
+                        label_i2c_ReadbackACK0x90.ForeColor = Color.Green;
+                        textBox_i2c_Readback0x90.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
+                    }
+                    else
+                    {
+                        /***** Flush the buffer *****/
+                        I2C_Status = FlushBuffer();
+
+                        textBox_i2c_Readback0x90.Text = "";
+                        label_i2c_ReadbackACK0x90.Text = "Not ACK";
+                        label_i2c_ReadbackACK0x90.ForeColor = Color.Red;
+                    }
+
+                    byte readback0x91 = i2c_read(i2c_addr, 0x91);
+                    if (readback0x91 == 0)
+                    {
+                        label_i2c_ReadbackACK0x91.Text = "ACK";
+                        label_i2c_ReadbackACK0x91.ForeColor = Color.Green;
+                        textBox_i2c_Readback0x91.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
+                    }
+                    else
+                    {
+                        /***** Flush the buffer *****/
+                        I2C_Status = FlushBuffer();
+
+                        textBox_i2c_Readback0x91.Text = "";
+                        label_i2c_ReadbackACK0x91.Text = "Not ACK";
+                        label_i2c_ReadbackACK0x91.ForeColor = Color.Red;
+                    }
+
+                    byte readback0x92 = i2c_read(i2c_addr, 0x92);
+                    if (readback0x92 == 0)
+                    {
+                        label_i2c_ReadbackACK0x92.Text = "ACK";
+                        label_i2c_ReadbackACK0x92.ForeColor = Color.Green;
+                        textBox_i2c_Readback0x92.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
+                    }
+                    else
+                    {
+                        /***** Flush the buffer *****/
+                        I2C_Status = FlushBuffer();
+
+                        textBox_i2c_Readback0x92.Text = "";
+                        label_i2c_ReadbackACK0x92.Text = "Not ACK";
+                        label_i2c_ReadbackACK0x92.ForeColor = Color.Red;
+                    }
+
+                    byte readback0x93 = i2c_read(i2c_addr, 0x93);
+                    if (readback0x93 == 0)
+                    {
+                        label_i2c_ReadbackACK0x93.Text = "ACK";
+                        label_i2c_ReadbackACK0x93.ForeColor = Color.Green;
+                        textBox_i2c_Readback0x93.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
+                    }
+                    else
+                    {
+                        /***** Flush the buffer *****/
+                        I2C_Status = FlushBuffer();
+
+                        textBox_i2c_Readback0x93.Text = "";
+                        label_i2c_ReadbackACK0x93.Text = "Not ACK";
+                        label_i2c_ReadbackACK0x93.ForeColor = Color.Red;
+                    }
+
+                    byte readback0x94 = i2c_read(i2c_addr, 0x94);
+                    if (readback0x94 == 0)
+                    {
+                        label_i2c_ReadbackACK0x94.Text = "ACK";
+                        label_i2c_ReadbackACK0x94.ForeColor = Color.Green;
+                        textBox_i2c_Readback0x94.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
+                    }
+                    else
+                    {
+                        /***** Flush the buffer *****/
+                        I2C_Status = FlushBuffer();
+
+                        textBox_i2c_Readback0x94.Text = "";
+                        label_i2c_ReadbackACK0x94.Text = "Not ACK";
+                        label_i2c_ReadbackACK0x94.ForeColor = Color.Red;
+                    }
+
+                    byte readback0x95 = i2c_read(i2c_addr, 0x95);
+                    if (readback0x95 == 0)
+                    {
+                        label_i2c_ReadbackACK0x95.Text = "ACK";
+                        label_i2c_ReadbackACK0x95.ForeColor = Color.Green;
+                        textBox_i2c_Readback0x95.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
+                    }
+                    else
+                    {
+                        /***** Flush the buffer *****/
+                        I2C_Status = FlushBuffer();
+
+                        textBox_i2c_Readback0x95.Text = "";
+                        label_i2c_ReadbackACK0x95.Text = "Not ACK";
+                        label_i2c_ReadbackACK0x95.ForeColor = Color.Red;
+                    }
+
+                    byte readback0x96 = i2c_read(i2c_addr, 0x96);
+                    if (readback0x96 == 0)
+                    {
+                        label_i2c_ReadbackACK0x96.Text = "ACK";
+                        label_i2c_ReadbackACK0x96.ForeColor = Color.Green;
+                        textBox_i2c_Readback0x96.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
+                    }
+                    else
+                    {
+                        /***** Flush the buffer *****/
+                        I2C_Status = FlushBuffer();
+
+                        textBox_i2c_Readback0x96.Text = "";
+                        label_i2c_ReadbackACK0x96.Text = "Not ACK";
+                        label_i2c_ReadbackACK0x96.ForeColor = Color.Red;
+                    }
+
+                    byte readback0x97 = i2c_read(i2c_addr, 0x97);
+                    if (readback0x97 == 0)
+                    {
+                        label_i2c_ReadbackACK0x97.Text = "ACK";
+                        label_i2c_ReadbackACK0x97.ForeColor = Color.Green;
+                        textBox_i2c_Readback0x97.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
+                    }
+                    else
+                    {
+                        /***** Flush the buffer *****/
+                        I2C_Status = FlushBuffer();
+
+                        textBox_i2c_Readback0x97.Text = "";
+                        label_i2c_ReadbackACK0x97.Text = "Not ACK";
+                        label_i2c_ReadbackACK0x97.ForeColor = Color.Red;
+                    }
+
+                    byte readback0x98 = i2c_read(i2c_addr, 0x98);
+                    if (readback0x98 == 0)
+                    {
+                        label_i2c_ReadbackACK0x98.Text = "ACK";
+                        label_i2c_ReadbackACK0x98.ForeColor = Color.Green;
+                        textBox_i2c_Readback0x98.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
+                    }
+                    else
+                    {
+                        /***** Flush the buffer *****/
+                        I2C_Status = FlushBuffer();
+
+                        textBox_i2c_Readback0x98.Text = "";
+                        label_i2c_ReadbackACK0x98.Text = "Not ACK";
+                        label_i2c_ReadbackACK0x98.ForeColor = Color.Red;
+                    }
+
+                    byte readback0x99 = i2c_read(i2c_addr, 0x99);
+                    if (readback0x99 == 0)
+                    {
+                        label_i2c_ReadbackACK0x99.Text = "ACK";
+                        label_i2c_ReadbackACK0x99.ForeColor = Color.Green;
+                        textBox_i2c_Readback0x99.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
+                    }
+                    else
+                    {
+                        /***** Flush the buffer *****/
+                        I2C_Status = FlushBuffer();
+
+                        textBox_i2c_Readback0x99.Text = "";
+                        label_i2c_ReadbackACK0x99.Text = "Not ACK";
+                        label_i2c_ReadbackACK0x99.ForeColor = Color.Red;
+                    }
+
+                    byte readback0x9a = i2c_read(i2c_addr, 0x9a);
+                    if (readback0x9a == 0)
+                    {
+                        label_i2c_ReadbackACK0x9a.Text = "ACK";
+                        label_i2c_ReadbackACK0x9a.ForeColor = Color.Green;
+                        textBox_i2c_Readback0x9a.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
+                    }
+                    else
+                    {
+                        /***** Flush the buffer *****/
+                        I2C_Status = FlushBuffer();
+
+                        textBox_i2c_Readback0x9a.Text = "";
+                        label_i2c_ReadbackACK0x9a.Text = "Not ACK";
+                        label_i2c_ReadbackACK0x9a.ForeColor = Color.Red;
+                    }
+
+                    byte readback0x9b = i2c_read(i2c_addr, 0x9b);
+                    if (readback0x9b == 0)
+                    {
+                        label_i2c_ReadbackACK0x9b.Text = "ACK";
+                        label_i2c_ReadbackACK0x9b.ForeColor = Color.Green;
+                        textBox_i2c_Readback0x9b.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
+                    }
+                    else
+                    {
+                        /***** Flush the buffer *****/
+                        I2C_Status = FlushBuffer();
+
+                        textBox_i2c_Readback0x9b.Text = "";
+                        label_i2c_ReadbackACK0x9b.Text = "Not ACK";
+                        label_i2c_ReadbackACK0x9b.ForeColor = Color.Red;
+                    }
+
+                    byte readback0x30 = i2c_read(i2c_addr, 0x30);
+                    if (readback0x30 == 0)
+                    {
+                        label_i2c_ReadbackACK0x30.Text = "ACK";
+                        label_i2c_ReadbackACK0x30.ForeColor = Color.Green;
+                        textBox_i2c_Readback0x30.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
+                    }
+                    else
+                    {
+                        /***** Flush the buffer *****/
+                        I2C_Status = FlushBuffer();
+
+                        textBox_i2c_Readback0x30.Text = "";
+                        label_i2c_ReadbackACK0x30.Text = "Not ACK";
+                        label_i2c_ReadbackACK0x30.ForeColor = Color.Red;
+                    }
+
+                    byte readback0x31 = i2c_read(i2c_addr, 0x31);
+                    if (readback0x31 == 0)
+                    {
+                        label_i2c_ReadbackACK0x31.Text = "ACK";
+                        label_i2c_ReadbackACK0x31.ForeColor = Color.Green;
+                        textBox_i2c_Readback0x31.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
+                    }
+                    else
+                    {
+                        /***** Flush the buffer *****/
+                        I2C_Status = FlushBuffer();
+
+                        textBox_i2c_Readback0x31.Text = "";
+                        label_i2c_ReadbackACK0x31.Text = "Not ACK";
+                        label_i2c_ReadbackACK0x31.ForeColor = Color.Red;
+                    }
                 }
 
 
@@ -1115,6 +1353,76 @@ namespace Baykeeper_GUI
             textBox_i2c_Readback.Text = "";
             label_i2c_ReadbackACK.Text = "---";
             label_i2c_ReadbackACK.ForeColor = Color.Black;
+
+            textBox_i2c_Readback0x90.Text = "";
+            label_i2c_ReadbackACK0x90.Text = "---";
+            label_i2c_ReadbackACK0x90.ForeColor = Color.Black;
+
+
+            textBox_i2c_Readback0x91.Text = "";
+            label_i2c_ReadbackACK0x91.Text = "---";
+            label_i2c_ReadbackACK0x91.ForeColor = Color.Black;
+
+
+            textBox_i2c_Readback0x92.Text = "";
+            label_i2c_ReadbackACK0x92.Text = "---";
+            label_i2c_ReadbackACK0x92.ForeColor = Color.Black;
+
+
+            textBox_i2c_Readback0x93.Text = "";
+            label_i2c_ReadbackACK0x93.Text = "---";
+            label_i2c_ReadbackACK0x93.ForeColor = Color.Black;
+
+
+            textBox_i2c_Readback0x94.Text = "";
+            label_i2c_ReadbackACK0x94.Text = "---";
+            label_i2c_ReadbackACK0x94.ForeColor = Color.Black;
+
+
+            textBox_i2c_Readback0x95.Text = "";
+            label_i2c_ReadbackACK0x95.Text = "---";
+            label_i2c_ReadbackACK0x95.ForeColor = Color.Black;
+
+
+            textBox_i2c_Readback0x96.Text = "";
+            label_i2c_ReadbackACK0x96.Text = "---";
+            label_i2c_ReadbackACK0x96.ForeColor = Color.Black;
+
+
+            textBox_i2c_Readback0x97.Text = "";
+            label_i2c_ReadbackACK0x97.Text = "---";
+            label_i2c_ReadbackACK0x97.ForeColor = Color.Black;
+
+
+            textBox_i2c_Readback0x98.Text = "";
+            label_i2c_ReadbackACK0x98.Text = "---";
+            label_i2c_ReadbackACK0x98.ForeColor = Color.Black;
+
+
+            textBox_i2c_Readback0x99.Text = "";
+            label_i2c_ReadbackACK0x99.Text = "---";
+            label_i2c_ReadbackACK0x99.ForeColor = Color.Black;
+
+
+            textBox_i2c_Readback0x9a.Text = "";
+            label_i2c_ReadbackACK0x9a.Text = "---";
+            label_i2c_ReadbackACK0x9a.ForeColor = Color.Black;
+
+
+            textBox_i2c_Readback0x9b.Text = "";
+            label_i2c_ReadbackACK0x9b.Text = "---";
+            label_i2c_ReadbackACK0x9b.ForeColor = Color.Black;
+
+
+            textBox_i2c_Readback0x30.Text = "";
+            label_i2c_ReadbackACK0x30.Text = "---";
+            label_i2c_ReadbackACK0x30.ForeColor = Color.Black;
+
+
+            textBox_i2c_Readback0x31.Text = "";
+            label_i2c_ReadbackACK0x31.Text = "---";
+            label_i2c_ReadbackACK0x31.ForeColor = Color.Black;
+
         }
 
         //###################################################################################################################################

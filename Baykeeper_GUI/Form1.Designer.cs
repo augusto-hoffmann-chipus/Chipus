@@ -147,6 +147,48 @@ namespace Baykeeper_GUI
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timer_disconnect = new System.Windows.Forms.Timer(this.components);
             this.timer_FG = new System.Windows.Forms.Timer(this.components);
+            this.label_i2c_ReadbackACK0x90 = new System.Windows.Forms.Label();
+            this.textBox_i2c_Readback0x90 = new System.Windows.Forms.TextBox();
+            this.label_i2c_ReadbackACK0x91 = new System.Windows.Forms.Label();
+            this.textBox_i2c_Readback0x91 = new System.Windows.Forms.TextBox();
+            this.label_i2c_ReadbackACK0x92 = new System.Windows.Forms.Label();
+            this.textBox_i2c_Readback0x92 = new System.Windows.Forms.TextBox();
+            this.label_i2c_ReadbackACK0x93 = new System.Windows.Forms.Label();
+            this.textBox_i2c_Readback0x93 = new System.Windows.Forms.TextBox();
+            this.label_i2c_ReadbackACK0x94 = new System.Windows.Forms.Label();
+            this.textBox_i2c_Readback0x94 = new System.Windows.Forms.TextBox();
+            this.label_i2c_ReadbackACK0x95 = new System.Windows.Forms.Label();
+            this.textBox_i2c_Readback0x95 = new System.Windows.Forms.TextBox();
+            this.label_i2c_ReadbackACK0x96 = new System.Windows.Forms.Label();
+            this.textBox_i2c_Readback0x96 = new System.Windows.Forms.TextBox();
+            this.label_i2c_ReadbackACK0x97 = new System.Windows.Forms.Label();
+            this.textBox_i2c_Readback0x97 = new System.Windows.Forms.TextBox();
+            this.label_i2c_ReadbackACK0x98 = new System.Windows.Forms.Label();
+            this.textBox_i2c_Readback0x98 = new System.Windows.Forms.TextBox();
+            this.label_i2c_ReadbackACK0x99 = new System.Windows.Forms.Label();
+            this.textBox_i2c_Readback0x99 = new System.Windows.Forms.TextBox();
+            this.label_i2c_ReadbackACK0x9a = new System.Windows.Forms.Label();
+            this.textBox_i2c_Readback0x9a = new System.Windows.Forms.TextBox();
+            this.label_i2c_ReadbackACK0x9b = new System.Windows.Forms.Label();
+            this.textBox_i2c_Readback0x9b = new System.Windows.Forms.TextBox();
+            this.label_i2c_ReadbackACK0x30 = new System.Windows.Forms.Label();
+            this.textBox_i2c_Readback0x30 = new System.Windows.Forms.TextBox();
+            this.label_i2c_ReadbackACK0x31 = new System.Windows.Forms.Label();
+            this.textBox_i2c_Readback0x31 = new System.Windows.Forms.TextBox();
+            this.label43 = new System.Windows.Forms.Label();
+            this.label44 = new System.Windows.Forms.Label();
+            this.label45 = new System.Windows.Forms.Label();
+            this.label46 = new System.Windows.Forms.Label();
+            this.label47 = new System.Windows.Forms.Label();
+            this.label48 = new System.Windows.Forms.Label();
+            this.label49 = new System.Windows.Forms.Label();
+            this.label50 = new System.Windows.Forms.Label();
+            this.label51 = new System.Windows.Forms.Label();
+            this.label52 = new System.Windows.Forms.Label();
+            this.label53 = new System.Windows.Forms.Label();
+            this.label54 = new System.Windows.Forms.Label();
+            this.label55 = new System.Windows.Forms.Label();
+            this.label56 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage_config.SuspendLayout();
             this.tabPage_outputs.SuspendLayout();
@@ -836,6 +878,48 @@ namespace Baykeeper_GUI
             // 
             // tabPage_i2c
             // 
+            this.tabPage_i2c.Controls.Add(this.label56);
+            this.tabPage_i2c.Controls.Add(this.label55);
+            this.tabPage_i2c.Controls.Add(this.label54);
+            this.tabPage_i2c.Controls.Add(this.label53);
+            this.tabPage_i2c.Controls.Add(this.label52);
+            this.tabPage_i2c.Controls.Add(this.label51);
+            this.tabPage_i2c.Controls.Add(this.label50);
+            this.tabPage_i2c.Controls.Add(this.label49);
+            this.tabPage_i2c.Controls.Add(this.label48);
+            this.tabPage_i2c.Controls.Add(this.label47);
+            this.tabPage_i2c.Controls.Add(this.label46);
+            this.tabPage_i2c.Controls.Add(this.label45);
+            this.tabPage_i2c.Controls.Add(this.label44);
+            this.tabPage_i2c.Controls.Add(this.label43);
+            this.tabPage_i2c.Controls.Add(this.label_i2c_ReadbackACK0x31);
+            this.tabPage_i2c.Controls.Add(this.textBox_i2c_Readback0x31);
+            this.tabPage_i2c.Controls.Add(this.label_i2c_ReadbackACK0x30);
+            this.tabPage_i2c.Controls.Add(this.textBox_i2c_Readback0x30);
+            this.tabPage_i2c.Controls.Add(this.label_i2c_ReadbackACK0x9b);
+            this.tabPage_i2c.Controls.Add(this.textBox_i2c_Readback0x9b);
+            this.tabPage_i2c.Controls.Add(this.label_i2c_ReadbackACK0x9a);
+            this.tabPage_i2c.Controls.Add(this.textBox_i2c_Readback0x9a);
+            this.tabPage_i2c.Controls.Add(this.label_i2c_ReadbackACK0x99);
+            this.tabPage_i2c.Controls.Add(this.textBox_i2c_Readback0x99);
+            this.tabPage_i2c.Controls.Add(this.label_i2c_ReadbackACK0x98);
+            this.tabPage_i2c.Controls.Add(this.textBox_i2c_Readback0x98);
+            this.tabPage_i2c.Controls.Add(this.label_i2c_ReadbackACK0x97);
+            this.tabPage_i2c.Controls.Add(this.textBox_i2c_Readback0x97);
+            this.tabPage_i2c.Controls.Add(this.label_i2c_ReadbackACK0x96);
+            this.tabPage_i2c.Controls.Add(this.textBox_i2c_Readback0x96);
+            this.tabPage_i2c.Controls.Add(this.label_i2c_ReadbackACK0x95);
+            this.tabPage_i2c.Controls.Add(this.textBox_i2c_Readback0x95);
+            this.tabPage_i2c.Controls.Add(this.label_i2c_ReadbackACK0x94);
+            this.tabPage_i2c.Controls.Add(this.textBox_i2c_Readback0x94);
+            this.tabPage_i2c.Controls.Add(this.label_i2c_ReadbackACK0x93);
+            this.tabPage_i2c.Controls.Add(this.textBox_i2c_Readback0x93);
+            this.tabPage_i2c.Controls.Add(this.label_i2c_ReadbackACK0x92);
+            this.tabPage_i2c.Controls.Add(this.textBox_i2c_Readback0x92);
+            this.tabPage_i2c.Controls.Add(this.label_i2c_ReadbackACK0x91);
+            this.tabPage_i2c.Controls.Add(this.textBox_i2c_Readback0x91);
+            this.tabPage_i2c.Controls.Add(this.label_i2c_ReadbackACK0x90);
+            this.tabPage_i2c.Controls.Add(this.textBox_i2c_Readback0x90);
             this.tabPage_i2c.Controls.Add(this.checkBox_readback);
             this.tabPage_i2c.Controls.Add(this.label_ACKCounter);
             this.tabPage_i2c.Controls.Add(this.label_i2c_ReadbackACK);
@@ -1392,6 +1476,398 @@ namespace Baykeeper_GUI
             this.timer_FG.Interval = 10;
             this.timer_FG.Tick += new System.EventHandler(this.timer_FG_Tick);
             // 
+            // label_i2c_ReadbackACK0x90
+            // 
+            this.label_i2c_ReadbackACK0x90.ForeColor = System.Drawing.Color.Black;
+            this.label_i2c_ReadbackACK0x90.Location = new System.Drawing.Point(206, 268);
+            this.label_i2c_ReadbackACK0x90.Name = "label_i2c_ReadbackACK0x90";
+            this.label_i2c_ReadbackACK0x90.Size = new System.Drawing.Size(74, 13);
+            this.label_i2c_ReadbackACK0x90.TabIndex = 21;
+            this.label_i2c_ReadbackACK0x90.Text = "---";
+            this.label_i2c_ReadbackACK0x90.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // textBox_i2c_Readback0x90
+            // 
+            this.textBox_i2c_Readback0x90.Enabled = false;
+            this.textBox_i2c_Readback0x90.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_i2c_Readback0x90.Location = new System.Drawing.Point(180, 245);
+            this.textBox_i2c_Readback0x90.Name = "textBox_i2c_Readback0x90";
+            this.textBox_i2c_Readback0x90.Size = new System.Drawing.Size(100, 20);
+            this.textBox_i2c_Readback0x90.TabIndex = 20;
+            // 
+            // label_i2c_ReadbackACK0x91
+            // 
+            this.label_i2c_ReadbackACK0x91.ForeColor = System.Drawing.Color.Black;
+            this.label_i2c_ReadbackACK0x91.Location = new System.Drawing.Point(206, 305);
+            this.label_i2c_ReadbackACK0x91.Name = "label_i2c_ReadbackACK0x91";
+            this.label_i2c_ReadbackACK0x91.Size = new System.Drawing.Size(74, 13);
+            this.label_i2c_ReadbackACK0x91.TabIndex = 23;
+            this.label_i2c_ReadbackACK0x91.Text = "---";
+            this.label_i2c_ReadbackACK0x91.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // textBox_i2c_Readback0x91
+            // 
+            this.textBox_i2c_Readback0x91.Enabled = false;
+            this.textBox_i2c_Readback0x91.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_i2c_Readback0x91.Location = new System.Drawing.Point(180, 282);
+            this.textBox_i2c_Readback0x91.Name = "textBox_i2c_Readback0x91";
+            this.textBox_i2c_Readback0x91.Size = new System.Drawing.Size(100, 20);
+            this.textBox_i2c_Readback0x91.TabIndex = 22;
+            // 
+            // label_i2c_ReadbackACK0x92
+            // 
+            this.label_i2c_ReadbackACK0x92.ForeColor = System.Drawing.Color.Black;
+            this.label_i2c_ReadbackACK0x92.Location = new System.Drawing.Point(206, 344);
+            this.label_i2c_ReadbackACK0x92.Name = "label_i2c_ReadbackACK0x92";
+            this.label_i2c_ReadbackACK0x92.Size = new System.Drawing.Size(74, 13);
+            this.label_i2c_ReadbackACK0x92.TabIndex = 25;
+            this.label_i2c_ReadbackACK0x92.Text = "---";
+            this.label_i2c_ReadbackACK0x92.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // textBox_i2c_Readback0x92
+            // 
+            this.textBox_i2c_Readback0x92.Enabled = false;
+            this.textBox_i2c_Readback0x92.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_i2c_Readback0x92.Location = new System.Drawing.Point(180, 321);
+            this.textBox_i2c_Readback0x92.Name = "textBox_i2c_Readback0x92";
+            this.textBox_i2c_Readback0x92.Size = new System.Drawing.Size(100, 20);
+            this.textBox_i2c_Readback0x92.TabIndex = 24;
+            // 
+            // label_i2c_ReadbackACK0x93
+            // 
+            this.label_i2c_ReadbackACK0x93.ForeColor = System.Drawing.Color.Black;
+            this.label_i2c_ReadbackACK0x93.Location = new System.Drawing.Point(206, 383);
+            this.label_i2c_ReadbackACK0x93.Name = "label_i2c_ReadbackACK0x93";
+            this.label_i2c_ReadbackACK0x93.Size = new System.Drawing.Size(74, 13);
+            this.label_i2c_ReadbackACK0x93.TabIndex = 27;
+            this.label_i2c_ReadbackACK0x93.Text = "---";
+            this.label_i2c_ReadbackACK0x93.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // textBox_i2c_Readback0x93
+            // 
+            this.textBox_i2c_Readback0x93.Enabled = false;
+            this.textBox_i2c_Readback0x93.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_i2c_Readback0x93.Location = new System.Drawing.Point(180, 360);
+            this.textBox_i2c_Readback0x93.Name = "textBox_i2c_Readback0x93";
+            this.textBox_i2c_Readback0x93.Size = new System.Drawing.Size(100, 20);
+            this.textBox_i2c_Readback0x93.TabIndex = 26;
+            // 
+            // label_i2c_ReadbackACK0x94
+            // 
+            this.label_i2c_ReadbackACK0x94.ForeColor = System.Drawing.Color.Black;
+            this.label_i2c_ReadbackACK0x94.Location = new System.Drawing.Point(206, 422);
+            this.label_i2c_ReadbackACK0x94.Name = "label_i2c_ReadbackACK0x94";
+            this.label_i2c_ReadbackACK0x94.Size = new System.Drawing.Size(74, 13);
+            this.label_i2c_ReadbackACK0x94.TabIndex = 29;
+            this.label_i2c_ReadbackACK0x94.Text = "---";
+            this.label_i2c_ReadbackACK0x94.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // textBox_i2c_Readback0x94
+            // 
+            this.textBox_i2c_Readback0x94.Enabled = false;
+            this.textBox_i2c_Readback0x94.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_i2c_Readback0x94.Location = new System.Drawing.Point(180, 399);
+            this.textBox_i2c_Readback0x94.Name = "textBox_i2c_Readback0x94";
+            this.textBox_i2c_Readback0x94.Size = new System.Drawing.Size(100, 20);
+            this.textBox_i2c_Readback0x94.TabIndex = 28;
+            // 
+            // label_i2c_ReadbackACK0x95
+            // 
+            this.label_i2c_ReadbackACK0x95.ForeColor = System.Drawing.Color.Black;
+            this.label_i2c_ReadbackACK0x95.Location = new System.Drawing.Point(206, 461);
+            this.label_i2c_ReadbackACK0x95.Name = "label_i2c_ReadbackACK0x95";
+            this.label_i2c_ReadbackACK0x95.Size = new System.Drawing.Size(74, 13);
+            this.label_i2c_ReadbackACK0x95.TabIndex = 31;
+            this.label_i2c_ReadbackACK0x95.Text = "---";
+            this.label_i2c_ReadbackACK0x95.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // textBox_i2c_Readback0x95
+            // 
+            this.textBox_i2c_Readback0x95.Enabled = false;
+            this.textBox_i2c_Readback0x95.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_i2c_Readback0x95.Location = new System.Drawing.Point(180, 438);
+            this.textBox_i2c_Readback0x95.Name = "textBox_i2c_Readback0x95";
+            this.textBox_i2c_Readback0x95.Size = new System.Drawing.Size(100, 20);
+            this.textBox_i2c_Readback0x95.TabIndex = 30;
+            // 
+            // label_i2c_ReadbackACK0x96
+            // 
+            this.label_i2c_ReadbackACK0x96.ForeColor = System.Drawing.Color.Black;
+            this.label_i2c_ReadbackACK0x96.Location = new System.Drawing.Point(382, 268);
+            this.label_i2c_ReadbackACK0x96.Name = "label_i2c_ReadbackACK0x96";
+            this.label_i2c_ReadbackACK0x96.Size = new System.Drawing.Size(74, 13);
+            this.label_i2c_ReadbackACK0x96.TabIndex = 33;
+            this.label_i2c_ReadbackACK0x96.Text = "---";
+            this.label_i2c_ReadbackACK0x96.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // textBox_i2c_Readback0x96
+            // 
+            this.textBox_i2c_Readback0x96.Enabled = false;
+            this.textBox_i2c_Readback0x96.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_i2c_Readback0x96.Location = new System.Drawing.Point(356, 245);
+            this.textBox_i2c_Readback0x96.Name = "textBox_i2c_Readback0x96";
+            this.textBox_i2c_Readback0x96.Size = new System.Drawing.Size(100, 20);
+            this.textBox_i2c_Readback0x96.TabIndex = 32;
+            // 
+            // label_i2c_ReadbackACK0x97
+            // 
+            this.label_i2c_ReadbackACK0x97.ForeColor = System.Drawing.Color.Black;
+            this.label_i2c_ReadbackACK0x97.Location = new System.Drawing.Point(382, 307);
+            this.label_i2c_ReadbackACK0x97.Name = "label_i2c_ReadbackACK0x97";
+            this.label_i2c_ReadbackACK0x97.Size = new System.Drawing.Size(74, 13);
+            this.label_i2c_ReadbackACK0x97.TabIndex = 35;
+            this.label_i2c_ReadbackACK0x97.Text = "---";
+            this.label_i2c_ReadbackACK0x97.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // textBox_i2c_Readback0x97
+            // 
+            this.textBox_i2c_Readback0x97.Enabled = false;
+            this.textBox_i2c_Readback0x97.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_i2c_Readback0x97.Location = new System.Drawing.Point(356, 284);
+            this.textBox_i2c_Readback0x97.Name = "textBox_i2c_Readback0x97";
+            this.textBox_i2c_Readback0x97.Size = new System.Drawing.Size(100, 20);
+            this.textBox_i2c_Readback0x97.TabIndex = 34;
+            // 
+            // label_i2c_ReadbackACK0x98
+            // 
+            this.label_i2c_ReadbackACK0x98.ForeColor = System.Drawing.Color.Black;
+            this.label_i2c_ReadbackACK0x98.Location = new System.Drawing.Point(382, 346);
+            this.label_i2c_ReadbackACK0x98.Name = "label_i2c_ReadbackACK0x98";
+            this.label_i2c_ReadbackACK0x98.Size = new System.Drawing.Size(74, 13);
+            this.label_i2c_ReadbackACK0x98.TabIndex = 37;
+            this.label_i2c_ReadbackACK0x98.Text = "---";
+            this.label_i2c_ReadbackACK0x98.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // textBox_i2c_Readback0x98
+            // 
+            this.textBox_i2c_Readback0x98.Enabled = false;
+            this.textBox_i2c_Readback0x98.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_i2c_Readback0x98.Location = new System.Drawing.Point(356, 323);
+            this.textBox_i2c_Readback0x98.Name = "textBox_i2c_Readback0x98";
+            this.textBox_i2c_Readback0x98.Size = new System.Drawing.Size(100, 20);
+            this.textBox_i2c_Readback0x98.TabIndex = 36;
+            // 
+            // label_i2c_ReadbackACK0x99
+            // 
+            this.label_i2c_ReadbackACK0x99.ForeColor = System.Drawing.Color.Black;
+            this.label_i2c_ReadbackACK0x99.Location = new System.Drawing.Point(382, 382);
+            this.label_i2c_ReadbackACK0x99.Name = "label_i2c_ReadbackACK0x99";
+            this.label_i2c_ReadbackACK0x99.Size = new System.Drawing.Size(74, 13);
+            this.label_i2c_ReadbackACK0x99.TabIndex = 39;
+            this.label_i2c_ReadbackACK0x99.Text = "---";
+            this.label_i2c_ReadbackACK0x99.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // textBox_i2c_Readback0x99
+            // 
+            this.textBox_i2c_Readback0x99.Enabled = false;
+            this.textBox_i2c_Readback0x99.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_i2c_Readback0x99.Location = new System.Drawing.Point(356, 359);
+            this.textBox_i2c_Readback0x99.Name = "textBox_i2c_Readback0x99";
+            this.textBox_i2c_Readback0x99.Size = new System.Drawing.Size(100, 20);
+            this.textBox_i2c_Readback0x99.TabIndex = 38;
+            // 
+            // label_i2c_ReadbackACK0x9a
+            // 
+            this.label_i2c_ReadbackACK0x9a.ForeColor = System.Drawing.Color.Black;
+            this.label_i2c_ReadbackACK0x9a.Location = new System.Drawing.Point(382, 421);
+            this.label_i2c_ReadbackACK0x9a.Name = "label_i2c_ReadbackACK0x9a";
+            this.label_i2c_ReadbackACK0x9a.Size = new System.Drawing.Size(74, 13);
+            this.label_i2c_ReadbackACK0x9a.TabIndex = 41;
+            this.label_i2c_ReadbackACK0x9a.Text = "---";
+            this.label_i2c_ReadbackACK0x9a.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // textBox_i2c_Readback0x9a
+            // 
+            this.textBox_i2c_Readback0x9a.Enabled = false;
+            this.textBox_i2c_Readback0x9a.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_i2c_Readback0x9a.Location = new System.Drawing.Point(356, 398);
+            this.textBox_i2c_Readback0x9a.Name = "textBox_i2c_Readback0x9a";
+            this.textBox_i2c_Readback0x9a.Size = new System.Drawing.Size(100, 20);
+            this.textBox_i2c_Readback0x9a.TabIndex = 40;
+            // 
+            // label_i2c_ReadbackACK0x9b
+            // 
+            this.label_i2c_ReadbackACK0x9b.ForeColor = System.Drawing.Color.Black;
+            this.label_i2c_ReadbackACK0x9b.Location = new System.Drawing.Point(382, 460);
+            this.label_i2c_ReadbackACK0x9b.Name = "label_i2c_ReadbackACK0x9b";
+            this.label_i2c_ReadbackACK0x9b.Size = new System.Drawing.Size(74, 13);
+            this.label_i2c_ReadbackACK0x9b.TabIndex = 43;
+            this.label_i2c_ReadbackACK0x9b.Text = "---";
+            this.label_i2c_ReadbackACK0x9b.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // textBox_i2c_Readback0x9b
+            // 
+            this.textBox_i2c_Readback0x9b.Enabled = false;
+            this.textBox_i2c_Readback0x9b.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_i2c_Readback0x9b.Location = new System.Drawing.Point(356, 437);
+            this.textBox_i2c_Readback0x9b.Name = "textBox_i2c_Readback0x9b";
+            this.textBox_i2c_Readback0x9b.Size = new System.Drawing.Size(100, 20);
+            this.textBox_i2c_Readback0x9b.TabIndex = 42;
+            // 
+            // label_i2c_ReadbackACK0x30
+            // 
+            this.label_i2c_ReadbackACK0x30.ForeColor = System.Drawing.Color.Black;
+            this.label_i2c_ReadbackACK0x30.Location = new System.Drawing.Point(555, 268);
+            this.label_i2c_ReadbackACK0x30.Name = "label_i2c_ReadbackACK0x30";
+            this.label_i2c_ReadbackACK0x30.Size = new System.Drawing.Size(74, 13);
+            this.label_i2c_ReadbackACK0x30.TabIndex = 45;
+            this.label_i2c_ReadbackACK0x30.Text = "---";
+            this.label_i2c_ReadbackACK0x30.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // textBox_i2c_Readback0x30
+            // 
+            this.textBox_i2c_Readback0x30.Enabled = false;
+            this.textBox_i2c_Readback0x30.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_i2c_Readback0x30.Location = new System.Drawing.Point(529, 245);
+            this.textBox_i2c_Readback0x30.Name = "textBox_i2c_Readback0x30";
+            this.textBox_i2c_Readback0x30.Size = new System.Drawing.Size(100, 20);
+            this.textBox_i2c_Readback0x30.TabIndex = 44;
+            // 
+            // label_i2c_ReadbackACK0x31
+            // 
+            this.label_i2c_ReadbackACK0x31.ForeColor = System.Drawing.Color.Black;
+            this.label_i2c_ReadbackACK0x31.Location = new System.Drawing.Point(555, 305);
+            this.label_i2c_ReadbackACK0x31.Name = "label_i2c_ReadbackACK0x31";
+            this.label_i2c_ReadbackACK0x31.Size = new System.Drawing.Size(74, 13);
+            this.label_i2c_ReadbackACK0x31.TabIndex = 47;
+            this.label_i2c_ReadbackACK0x31.Text = "---";
+            this.label_i2c_ReadbackACK0x31.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // textBox_i2c_Readback0x31
+            // 
+            this.textBox_i2c_Readback0x31.Enabled = false;
+            this.textBox_i2c_Readback0x31.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_i2c_Readback0x31.Location = new System.Drawing.Point(529, 282);
+            this.textBox_i2c_Readback0x31.Name = "textBox_i2c_Readback0x31";
+            this.textBox_i2c_Readback0x31.Size = new System.Drawing.Size(100, 20);
+            this.textBox_i2c_Readback0x31.TabIndex = 46;
+            // 
+            // label43
+            // 
+            this.label43.Location = new System.Drawing.Point(119, 248);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(56, 13);
+            this.label43.TabIndex = 48;
+            this.label43.Text = "0x90:";
+            this.label43.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label44
+            // 
+            this.label44.Location = new System.Drawing.Point(119, 284);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(56, 13);
+            this.label44.TabIndex = 49;
+            this.label44.Text = "0x91:";
+            this.label44.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label45
+            // 
+            this.label45.Location = new System.Drawing.Point(119, 324);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(56, 13);
+            this.label45.TabIndex = 50;
+            this.label45.Text = "0x92:";
+            this.label45.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label46
+            // 
+            this.label46.Location = new System.Drawing.Point(119, 362);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(56, 13);
+            this.label46.TabIndex = 51;
+            this.label46.Text = "0x93:";
+            this.label46.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label47
+            // 
+            this.label47.Location = new System.Drawing.Point(119, 402);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(56, 13);
+            this.label47.TabIndex = 52;
+            this.label47.Text = "0x94:";
+            this.label47.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label48
+            // 
+            this.label48.Location = new System.Drawing.Point(119, 441);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(56, 13);
+            this.label48.TabIndex = 53;
+            this.label48.Text = "0x95:";
+            this.label48.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label49
+            // 
+            this.label49.Location = new System.Drawing.Point(294, 248);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(56, 13);
+            this.label49.TabIndex = 54;
+            this.label49.Text = "0x96:";
+            this.label49.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label50
+            // 
+            this.label50.Location = new System.Drawing.Point(294, 289);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(56, 13);
+            this.label50.TabIndex = 55;
+            this.label50.Text = "0x97:";
+            this.label50.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label51
+            // 
+            this.label51.Location = new System.Drawing.Point(294, 324);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(56, 13);
+            this.label51.TabIndex = 56;
+            this.label51.Text = "0x98:";
+            this.label51.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label52
+            // 
+            this.label52.Location = new System.Drawing.Point(294, 359);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(56, 13);
+            this.label52.TabIndex = 57;
+            this.label52.Text = "0x99:";
+            this.label52.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label53
+            // 
+            this.label53.Location = new System.Drawing.Point(294, 401);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(56, 13);
+            this.label53.TabIndex = 58;
+            this.label53.Text = "0x9a:";
+            this.label53.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label54
+            // 
+            this.label54.Location = new System.Drawing.Point(294, 440);
+            this.label54.Name = "label54";
+            this.label54.Size = new System.Drawing.Size(56, 13);
+            this.label54.TabIndex = 59;
+            this.label54.Text = "0x9b:";
+            this.label54.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label55
+            // 
+            this.label55.Location = new System.Drawing.Point(470, 248);
+            this.label55.Name = "label55";
+            this.label55.Size = new System.Drawing.Size(56, 13);
+            this.label55.TabIndex = 60;
+            this.label55.Text = "0x30:";
+            this.label55.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label56
+            // 
+            this.label56.Location = new System.Drawing.Point(470, 287);
+            this.label56.Name = "label56";
+            this.label56.Size = new System.Drawing.Size(56, 13);
+            this.label56.TabIndex = 61;
+            this.label56.Text = "0x31:";
+            this.label56.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1550,6 +2026,48 @@ namespace Baykeeper_GUI
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Timer timer_FG;
         private System.Windows.Forms.CheckBox checkBox_readback;
+        private System.Windows.Forms.Label label56;
+        private System.Windows.Forms.Label label55;
+        private System.Windows.Forms.Label label54;
+        private System.Windows.Forms.Label label53;
+        private System.Windows.Forms.Label label52;
+        private System.Windows.Forms.Label label51;
+        private System.Windows.Forms.Label label50;
+        private System.Windows.Forms.Label label49;
+        private System.Windows.Forms.Label label48;
+        private System.Windows.Forms.Label label47;
+        private System.Windows.Forms.Label label46;
+        private System.Windows.Forms.Label label45;
+        private System.Windows.Forms.Label label44;
+        private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.Label label_i2c_ReadbackACK0x31;
+        private System.Windows.Forms.TextBox textBox_i2c_Readback0x31;
+        private System.Windows.Forms.Label label_i2c_ReadbackACK0x30;
+        private System.Windows.Forms.TextBox textBox_i2c_Readback0x30;
+        private System.Windows.Forms.Label label_i2c_ReadbackACK0x9b;
+        private System.Windows.Forms.TextBox textBox_i2c_Readback0x9b;
+        private System.Windows.Forms.Label label_i2c_ReadbackACK0x9a;
+        private System.Windows.Forms.TextBox textBox_i2c_Readback0x9a;
+        private System.Windows.Forms.Label label_i2c_ReadbackACK0x99;
+        private System.Windows.Forms.TextBox textBox_i2c_Readback0x99;
+        private System.Windows.Forms.Label label_i2c_ReadbackACK0x98;
+        private System.Windows.Forms.TextBox textBox_i2c_Readback0x98;
+        private System.Windows.Forms.Label label_i2c_ReadbackACK0x97;
+        private System.Windows.Forms.TextBox textBox_i2c_Readback0x97;
+        private System.Windows.Forms.Label label_i2c_ReadbackACK0x96;
+        private System.Windows.Forms.TextBox textBox_i2c_Readback0x96;
+        private System.Windows.Forms.Label label_i2c_ReadbackACK0x95;
+        private System.Windows.Forms.TextBox textBox_i2c_Readback0x95;
+        private System.Windows.Forms.Label label_i2c_ReadbackACK0x94;
+        private System.Windows.Forms.TextBox textBox_i2c_Readback0x94;
+        private System.Windows.Forms.Label label_i2c_ReadbackACK0x93;
+        private System.Windows.Forms.TextBox textBox_i2c_Readback0x93;
+        private System.Windows.Forms.Label label_i2c_ReadbackACK0x92;
+        private System.Windows.Forms.TextBox textBox_i2c_Readback0x92;
+        private System.Windows.Forms.Label label_i2c_ReadbackACK0x91;
+        private System.Windows.Forms.TextBox textBox_i2c_Readback0x91;
+        private System.Windows.Forms.Label label_i2c_ReadbackACK0x90;
+        private System.Windows.Forms.TextBox textBox_i2c_Readback0x90;
     }
 }
 

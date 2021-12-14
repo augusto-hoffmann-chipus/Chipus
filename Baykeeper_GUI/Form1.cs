@@ -1261,6 +1261,187 @@ namespace Baykeeper_GUI
 
         }
 
+
+        private void button_TS_Click(object sender, EventArgs e)
+        {
+            if (timer_TS_refresh.Enabled == true)
+            {
+                timer_TS_refresh.Enabled = false;
+                button_TS.Text = "Start";
+
+                label_TS_ack.Text = "---";
+                label_TS_ack.ForeColor = Color.Black;
+
+                label_TS_trim0.Text = "---";
+                label_TS_trim0.ForeColor = Color.Black;
+
+                label_TS_trim1.Text = "---";
+                label_TS_trim1.ForeColor = Color.Black;
+
+                label_TS_LSB.Text = "---";
+                label_TS_LSB.ForeColor = Color.Black;
+                textBox_TS_LSB.Text = "";
+
+                label_TS_MSB.Text = "---";
+                label_TS_MSB.ForeColor = Color.Black;
+                textBox_TS_MSB.Text = "";
+
+
+                textBox_TS_trim0.Enabled = true;
+                textBox_TS_trim1.Enabled = true;
+
+            }
+            else
+            {
+
+                byte i2c_addr = Convert.ToByte(textBox_TS_i2c_addr.Text, 16);
+                /////////////////////////////////////////////////////////////////////////////////////////////
+                byte TS_trim1 = 0x00;
+                try
+                {
+                    TS_trim1 = Convert.ToByte(textBox_TS_trim1.Text, 2);
+                }
+                catch
+                {
+                    // error message
+                    MessageBox.Show("Please insert a valid trim1.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    textBox_TS_trim1.Text = "00000000";
+                    return;
+                }
+
+                byte ack = i2c_write(i2c_addr, 0x46, TS_trim1);
+                if (ack == 0)
+                {
+                    label_TS_trim1.Text = "ACK";
+                    label_TS_trim1.ForeColor = Color.Green;
+                }
+                else
+                {
+                    label_TS_trim1.Text = "Not ACK";
+                    label_TS_trim1.ForeColor = Color.Red;
+                }
+                /////////////////////////////////////////////////////////////////////////////////////////////
+                byte TS_trim0 = 0x00;
+                try
+                {
+                    TS_trim0 = Convert.ToByte(textBox_TS_trim0.Text, 2);
+                }
+                catch
+                {
+                    // error message
+                    MessageBox.Show("Please insert a valid trim0.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    textBox_TS_trim0.Text = "00000000";
+                    return;
+                }
+
+                ack = i2c_write(i2c_addr, 0x45, TS_trim0);
+                if (ack == 0)
+                {
+                    label_TS_trim0.Text = "ACK";
+                    label_TS_trim0.ForeColor = Color.Green;
+                }
+                else
+                {
+                    label_TS_trim0.Text = "Not ACK";
+                    label_TS_trim0.ForeColor = Color.Red;
+                }
+                /////////////////////////////////////////////////////////////////////////////////////////////
+                ///
+
+                textBox_TS_trim0.Enabled = false;
+                textBox_TS_trim1.Enabled = false;
+
+
+                timer_TS_refresh.Enabled = true;
+                button_TS.Text = "Stop";
+            }
+
+
+            
+            
+        }
+
+
+        private void timer_TS_refresh_Tick(object sender, EventArgs e)
+        {
+            byte i2c_addr = Convert.ToByte(textBox_TS_i2c_addr.Text, 16);
+
+            byte ack = i2c_write(i2c_addr, 0x00, 0xff);
+            if (ack == 0)
+            {
+                label_TS_ack.Text = "ACK";
+                label_TS_ack.ForeColor = Color.Green;
+                timer_TS_task.Enabled = true;
+            }
+            else
+            {
+                button_TS.PerformClick();
+                label_TS_ack.Text = "Not ACK";
+                label_TS_ack.ForeColor = Color.Red;
+            }
+        }
+
+
+        private void timer_TS_task_Tick(object sender, EventArgs e)
+        {
+            timer_TS_task.Enabled = false;
+
+            byte i2c_addr = Convert.ToByte(textBox_TS_i2c_addr.Text, 16);
+            byte ack = i2c_write(i2c_addr, 0x00, 0x00);
+
+
+            if (ack == 0)
+            {
+                label_TS_ack.Text = "ACK";
+                label_TS_ack.ForeColor = Color.Green;
+            }
+            else
+            {
+                button_TS.PerformClick();
+                label_TS_ack.Text = "Not ACK";
+                label_TS_ack.ForeColor = Color.Red;
+            }
+
+
+
+
+            ack = i2c_read(i2c_addr, 0x42); // MSB
+            if (ack == 0)
+            {
+                label_TS_MSB.Text = "ACK";
+                label_TS_MSB.ForeColor = Color.Green;
+                textBox_TS_MSB.Text = i2c_return.ToString("X").PadLeft(2, '0');
+            }
+            else
+            {
+                label_TS_MSB.Text = "Not ACK";
+                label_TS_MSB.ForeColor = Color.Red;
+                textBox_TS_MSB.Text = "";
+            }
+
+
+
+
+            ack = i2c_read(i2c_addr, 0x43); // LSB
+            if (ack == 0)
+            {
+                label_TS_LSB.Text = "ACK";
+                label_TS_LSB.ForeColor = Color.Green;
+                textBox_TS_LSB.Text = i2c_return.ToString("X").PadLeft(2, '0');
+            }
+            else
+            {
+                label_TS_LSB.Text = "Not ACK";
+                label_TS_LSB.ForeColor = Color.Red;
+                textBox_TS_LSB.Text = "";
+            }
+
+
+
+
+
+        }
+
         //###################################################################################################################################
         // Button to run FG task
         private void timer_FG_Tick(object sender, EventArgs e)
@@ -2552,6 +2733,10 @@ namespace Baykeeper_GUI
                 return 0;           // there were no bytes to read
             }
         }
+
+
+
+
 
 
         //###################################################################################################################################

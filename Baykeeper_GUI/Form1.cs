@@ -1290,6 +1290,8 @@ namespace Baykeeper_GUI
                 textBox_TS_trim0.Enabled = true;
                 textBox_TS_trim1.Enabled = true;
 
+                label_TS_temperature.Text = "Temperature: xx.xx°C";
+
             }
             else
             {
@@ -1404,13 +1406,14 @@ namespace Baykeeper_GUI
 
 
 
-
+            byte MSB = 0x00;
             ack = i2c_read(i2c_addr, 0x42); // MSB
             if (ack == 0)
             {
                 label_TS_MSB.Text = "ACK";
                 label_TS_MSB.ForeColor = Color.Green;
-                textBox_TS_MSB.Text = i2c_return.ToString("X").PadLeft(2, '0');
+                textBox_TS_MSB.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
+                MSB = i2c_return;
             }
             else
             {
@@ -1421,13 +1424,14 @@ namespace Baykeeper_GUI
 
 
 
-
+            byte LSB = 0x00;
             ack = i2c_read(i2c_addr, 0x43); // LSB
             if (ack == 0)
             {
                 label_TS_LSB.Text = "ACK";
                 label_TS_LSB.ForeColor = Color.Green;
-                textBox_TS_LSB.Text = i2c_return.ToString("X").PadLeft(2, '0');
+                textBox_TS_LSB.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
+                LSB = i2c_return;
             }
             else
             {
@@ -1436,8 +1440,22 @@ namespace Baykeeper_GUI
                 textBox_TS_LSB.Text = "";
             }
 
+            UInt32 TEMPSENS_FULL = 0X0000;
+            TEMPSENS_FULL = (Convert.ToUInt32(MSB) * 16) + Convert.ToUInt32(LSB);
 
+            double TEMPSENS_FULL_c2 = 0x0000;
 
+            if (TEMPSENS_FULL > Math.Pow(2,11))
+            {
+                TEMPSENS_FULL_c2 = (Math.Pow(2, 12) - TEMPSENS_FULL)*(-1);
+            }
+            else
+            {
+                TEMPSENS_FULL_c2 = TEMPSENS_FULL;
+            }
+            double Temp_C = TEMPSENS_FULL_c2 * 0.0625;
+
+            label_TS_temperature.Text = "Temperature: " + Convert.ToString(Temp_C) + "°C";
 
 
         }

@@ -2131,7 +2131,7 @@ namespace Baykeeper_GUI
             this.label_TS_temperature.Name = "label_TS_temperature";
             this.label_TS_temperature.Size = new System.Drawing.Size(275, 51);
             this.label_TS_temperature.TabIndex = 79;
-            this.label_TS_temperature.Text = "Temperature: xx.xx °C";
+            this.label_TS_temperature.Text = "Temperature: xx.xx°C";
             // 
             // Form1
             // 

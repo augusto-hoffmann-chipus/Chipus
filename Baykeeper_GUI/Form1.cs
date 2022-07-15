@@ -84,6 +84,7 @@ namespace Baykeeper_GUI
 
 
         static uint ACKCounter = 0;
+        static uint ZeroCounter = 0;
 
 
         const byte BKP_ADDRESS = 0x44;
@@ -556,6 +557,33 @@ namespace Baykeeper_GUI
             if (AppStatus != 0) return 1;
 
             return 0;
+        }
+
+        private byte i2c_write_and_check(byte ADDR, byte REG, byte DATA)
+        {
+            int i = 0;
+            byte status = 0;
+            while(true)
+            {
+                i2c_write(ADDR, REG, DATA);
+                i2c_read(ADDR, REG);
+                if (i2c_return == DATA)
+                {
+                    status = 0;
+                    break;
+                }
+                else
+                {
+                    i = i + 1;
+                }
+                if(i >= 10)
+                {
+                    status = 1;
+                    break;
+                }
+            }
+
+            return status;
         }
 
 
@@ -1205,8 +1233,8 @@ namespace Baykeeper_GUI
             }
 
 
-            //while(true)
-            //{
+            while(true)
+            {
             byte ack = i2c_read(i2c_addr, i2c_reg);
             if (ack == 0)
             {
@@ -1225,14 +1253,14 @@ namespace Baykeeper_GUI
                 label_i2c_ReadACK.ForeColor = Color.Red;
                 textBox_i2c_ReadData.Text = "";
                 ACKCounter = 0;
-                //break;
+                break;
             }
             if (ACKCounter >= 500)
             {
                 ACKCounter = 0;
-                //break;
+                break;
             }
-            //}
+            }
 
         }
         
@@ -1262,11 +1290,19 @@ namespace Baykeeper_GUI
         }
 
 
+        private void button_GPIO_Click(object sender, EventArgs e)
+        {
+
+            readGPIO();
+            
+        }
+
         private void button_TS_Click(object sender, EventArgs e)
         {
-            if (timer_TS_refresh.Enabled == true)
+            if ((timer_TS_refresh.Enabled == true) || (timer_TS_task.Enabled == true))
             {
                 timer_TS_refresh.Enabled = false;
+                timer_TS_task.Enabled = false;
                 button_TS.Text = "Start";
 
                 label_TS_ack.Text = "---";
@@ -1287,8 +1323,8 @@ namespace Baykeeper_GUI
                 textBox_TS_MSB.Text = "";
 
 
-                textBox_TS_trim0.Enabled = true;
-                textBox_TS_trim1.Enabled = true;
+                //textBox_TS_trim0.Enabled = true;
+                //textBox_TS_trim1.Enabled = true;
 
                 label_TS_temperature.Text = "Temperature: xx.xx°C";
 
@@ -1296,7 +1332,16 @@ namespace Baykeeper_GUI
             else
             {
 
+
+                /////////////////////////////////////////////////////////////////////////////////////////////
+                ///
+
+                //textBox_TS_trim0.Enabled = false;
+                //textBox_TS_trim1.Enabled = false;
+
                 byte i2c_addr = Convert.ToByte(textBox_TS_i2c_addr.Text, 16);
+
+
                 /////////////////////////////////////////////////////////////////////////////////////////////
                 byte TS_trim1 = 0x00;
                 try
@@ -1311,7 +1356,7 @@ namespace Baykeeper_GUI
                     return;
                 }
 
-                byte ack = i2c_write(i2c_addr, 0x46, TS_trim1);
+                byte ack = i2c_write_and_check(i2c_addr, 0x46, TS_trim1);
                 if (ack == 0)
                 {
                     label_TS_trim1.Text = "ACK";
@@ -1336,7 +1381,7 @@ namespace Baykeeper_GUI
                     return;
                 }
 
-                ack = i2c_write(i2c_addr, 0x45, TS_trim0);
+                ack = i2c_write_and_check(i2c_addr, 0x45, TS_trim0);
                 if (ack == 0)
                 {
                     label_TS_trim0.Text = "ACK";
@@ -1347,11 +1392,6 @@ namespace Baykeeper_GUI
                     label_TS_trim0.Text = "Not ACK";
                     label_TS_trim0.ForeColor = Color.Red;
                 }
-                /////////////////////////////////////////////////////////////////////////////////////////////
-                ///
-
-                textBox_TS_trim0.Enabled = false;
-                textBox_TS_trim1.Enabled = false;
 
 
                 timer_TS_refresh.Enabled = true;
@@ -1366,8 +1406,15 @@ namespace Baykeeper_GUI
 
         private void timer_TS_refresh_Tick(object sender, EventArgs e)
         {
+            timer_TS_refresh.Enabled = false;
+
             byte i2c_addr = Convert.ToByte(textBox_TS_i2c_addr.Text, 16);
 
+
+
+
+
+            //////
             byte ack = i2c_write(i2c_addr, 0x00, 0xff);
             if (ack == 0)
             {
@@ -1389,37 +1436,60 @@ namespace Baykeeper_GUI
             timer_TS_task.Enabled = false;
 
             byte i2c_addr = Convert.ToByte(textBox_TS_i2c_addr.Text, 16);
-            byte ack = i2c_write(i2c_addr, 0x00, 0x00);
+            //byte ack = i2c_write(i2c_addr, 0x00, 0x00);
 
 
-            if (ack == 0)
-            {
-                label_TS_ack.Text = "ACK";
-                label_TS_ack.ForeColor = Color.Green;
-            }
-            else
-            {
-                button_TS.PerformClick();
-                label_TS_ack.Text = "Not ACK";
-                label_TS_ack.ForeColor = Color.Red;
-            }
+            //if (ack == 0)
+            //{
+            //    label_TS_ack.Text = "ACK";
+            //    label_TS_ack.ForeColor = Color.Green;
+            //    timer_TS_refresh.Enabled = true;
+            //}
+            //else
+            //{
+            //    button_TS.PerformClick();
+            //    label_TS_ack.Text = "Not ACK";
+            //    label_TS_ack.ForeColor = Color.Red;
+            //}
 
 
 
             byte MSB = 0x00;
-            ack = i2c_read(i2c_addr, 0x42); // MSB
+            byte ack = 0;
+            byte data1 = 0;
+            byte data2 = 0;
+            while (true)
+            {
+                ack = i2c_read(i2c_addr, 0x42); // MSB
+                data1 = i2c_return;
+                ack = i2c_read(i2c_addr, 0x42); // MSB
+                data2 = i2c_return;
+                if(data1 == data2)
+                {
+                    break;
+                }
+            }
+            
             if (ack == 0)
             {
                 label_TS_MSB.Text = "ACK";
                 label_TS_MSB.ForeColor = Color.Green;
                 textBox_TS_MSB.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
                 MSB = i2c_return;
+                timer_TS_refresh.Enabled = true;
             }
             else
             {
                 label_TS_MSB.Text = "Not ACK";
                 label_TS_MSB.ForeColor = Color.Red;
                 textBox_TS_MSB.Text = "";
+                button_TS.PerformClick();
+            }
+
+            if (i2c_return == 0)
+            {
+                ZeroCounter++;
+                label_zeroCounter.Text = "Zero Counter: " + ZeroCounter.ToString();
             }
 
 
@@ -1438,6 +1508,7 @@ namespace Baykeeper_GUI
                 label_TS_LSB.Text = "Not ACK";
                 label_TS_LSB.ForeColor = Color.Red;
                 textBox_TS_LSB.Text = "";
+                button_TS.PerformClick();
             }
 
             UInt32 TEMPSENS_FULL = 0X0000;
@@ -1746,6 +1817,39 @@ namespace Baykeeper_GUI
             if (i2c_write(BKP_ADDRESS, BKP_L1_EN, 0x00) != 0) return 1;
             if (i2c_write(BKP_ADDRESS, BKP_L2_EN, 0x00) != 0) return 1;
             if (i2c_write(BKP_ADDRESS, BKP_L3_EN, 0x00) != 0) return 1;
+
+            return 0;
+        }
+
+        private byte readGPIO()
+        {
+            NumBytesToSend = 0;
+
+
+
+            MPSSEbuffer[NumBytesToSend++] = 0x83;                               //       ' Command - read high byte
+
+            // This command then tells the MPSSE to send any results gathered back immediately
+            MPSSEbuffer[NumBytesToSend++] = 0x87;                                  //    ' Send answer back immediate command
+
+            // send commands to chip
+            I2C_Status = Send_Data(NumBytesToSend);
+            if (I2C_Status != 0)
+            {
+                return 1;
+            }
+
+            // get the byte which has been read from the driver's receive buffer
+            I2C_Status = Receive_Data(1);
+            if (I2C_Status != 0)
+            {
+                return 1;
+            }
+
+            // InputBuffer2[0] now contains the results
+            //ACbusReadVal = (byte)(InputBuffer2[0]);
+
+            label_GPIO.Text = Convert.ToString(InputBuffer2[0], 2).PadLeft(8, '0');
 
             return 0;
         }
@@ -2326,21 +2430,20 @@ namespace Baykeeper_GUI
             ADbusVal = (byte)(0x00 | I2C_Data_SDAhi_SCLhi | (GPIO_Low_Dat & 0xF8));
             ADbusDir = (byte)(0x00 | I2C_Dir_SDAout_SCLout | (GPIO_Low_Dir & 0xF8));    // on FT232H lines always output
 
-            for (Count = 0; Count < 6; Count++)
+            //for (Count = 0; Count < 6; Count++)
+            for (Count = 0; Count < 18; Count++)
             {
                 MPSSEbuffer[NumBytesToSend++] = 0x80;	    // ADbus GPIO command
                 MPSSEbuffer[NumBytesToSend++] = ADbusVal;   // Set data value
                 MPSSEbuffer[NumBytesToSend++] = ADbusDir;	// Set direction
             }
-
-            for (Count = 0; Count < 6; Count++)
+            for (Count = 0; Count < 18; Count++)
             {
                 MPSSEbuffer[NumBytesToSend++] = 0x80;	    // ADbus GPIO command
                 MPSSEbuffer[NumBytesToSend++] = ADbusVal;   // Set data value
                 MPSSEbuffer[NumBytesToSend++] = ADbusDir;	// Set direction
             }
-
-            for (Count = 0; Count < 6; Count++)
+            for (Count = 0; Count < 18; Count++)
             {
                 MPSSEbuffer[NumBytesToSend++] = 0x80;	    // ADbus GPIO command
                 MPSSEbuffer[NumBytesToSend++] = ADbusVal;   // Set data value
@@ -2455,7 +2558,7 @@ namespace Baykeeper_GUI
             ADbusVal = (byte)(0x00 | I2C_Data_SDAlo_SCLlo | (GPIO_Low_Dat & 0xF8));
             ADbusDir = (byte)(0x00 | I2C_Dir_SDAout_SCLout | (GPIO_Low_Dir & 0xF8));    // on FT232H lines always output
 
-            for (Count = 0; Count < 6; Count++)
+            for (Count = 0; Count < 18; Count++)
             {
                 MPSSEbuffer[NumBytesToSend++] = 0x80;	    // ADbus GPIO command
                 MPSSEbuffer[NumBytesToSend++] = ADbusVal;   // Set data value
@@ -2466,7 +2569,7 @@ namespace Baykeeper_GUI
             ADbusVal = (byte)(0x00 | I2C_Data_SDAlo_SCLhi | (GPIO_Low_Dat & 0xF8));
             ADbusDir = (byte)(0x00 | I2C_Dir_SDAout_SCLout | (GPIO_Low_Dir & 0xF8));    // on FT232H lines always output
 
-            for (Count = 0; Count < 6; Count++)
+            for (Count = 0; Count < 18; Count++)
             {
                 MPSSEbuffer[NumBytesToSend++] = 0x80;	    // ADbus GPIO command
                 MPSSEbuffer[NumBytesToSend++] = ADbusVal;   // Set data value
@@ -2477,7 +2580,7 @@ namespace Baykeeper_GUI
             ADbusVal = (byte)(0x00 | I2C_Data_SDAhi_SCLhi | (GPIO_Low_Dat & 0xF8));
             ADbusDir = (byte)(0x00 | I2C_Dir_SDAout_SCLout | (GPIO_Low_Dir & 0xF8));        // on FT232H lines always output
 
-            for (Count = 0; Count < 6; Count++)
+            for (Count = 0; Count < 18; Count++)
             {
                 MPSSEbuffer[NumBytesToSend++] = 0x80;	    // ADbus GPIO command
                 MPSSEbuffer[NumBytesToSend++] = ADbusVal;   // Set data value
@@ -2668,7 +2771,7 @@ namespace Baykeeper_GUI
             uint TotalBytesRead = 0;
             bool QueueTimeoutFlag = false;
             uint NumBytesRxd = 0;
-
+            
             // Keep looping until all requested bytes are received or we've tried 5000 times (value can be chosen as required)
             while ((TotalBytesRead < BytesToRead) && (QueueTimeoutFlag == false))
             {
@@ -2751,6 +2854,7 @@ namespace Baykeeper_GUI
                 return 0;           // there were no bytes to read
             }
         }
+
 
 
 

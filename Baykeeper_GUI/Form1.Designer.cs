@@ -185,6 +185,9 @@ namespace Baykeeper_GUI
             this.label26 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.tabPage_TS = new System.Windows.Forms.TabPage();
+            this.label_GPIO = new System.Windows.Forms.Label();
+            this.button_GPIO = new System.Windows.Forms.Button();
+            this.label_TS_temperature = new System.Windows.Forms.Label();
             this.label_TS_LSB = new System.Windows.Forms.Label();
             this.textBox_TS_LSB = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
@@ -212,7 +215,7 @@ namespace Baykeeper_GUI
             this.timer_FG = new System.Windows.Forms.Timer(this.components);
             this.timer_TS_refresh = new System.Windows.Forms.Timer(this.components);
             this.timer_TS_task = new System.Windows.Forms.Timer(this.components);
-            this.label_TS_temperature = new System.Windows.Forms.Label();
+            this.label_zeroCounter = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage_config.SuspendLayout();
             this.tabPage_outputs.SuspendLayout();
@@ -1386,7 +1389,6 @@ namespace Baykeeper_GUI
             this.label_ACKCounter.TabIndex = 18;
             this.label_ACKCounter.Text = "ACK Counter: 0";
             this.label_ACKCounter.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.label_ACKCounter.Visible = false;
             // 
             // label_i2c_ReadbackACK
             // 
@@ -1859,6 +1861,9 @@ namespace Baykeeper_GUI
             // 
             // tabPage_TS
             // 
+            this.tabPage_TS.Controls.Add(this.label_zeroCounter);
+            this.tabPage_TS.Controls.Add(this.label_GPIO);
+            this.tabPage_TS.Controls.Add(this.button_GPIO);
             this.tabPage_TS.Controls.Add(this.label_TS_temperature);
             this.tabPage_TS.Controls.Add(this.label_TS_LSB);
             this.tabPage_TS.Controls.Add(this.textBox_TS_LSB);
@@ -1886,6 +1891,34 @@ namespace Baykeeper_GUI
             this.tabPage_TS.TabIndex = 7;
             this.tabPage_TS.Text = "TS";
             this.tabPage_TS.UseVisualStyleBackColor = true;
+            // 
+            // label_GPIO
+            // 
+            this.label_GPIO.Font = new System.Drawing.Font("Raleway SemiBold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_GPIO.Location = new System.Drawing.Point(41, 412);
+            this.label_GPIO.Name = "label_GPIO";
+            this.label_GPIO.Size = new System.Drawing.Size(275, 51);
+            this.label_GPIO.TabIndex = 81;
+            this.label_GPIO.Text = "0bxxxxxxxx";
+            // 
+            // button_GPIO
+            // 
+            this.button_GPIO.Location = new System.Drawing.Point(93, 386);
+            this.button_GPIO.Name = "button_GPIO";
+            this.button_GPIO.Size = new System.Drawing.Size(75, 23);
+            this.button_GPIO.TabIndex = 80;
+            this.button_GPIO.Text = "Read GPIO";
+            this.button_GPIO.UseVisualStyleBackColor = true;
+            this.button_GPIO.Click += new System.EventHandler(this.button_GPIO_Click);
+            // 
+            // label_TS_temperature
+            // 
+            this.label_TS_temperature.Font = new System.Drawing.Font("Raleway SemiBold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_TS_temperature.Location = new System.Drawing.Point(493, 386);
+            this.label_TS_temperature.Name = "label_TS_temperature";
+            this.label_TS_temperature.Size = new System.Drawing.Size(275, 51);
+            this.label_TS_temperature.TabIndex = 79;
+            this.label_TS_temperature.Text = "Temperature: xx.xx°C";
             // 
             // label_TS_LSB
             // 
@@ -2117,21 +2150,23 @@ namespace Baykeeper_GUI
             // 
             // timer_TS_refresh
             // 
-            this.timer_TS_refresh.Interval = 1000;
+            this.timer_TS_refresh.Interval = 500;
             this.timer_TS_refresh.Tick += new System.EventHandler(this.timer_TS_refresh_Tick);
             // 
             // timer_TS_task
             // 
+            this.timer_TS_task.Interval = 500;
             this.timer_TS_task.Tick += new System.EventHandler(this.timer_TS_task_Tick);
             // 
-            // label_TS_temperature
+            // label_zeroCounter
             // 
-            this.label_TS_temperature.Font = new System.Drawing.Font("Raleway SemiBold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_TS_temperature.Location = new System.Drawing.Point(493, 386);
-            this.label_TS_temperature.Name = "label_TS_temperature";
-            this.label_TS_temperature.Size = new System.Drawing.Size(275, 51);
-            this.label_TS_temperature.TabIndex = 79;
-            this.label_TS_temperature.Text = "Temperature: xx.xx°C";
+            this.label_zeroCounter.ForeColor = System.Drawing.Color.Black;
+            this.label_zeroCounter.Location = new System.Drawing.Point(199, 339);
+            this.label_zeroCounter.Name = "label_zeroCounter";
+            this.label_zeroCounter.Size = new System.Drawing.Size(158, 24);
+            this.label_zeroCounter.TabIndex = 82;
+            this.label_zeroCounter.Text = "Zero Counter: 0";
+            this.label_zeroCounter.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // Form1
             // 
@@ -2359,6 +2394,9 @@ namespace Baykeeper_GUI
         private System.Windows.Forms.Timer timer_TS_refresh;
         private System.Windows.Forms.Timer timer_TS_task;
         private System.Windows.Forms.Label label_TS_temperature;
+        private System.Windows.Forms.Label label_GPIO;
+        private System.Windows.Forms.Button button_GPIO;
+        private System.Windows.Forms.Label label_zeroCounter;
     }
 }
 

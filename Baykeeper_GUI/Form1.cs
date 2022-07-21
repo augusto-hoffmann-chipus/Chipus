@@ -1233,15 +1233,15 @@ namespace Baykeeper_GUI
             }
 
 
-            while(true)
-            {
+            //while(true)
+            //{
             byte ack = i2c_read(i2c_addr, i2c_reg);
             if (ack == 0)
             {
                 label_i2c_ReadACK.Text = "ACK";
                 label_i2c_ReadACK.ForeColor = Color.Green;
                 textBox_i2c_ReadData.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
-                ACKCounter++;
+                //ACKCounter++;
                 label_ACKCounter.Text = "ACK Counter: " + ACKCounter.ToString();
             }
             else
@@ -1252,15 +1252,15 @@ namespace Baykeeper_GUI
                 label_i2c_ReadACK.Text = "Not ACK";
                 label_i2c_ReadACK.ForeColor = Color.Red;
                 textBox_i2c_ReadData.Text = "";
-                ACKCounter = 0;
-                break;
+                //ACKCounter = 0;
+                //break;
             }
-            if (ACKCounter >= 500)
-            {
-                ACKCounter = 0;
-                break;
-            }
-            }
+            //if (ACKCounter >= 500)
+            ////{
+            ////    ACKCounter = 0;
+            ////    break;
+            ////}
+            //}
 
         }
         
@@ -1805,7 +1805,7 @@ namespace Baykeeper_GUI
 
         private byte baykeeperInit()
         {
-            return 0;
+            //return 0;
             // Due to wrong implementation, the following register must be trimmed before use
             // Start
 

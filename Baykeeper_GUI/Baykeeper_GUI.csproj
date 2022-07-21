@@ -13,7 +13,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>C:\Users\Chipus\Desktop\Hoffmann\baykeeper\1v0\docs\test\GUI\</PublishUrl>
+    <PublishUrl>C:\Users\Chipus\Desktop\Hoffmann\baykeeper\1v0\docs\trunk\test\GUI\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -28,7 +28,7 @@
     <ProductName>Baykeeper GUI</ProductName>
     <PublisherName>Chipus Microelectronics</PublisherName>
     <SuiteName>Chipus Microelectronics</SuiteName>
-    <ApplicationRevision>11</ApplicationRevision>
+    <ApplicationRevision>13</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>

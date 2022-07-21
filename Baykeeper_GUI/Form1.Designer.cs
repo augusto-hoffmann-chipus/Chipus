@@ -185,6 +185,7 @@ namespace Baykeeper_GUI
             this.label26 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.tabPage_TS = new System.Windows.Forms.TabPage();
+            this.label_zeroCounter = new System.Windows.Forms.Label();
             this.label_GPIO = new System.Windows.Forms.Label();
             this.button_GPIO = new System.Windows.Forms.Button();
             this.label_TS_temperature = new System.Windows.Forms.Label();
@@ -215,7 +216,6 @@ namespace Baykeeper_GUI
             this.timer_FG = new System.Windows.Forms.Timer(this.components);
             this.timer_TS_refresh = new System.Windows.Forms.Timer(this.components);
             this.timer_TS_task = new System.Windows.Forms.Timer(this.components);
-            this.label_zeroCounter = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage_config.SuspendLayout();
             this.tabPage_outputs.SuspendLayout();
@@ -1389,6 +1389,7 @@ namespace Baykeeper_GUI
             this.label_ACKCounter.TabIndex = 18;
             this.label_ACKCounter.Text = "ACK Counter: 0";
             this.label_ACKCounter.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.label_ACKCounter.Visible = false;
             // 
             // label_i2c_ReadbackACK
             // 
@@ -1892,6 +1893,16 @@ namespace Baykeeper_GUI
             this.tabPage_TS.Text = "TS";
             this.tabPage_TS.UseVisualStyleBackColor = true;
             // 
+            // label_zeroCounter
+            // 
+            this.label_zeroCounter.ForeColor = System.Drawing.Color.Black;
+            this.label_zeroCounter.Location = new System.Drawing.Point(199, 339);
+            this.label_zeroCounter.Name = "label_zeroCounter";
+            this.label_zeroCounter.Size = new System.Drawing.Size(158, 24);
+            this.label_zeroCounter.TabIndex = 82;
+            this.label_zeroCounter.Text = "Zero Counter: 0";
+            this.label_zeroCounter.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
             // label_GPIO
             // 
             this.label_GPIO.Font = new System.Drawing.Font("Raleway SemiBold", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -2119,9 +2130,9 @@ namespace Baykeeper_GUI
             this.label_copyright.Location = new System.Drawing.Point(494, 539);
             this.label_copyright.Name = "label_copyright";
             this.label_copyright.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label_copyright.Size = new System.Drawing.Size(284, 13);
+            this.label_copyright.Size = new System.Drawing.Size(285, 13);
             this.label_copyright.TabIndex = 2;
-            this.label_copyright.Text = "© 2021 Chipus Microelectronics, All Rights Reserved.";
+            this.label_copyright.Text = "© 2022 Chipus Microelectronics, All Rights Reserved.";
             this.label_copyright.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // pictureBox_chipusLogo
@@ -2157,16 +2168,6 @@ namespace Baykeeper_GUI
             // 
             this.timer_TS_task.Interval = 500;
             this.timer_TS_task.Tick += new System.EventHandler(this.timer_TS_task_Tick);
-            // 
-            // label_zeroCounter
-            // 
-            this.label_zeroCounter.ForeColor = System.Drawing.Color.Black;
-            this.label_zeroCounter.Location = new System.Drawing.Point(199, 339);
-            this.label_zeroCounter.Name = "label_zeroCounter";
-            this.label_zeroCounter.Size = new System.Drawing.Size(158, 24);
-            this.label_zeroCounter.TabIndex = 82;
-            this.label_zeroCounter.Text = "Zero Counter: 0";
-            this.label_zeroCounter.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // Form1
             // 

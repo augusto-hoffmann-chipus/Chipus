@@ -117,6 +117,7 @@ namespace Baykeeper_GUI
 
         public Form1()
         {
+
             InitializeComponent();
             if (ApplicationDeployment.IsNetworkDeployed)
             {
@@ -125,7 +126,7 @@ namespace Baykeeper_GUI
             }
 
 
-
+            
 
             device_disconnected();
         }
@@ -415,6 +416,8 @@ namespace Baykeeper_GUI
             timer_TS_task.Enabled = false;
             button_TS.Text = "Start Conversion";
             button_TS.Enabled = false;
+            textBox_TS_trim0.Enabled = true;
+            textBox_TS_trim1.Enabled = true;
 
             label_TS_ack.Text = "---";
             label_TS_ack.ForeColor = Color.Black;
@@ -441,7 +444,7 @@ namespace Baykeeper_GUI
 
             textBox_TS_i2c_addr.Enabled = false;
 
-            label_TS_temperature.Text = "--.--°C";
+            label_TS_temperature.Text = "--.--";
 
             label_boardID.Text = "---";
 
@@ -465,6 +468,8 @@ namespace Baykeeper_GUI
                 timer_TS_refresh.Enabled = false;
                 timer_TS_task.Enabled = false;
                 button_TS.Text = "Start Conversion";
+                textBox_TS_trim0.Enabled = true;
+                textBox_TS_trim1.Enabled = true;
 
                 label_TS_ack.Text = "---";
                 label_TS_ack.ForeColor = Color.Black;
@@ -487,7 +492,7 @@ namespace Baykeeper_GUI
                 //textBox_TS_trim0.Enabled = true;
                 //textBox_TS_trim1.Enabled = true;
 
-                label_TS_temperature.Text = "--.--°C";
+                label_TS_temperature.Text = "--.--";
 
                 //label_boardID.Text = "---";
 
@@ -499,8 +504,6 @@ namespace Baykeeper_GUI
                 /////////////////////////////////////////////////////////////////////////////////////////////
                 ///
 
-                //textBox_TS_trim0.Enabled = false;
-                //textBox_TS_trim1.Enabled = false;
 
                 byte i2c_addr = Convert.ToByte(textBox_TS_i2c_addr.Text, 16);
 
@@ -564,6 +567,8 @@ namespace Baykeeper_GUI
                 TSon = 1;
                 timer_TS_refresh.Enabled = true;
                 button_TS.Text = "Stop Conversion";
+                textBox_TS_trim0.Enabled = false;
+                textBox_TS_trim1.Enabled = false;
             }
 
 
@@ -662,9 +667,9 @@ namespace Baykeeper_GUI
 
             UInt32 TEMPSENS_FULL = 0X0000;
             TEMPSENS_FULL = (Convert.ToUInt32(MSB) * 16) + Convert.ToUInt32(LSB);
-
+            
             double TEMPSENS_FULL_c2 = 0x0000;
-
+            
             if (TEMPSENS_FULL > Math.Pow(2, 11))
             {
                 TEMPSENS_FULL_c2 = (Math.Pow(2, 12) - TEMPSENS_FULL) * (-1);
@@ -674,8 +679,9 @@ namespace Baykeeper_GUI
                 TEMPSENS_FULL_c2 = TEMPSENS_FULL;
             }
             double Temp_C = TEMPSENS_FULL_c2 * 0.0625;
+            
+            label_TS_temperature.Text = Convert.ToString(Temp_C);
 
-            label_TS_temperature.Text = Convert.ToString(Temp_C) + "°C";
 
 
         }
@@ -1842,6 +1848,11 @@ namespace Baykeeper_GUI
             {
                 return 0;           // there were no bytes to read
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Bits <7..3> = Fine adjustment of B coefficent of equation" + System.Environment.NewLine + "Bits <2..0> = MSB bits of the Temperature trimming", "MSB Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
 

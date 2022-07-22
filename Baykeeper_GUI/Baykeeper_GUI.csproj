@@ -28,7 +28,7 @@
     <ProductName>Baykeeper GUI</ProductName>
     <PublisherName>Chipus Microelectronics</PublisherName>
     <SuiteName>Chipus Microelectronics</SuiteName>
-    <ApplicationRevision>13</ApplicationRevision>
+    <ApplicationRevision>14</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -142,6 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <None Include="imgs\equation.PNG" />
     <None Include="imgs\temperature.png" />
     <None Include="imgs\boardID.png" />
     <None Include="imgs\icon.png" />

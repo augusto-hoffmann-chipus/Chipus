@@ -142,6 +142,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <None Include="imgs\temperature.png" />
+    <None Include="imgs\boardID.png" />
     <None Include="imgs\icon.png" />
     <None Include="imgs\chipusLogo_100x22px.png" />
     <None Include="imgs\chipusLogo_300x80px.png" />

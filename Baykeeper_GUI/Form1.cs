@@ -37,8 +37,8 @@ namespace Baykeeper_GUI
         // ###### I2C Library defines ######
         const byte I2C_Dir_SDAin_SCLin = 0x00;
         const byte I2C_Dir_SDAin_SCLout = 0x01;
-        const byte I2C_Dir_SDAout_SCLout = 0x03;
         const byte I2C_Dir_SDAout_SCLin = 0x02;
+        const byte I2C_Dir_SDAout_SCLout = 0x03;
         const byte I2C_Data_SDAhi_SCLhi = 0x03;
         const byte I2C_Data_SDAlo_SCLhi = 0x01;
         const byte I2C_Data_SDAlo_SCLlo = 0x00;
@@ -77,14 +77,15 @@ namespace Baykeeper_GUI
 
         static byte[] ADCData = new byte[500];
         static byte i2c_return = 0x00;
-        static Int16 ADCvalue = 0;
+        //static Int16 ADCvalue = 0;
 
 
-        // ###### Baykeeper defines ######
+        // ###### Sambaqui defines ######
+        static uint TSon = 0;
 
 
-        static uint ACKCounter = 0;
-        static uint ZeroCounter = 0;
+        static byte trim_LSB = 0b_11111111; //default
+        static byte trim_MSB = 0b_00000001; //default
 
 
         const byte BKP_ADDRESS = 0x44;
@@ -92,20 +93,9 @@ namespace Baykeeper_GUI
         // COMMAND
         const byte BKP_TASK0 = 0X00;
         const byte BKP_TASK1 = 0X01;
-        // PWR PATH
-        const byte BKP_RG_FLAG = 0X10;
-        const byte BKP_RG_DBEN = 0X11;
-        const byte BKP_RG_DBDATA = 0X12;
-        const byte BKP_RG_DBOCTRL = 0X13;
-        const byte BKP_RG_ILIM = 0X14;
-        const byte BKP_RG_EN = 0X15;
-        const byte BKP_RG_TRIM0 = 0X16;
         // OSC
         const byte BKP_OSC_EN = 0X20;
         const byte BKP_OSC_TRIM = 0X21;
-        // DBG
-        const byte BKP_DBG_DEMUX_IN_SEL = 0X30;
-        const byte BKP_DBG_MUX_OUT_SEL = 0X31;
         // TEMPERATURE SENSOR
         const byte BKP_TS_EVNT1 = 0X40;
         const byte BKP_TS_CTRL0 = 0X41;
@@ -114,70 +104,8 @@ namespace Baykeeper_GUI
         const byte BKP_TS_DBEN = 0X44;
         const byte BKP_TS_TRIM0 = 0X45;
         const byte BKP_TS_TRIM1 = 0X46;
-        // BATTERY CHARGER
-        const byte BKP_BC_CHGST = 0X50;
-        const byte BKP_BC_NTC = 0X51;
-        const byte BKP_BC_FLAG0 = 0X52;
-        const byte BKP_BC_FLAG1 = 0X53;
-        const byte BKP_BC_DBEN0 = 0X54;
-        const byte BKP_BC_DBEN1 = 0X55;
-        const byte BKP_BC_DBDATA0 = 0X56;
-        const byte BKP_BC_DBDATA1 = 0X57;
-        const byte BKP_BC_DBOCTRL = 0X58;
-        const byte BKP_BC_TRIM0 = 0X59;
-        const byte BKP_BC_TRIM1 = 0X5A;
-        const byte BKP_BC_CTRL0 = 0X5B;
-        const byte BKP_BC_CTRL1 = 0X5C;
-        const byte BKP_BC_CTRL2 = 0X5D;
-        const byte BKP_BC_CTRL3 = 0X5E;
-        const byte BKP_BC_EN0 = 0X5F;
-        const byte BKP_BC_EN1 = 0X60;
-        const byte BKP_BC_EN2 = 0X61;
-        // FUEL GAUGE
-        const byte BKP_FG_M0_DATA_MSB = 0X70;
-        const byte BKP_FG_M0_DATA_LSB = 0X71;
-        const byte BKP_FG_M1_DATA_MSB = 0X72;
-        const byte BKP_FG_M1_DATA_LSB = 0X73;
-        const byte BKP_FG_TIME_CTRL = 0X74;
-        const byte BKP_FG_DBEN = 0X75;
-        const byte BKP_FG_CTRL0 = 0X76;
-        const byte BKP_FG_EN = 0X77;
-        const byte BKP_FG_TRIM_MODE0 = 0X78;
-        const byte BKP_FG_TRIM_MODE1 = 0X79;
-        // ULP PMU
-        const byte BKP_UL_DBDATA = 0X80;
-        const byte BKP_UL_DBEN = 0X81;
-        const byte BKP_UL_DBCTRL = 0X82;
-        const byte BKP_UL_CTRL0 = 0X83;
-        const byte BKP_UL_CTRL1 = 0X84;
-        const byte BKP_UL_EN = 0X85;
-        const byte BKP_UL_TRIM0 = 0X86;
-        const byte BKP_UL_TRIM1 = 0X87;
-        const byte BKP_UL_TRIM2 = 0X88;
-        const byte BKP_UL_TRIM3 = 0X89;
-        // SIMO
-        const byte BKP_SIMO_DBEN = 0X90;
-        const byte BKP_SIMO_DBCTRL0 = 0X91;
-        const byte BKP_SIMO_DBCTRL1 = 0X92;
-        const byte BKP_SIMO_EN = 0X93;
-        const byte BKP_SIMO_CTRL0 = 0X94;
-        const byte BKP_SIMO_CTRL1 = 0X95;
-        const byte BKP_SIMO_CTRL2 = 0X96;
-        const byte BKP_SIMO_CTRL3 = 0X97;
-        const byte BKP_SIMO_TRIM0 = 0X98;
-        const byte BKP_SIMO_TRIM1 = 0X99;
-        const byte BKP_SIMO_TRIM2 = 0X9A;
-        const byte BKP_SIMO_TRIM3 = 0X9B;
-        // LDO
-        const byte BKP_L1_CTRL0 = 0XA0;
-        const byte BKP_L1_EN = 0XA1;
-        const byte BKP_L1_TRIM0 = 0XA2;
-        const byte BKP_L2_CTRL0 = 0XA3;
-        const byte BKP_L2_EN = 0XA4;
-        const byte BKP_L2_TRIM0 = 0XA5;
-        const byte BKP_L3_CTRL0 = 0XA6;
-        const byte BKP_L3_EN = 0XA7;
-        const byte BKP_L3_TRIM0 = 0XA8;
+
+
         //public const byte reg = 0x29; // add registers here
         uint devcount = 0;
 
@@ -189,17 +117,15 @@ namespace Baykeeper_GUI
 
         public Form1()
         {
-            InitializeComponent(); 
+            InitializeComponent();
             if (ApplicationDeployment.IsNetworkDeployed)
             {
-                this.Text = string.Format("Chipus - Baykeeper GUI (" +
+                this.Text = string.Format("Chipus - Sambaqui GUI (" +
                     ApplicationDeployment.CurrentDeployment.CurrentVersion) + ")";
             }
 
 
 
-            // Tab do debug Dubbel ADC, removed in this application
-            tabControl1.TabPages.Remove(tabPage_ADS112C04);
 
             device_disconnected();
         }
@@ -293,7 +219,7 @@ namespace Baykeeper_GUI
 
         private void linkLabel_tabAbout_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            
+
             // Specify that the link was visited.
             this.linkLabel_tabAbout.LinkVisited = true;
 
@@ -303,199 +229,6 @@ namespace Baykeeper_GUI
 
 
 
-
-
-
-        ///////////////////////////////////// Output Buttons Handle ///////////
-        private void button_outputLDO1_Click(object sender, EventArgs e)
-        {
-            if (i2c_read(BKP_ADDRESS, BKP_L1_EN) == 0) // read current state
-            {
-                if (i2c_return == 0) // enable bit is set low (output off)
-                {
-                    if (outputOn(BKP_L1_EN) == 0) // no error
-                    {
-                        button_outputLDO1.Text = "OFF";
-                        pictureBox_statusLDO1.Image = Properties.Resources.outputStatusOn;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Oops, something wrong turning LDO1 on.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-                else
-                {
-                    if (outputOff(BKP_L1_EN) == 0) // no error
-                    {
-                        button_outputLDO1.Text = "ON";
-                        pictureBox_statusLDO1.Image = Properties.Resources.outputStatusOff;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Oops, something wrong turning LDO1 off.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
-            else // error message
-            {
-                MessageBox.Show("Error accessing BKP_L1_EN register.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void button_outputLDO2_Click(object sender, EventArgs e)
-        {
-            if (i2c_read(BKP_ADDRESS, BKP_L2_EN) == 0) // read current state
-            {
-                if (i2c_return == 0) // enable bit is set low (output off)
-                {
-                    if (outputOn(BKP_L2_EN) == 0) // no error
-                    {
-                        button_outputLDO2.Text = "OFF";
-                        pictureBox_statusLDO2.Image = Properties.Resources.outputStatusOn;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Oops, something wrong turning LDO2 on.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-                else
-                {
-                    if (outputOff(BKP_L2_EN) == 0) // no error
-                    {
-                        button_outputLDO2.Text = "ON";
-                        pictureBox_statusLDO2.Image = Properties.Resources.outputStatusOff;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Oops, something wrong turning LDO2 off.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
-            else // error message
-            {
-                MessageBox.Show("Error accessing BKP_L2_EN register.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void button_outputLDO3_Click(object sender, EventArgs e)
-        {
-            if (i2c_read(BKP_ADDRESS, BKP_L3_EN) == 0) // read current state
-            {
-                if (i2c_return == 0) // enable bit is set low (output off)
-                {
-                    if (outputOn(BKP_L3_EN) == 0) // no error
-                    {
-                        button_outputLDO3.Text = "OFF";
-                        pictureBox_statusLDO3.Image = Properties.Resources.outputStatusOn;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Oops, something wrong turning LDO3 on.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-                else
-                {
-                    if (outputOff(BKP_L3_EN) == 0) // no error
-                    {
-                        button_outputLDO3.Text = "ON";
-                        pictureBox_statusLDO3.Image = Properties.Resources.outputStatusOff;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Oops, something wrong turning LDO3 off.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
-            else // error message
-            {
-                MessageBox.Show("Error accessing BKP_L3_EN register.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void button_outputVDCDC1_Click(object sender, EventArgs e)
-        {
-            // to be implemented
-        }
-
-        private void button_outputVDCDC2_Click(object sender, EventArgs e)
-        {
-            // to be implemented
-        }
-
-        private void button_outputAllOn_Click(object sender, EventArgs e)
-        {
-            if (outputOn(BKP_L1_EN) == 0) // no error
-            {
-                button_outputLDO1.Text = "OFF";
-                pictureBox_statusLDO1.Image = Properties.Resources.outputStatusOn;
-            }
-            else
-            {
-                MessageBox.Show("Oops, something wrong turning LDO1 on.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            if (outputOn(BKP_L2_EN) == 0) // no error
-            {
-                button_outputLDO2.Text = "OFF";
-                pictureBox_statusLDO2.Image = Properties.Resources.outputStatusOn;
-            }
-            else
-            {
-                MessageBox.Show("Oops, something wrong turning LDO2 on.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            if (outputOn(BKP_L3_EN) == 0) // no error
-            {
-                button_outputLDO3.Text = "OFF";
-                pictureBox_statusLDO3.Image = Properties.Resources.outputStatusOn;
-            }
-            else
-            {
-                MessageBox.Show("Oops, something wrong turning LDO3 on.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-
-
-            // others outputs to be added
-        }
-
-        private void button_outputAllOff_Click(object sender, EventArgs e)
-        {
-            if (outputOff(BKP_L1_EN) == 0) // no error
-            {
-                button_outputLDO1.Text = "ON";
-                pictureBox_statusLDO1.Image = Properties.Resources.outputStatusOff;
-            }
-            else
-            {
-                MessageBox.Show("Oops, something wrong turning LDO1 off.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-
-            if (outputOff(BKP_L2_EN) == 0) // no error
-            {
-                button_outputLDO2.Text = "ON";
-                pictureBox_statusLDO2.Image = Properties.Resources.outputStatusOff;
-            }
-            else
-            {
-                MessageBox.Show("Oops, something wrong turning LDO2 off.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-
-            if (outputOff(BKP_L3_EN) == 0) // no error
-            {
-                button_outputLDO3.Text = "ON";
-                pictureBox_statusLDO3.Image = Properties.Resources.outputStatusOff;
-            }
-            else
-            {
-                MessageBox.Show("Oops, something wrong turning LDO3 off.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-
-            // others outputs to be added
-        }
 
 
         private byte outputOn(byte REG)
@@ -563,7 +296,7 @@ namespace Baykeeper_GUI
         {
             int i = 0;
             byte status = 0;
-            while(true)
+            while (true)
             {
                 i2c_write(ADDR, REG, DATA);
                 i2c_read(ADDR, REG);
@@ -576,7 +309,7 @@ namespace Baykeeper_GUI
                 {
                     i = i + 1;
                 }
-                if(i >= 10)
+                if (i >= 10)
                 {
                     status = 1;
                     break;
@@ -624,140 +357,18 @@ namespace Baykeeper_GUI
         }
 
 
-        //###################################################################################################################################
-        // Reads ADC and update screen
-        // Must be deleted to use with Baykeeper
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            i2c_read_ADS112C04(0x40, 0x10);
-            textBox6.Text = Convert.ToString(ADCData[0], 2).PadLeft(8, '0');
-            textBox5.Text = Convert.ToString(ADCData[1], 2).PadLeft(8, '0');
-
-
-            int gain = 1;
-            try
-            {
-                gain = Convert.ToUInt16(textBox7.Text);
-            }
-            catch
-            { }
-
-
-            double vref = 2.048;
-            try
-            {
-                vref = Convert.ToDouble(textBox8.Text);
-            }
-            catch
-            { }
-            double voltage = ((2 * vref / gain) / Math.Pow(2, 16)) * ADCvalue;
-
-
-            label_voltage.Text = (1000 * voltage).ToString() + " mV";
-
-
-            i2c_write(0x40, 0x08, 0x00);
-        }
-
-
-        //###################################################################################################################################
-        // Write ADS122C04 config register and start conversion
-        // Tested and validated
-        private void button_writeADS_Click(object sender, EventArgs e)
-        {
-            byte data0x40 = Convert.ToByte(textBox_ADS0x40.Text, 16);
-            byte data0x44 = Convert.ToByte(textBox_ADS0x44.Text, 16);
-            byte data0x48 = Convert.ToByte(textBox_ADS0x48.Text, 16);
-            byte data0x4c = Convert.ToByte(textBox_ADS0x4c.Text, 16);
-
-            i2c_write(0x40, 0x40, data0x40);
-            i2c_write(0x40, 0x44, data0x44);
-            i2c_write(0x40, 0x48, data0x48);
-            i2c_write(0x40, 0x4c, data0x4c);
-
-
-            i2c_write(0x40, 0x08, data0x4c); // dummy data
-        }
-
-
-        //###################################################################################################################################
-        // Read back ADS122C04 config register to check if it was well writen
-        // Tested and validated
-        private void button_readADS_Click(object sender, EventArgs e)
-        {
-            byte data0x40 = i2c_read(0x40, 0x20);
-            byte data0x44 = i2c_read(0x40, 0x24);
-            byte data0x48 = i2c_read(0x40, 0x28);
-            byte data0x4c = i2c_read(0x40, 0x2c);
-
-
-
-            textBox4.Text = data0x40.ToString("X").PadLeft(2, '0');
-            textBox3.Text = data0x44.ToString("X").PadLeft(2, '0');
-            textBox2.Text = data0x48.ToString("X").PadLeft(2, '0');
-            textBox1.Text = data0x4c.ToString("X").PadLeft(2, '0');
-        }
-
-
-        //###################################################################################################################################
-        // Enable 1.5 second timer to constantly reading ADS122C04
-        // Could be deleted to use only with baykeeper
-        private void button_readData_Click(object sender, EventArgs e)
-        {
-            timer1.Enabled = true;
-        }
 
 
         //###################################################################################################################################
         // This funcion reads 2 following data from REG and REG+1 an write on a global variable called ADCvalue
         // Used to test ADS112C04 and verified
-        private byte i2c_read_ADS112C04(byte ADDR, byte REG)
-        {
-
-            AppStatus = I2C_SetStart();                                                     // I2C START
-            if (AppStatus != 0) return 1;
-
-            AppStatus = I2C_SendDeviceAddrAndCheckACK((byte)(ADDR), false);        // I2C ADDRESS (for write)
-            if (AppStatus != 0) return 1;
-            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
-
-            AppStatus = I2C_SendByteAndCheckACK((byte)(REG));                              // SEND REGISTER ID
-            if (AppStatus != 0) return 1;
-            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
-
-            AppStatus = I2C_SetStart();                                                     // REPEAT START
-            if (AppStatus != 0) return 1;
-
-            AppStatus = I2C_SendDeviceAddrAndCheckACK((byte)(ADDR), true);                      // I2C ADDRESS (for read)
-            if (AppStatus != 0) return 1;
-            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
-
-            AppStatus = I2C_ReadByte(true);                                                 // I2C READ (send Ack)
-            if (AppStatus != 0) return 1;
-
-            ADCData[0] = InputBuffer2[0];                                              // Get the byte read
-
-            AppStatus = I2C_ReadByte(false);                                                 // I2C READ (send Ack)
-            if (AppStatus != 0) return 1;
-
-            ADCData[1] = InputBuffer2[0];                                              // Get the byte read
-
-            AppStatus = I2C_SetStop();                                                      // I2C STOP
-            if (AppStatus != 0) return 1;
-
-            ADCvalue = (Int16)((ADCData[0] << 8) | ADCData[1]);
-
-            return 0;
-
-        }
-
 
         //###################################################################################################################################
         // A 1 second timer is enabled after connected to detect if the connection is still avaiable
-        // An unused GPIO is set to high value in order to check if FTDI is answering
+        // An unused GPIO is read in order to check if FTDI is answering
         private void timer_disconnect_Tick(object sender, EventArgs e)
         {
-            AppStatus = I2C_SetGPIOValuesHigh(0x40, 0x40);  // set direction of AC6 as output, value is 1 (high) for LED off
+            AppStatus = I2C_GetGPIOValuesLow();
 
             //If write to MPSSE failed (e.g. device unplugged) then stop running
             if (AppStatus != 0)
@@ -776,7 +387,6 @@ namespace Baykeeper_GUI
         private void device_disconnected()
         {
             // Close the FTDI device and then close the window
-            timer1.Enabled = false;
             timer_disconnect.Enabled = false;
 
 
@@ -789,30 +399,6 @@ namespace Baykeeper_GUI
             label_serialPortStatus.Text = "Disconnected";
             label_serialPortStatus.ForeColor = Color.Red;
 
-            ///////////////////////////////////////////////////////////////////
-            /// TAB "Outputs"
-            ///////////////////////////////////////////////////////////////////
-            button_outputLDO1.Enabled = false;
-            button_outputLDO2.Enabled = false;
-            button_outputLDO3.Enabled = false;
-            button_outputVDCDC1.Enabled = false;
-            button_outputVDCDC2.Enabled = false;
-            button_outputAllOn.Enabled = false;
-            button_outputAllOff.Enabled = false;
-            pictureBox_statusLDO1.Image = Properties.Resources.outputStatusOff;
-            pictureBox_statusLDO2.Image = Properties.Resources.outputStatusOff;
-            pictureBox_statusLDO3.Image = Properties.Resources.outputStatusOff;
-            pictureBox_statusVDCDC1.Image = Properties.Resources.outputStatusOff;
-            pictureBox_statusVDCDC2.Image = Properties.Resources.outputStatusOff;
-
-
-
-            ///////////////////////////////////////////////////////////////////
-            /// TAB "Battery Charger"
-            ///////////////////////////////////////////////////////////////////
-            progressBar1.Value = 0;
-            label_battery.Text = "0%";
-
 
             ///////////////////////////////////////////////////////////////////
             /// TAB "About"
@@ -821,376 +407,43 @@ namespace Baykeeper_GUI
 
 
             ///////////////////////////////////////////////////////////////////
-            /// TAB "ADS112C04"
+            /// TAB "Temperature Sensor"
             ///////////////////////////////////////////////////////////////////
-            textBox_ADS0x40.Text = "00";
-            textBox_ADS0x40.Enabled = false;
-            textBox_ADS0x44.Text = "00";
-            textBox_ADS0x44.Enabled = false;
-            textBox_ADS0x48.Text = "00";
-            textBox_ADS0x48.Enabled = false;
-            textBox_ADS0x4c.Text = "00";
-            textBox_ADS0x4c.Enabled = false;
+            TSon = 0;
 
-            button_writeADS.Enabled = false;
+            timer_TS_refresh.Enabled = false;
+            timer_TS_task.Enabled = false;
+            button_TS.Text = "Start Conversion";
+            button_TS.Enabled = false;
 
+            label_TS_ack.Text = "---";
+            label_TS_ack.ForeColor = Color.Black;
 
-            textBox4.Text = "00";
-            textBox3.Text = "00";
-            textBox2.Text = "00";
-            textBox1.Text = "00";
+            label_TS_trim0.Text = "---";
+            label_TS_trim0.ForeColor = Color.Black;
+            textBox_TS_trim0.Enabled = false;
 
-            button_readADS.Enabled = false;
+            label_TS_trim1.Text = "---";
+            label_TS_trim1.ForeColor = Color.Black;
+            textBox_TS_trim1.Enabled = false;
 
-            button_readData.Enabled = false;
+            label_TS_LSB.Text = "---";
+            label_TS_LSB.ForeColor = Color.Black;
+            textBox_TS_LSB.Text = "";
 
-            textBox5.Text = "XXXXXXXX";
-            textBox6.Text = "XXXXXXXX";
-            textBox7.Text = "128";
-            textBox8.Text = "2,048";
-            label_voltage.Text = "X,XX mV";
-
+            label_TS_MSB.Text = "---";
+            label_TS_MSB.ForeColor = Color.Black;
+            textBox_TS_MSB.Text = "";
 
 
+            //textBox_TS_trim0.Enabled = true;
+            //textBox_TS_trim1.Enabled = true;
 
+            textBox_TS_i2c_addr.Enabled = false;
 
+            label_TS_temperature.Text = "--.--°C";
 
-        }
-
-        //###################################################################################################################################
-        // Write button on I2C tab
-        private void button1_Click(object sender, EventArgs e)
-        {
-            textBox_i2c_Readback.Text = "";
-
-            byte i2c_addr = 0x00;
-            byte i2c_reg = 0x00;
-            byte i2c_data = 0x00;
-
-            try
-            {
-                i2c_addr = Convert.ToByte(textBox_i2c_SlaveAddr.Text, 16);
-                textBox_i2c_SlaveAddr.Text = i2c_addr.ToString("X").PadLeft(2, '0');
-            }
-            catch
-            {
-                // error message
-                MessageBox.Show("Please insert a valid slave address.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                textBox_i2c_SlaveAddr.Text = "00";
-                return;
-            }
-
-            try
-            {
-                i2c_reg = Convert.ToByte(textBox_i2c_WriteReg.Text, 16);
-                textBox_i2c_WriteReg.Text = i2c_reg.ToString("X").PadLeft(2, '0');
-            }
-            catch
-            {
-                // error message
-                MessageBox.Show("Please insert a valid register address.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                textBox_i2c_WriteReg.Text = "00";
-                return;
-            }
-
-            try
-            {
-                i2c_data = Convert.ToByte(textBox_i2c_WriteData.Text, 2);
-                textBox_i2c_WriteData.Text = Convert.ToString(i2c_data, 2).PadLeft(8, '0');
-            }
-            catch
-            {
-                // error message
-                MessageBox.Show("Please insert a valid data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                textBox_i2c_WriteData.Text = "00000000";
-                return;
-            }
-
-
-
-
-            byte ack = i2c_write(i2c_addr, i2c_reg, i2c_data);
-
-
-            if (ack == 0)
-            {
-                label_i2c_WriteACK.Text = "ACK";
-                label_i2c_WriteACK.ForeColor = Color.Green;
-
-                if (checkBox_readback.Checked)
-                {
-
-                    byte readback = i2c_read(i2c_addr, i2c_reg);
-                    if (readback == 0)
-                    {
-                        label_i2c_ReadbackACK.Text = "ACK";
-                        label_i2c_ReadbackACK.ForeColor = Color.Green;
-                        textBox_i2c_Readback.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
-                    }
-                    else
-                    {
-                        /***** Flush the buffer *****/
-                        I2C_Status = FlushBuffer();
-
-                        textBox_i2c_Readback.Text = "";
-                        label_i2c_ReadbackACK.Text = "Not ACK";
-                        label_i2c_ReadbackACK.ForeColor = Color.Red;
-                    }
-
-                    byte readback0x90 = i2c_read(i2c_addr, 0x90);
-                    if (readback0x90 == 0)
-                    {
-                        label_i2c_ReadbackACK0x90.Text = "ACK";
-                        label_i2c_ReadbackACK0x90.ForeColor = Color.Green;
-                        textBox_i2c_Readback0x90.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
-                    }
-                    else
-                    {
-                        /***** Flush the buffer *****/
-                        I2C_Status = FlushBuffer();
-
-                        textBox_i2c_Readback0x90.Text = "";
-                        label_i2c_ReadbackACK0x90.Text = "Not ACK";
-                        label_i2c_ReadbackACK0x90.ForeColor = Color.Red;
-                    }
-
-                    byte readback0x91 = i2c_read(i2c_addr, 0x91);
-                    if (readback0x91 == 0)
-                    {
-                        label_i2c_ReadbackACK0x91.Text = "ACK";
-                        label_i2c_ReadbackACK0x91.ForeColor = Color.Green;
-                        textBox_i2c_Readback0x91.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
-                    }
-                    else
-                    {
-                        /***** Flush the buffer *****/
-                        I2C_Status = FlushBuffer();
-
-                        textBox_i2c_Readback0x91.Text = "";
-                        label_i2c_ReadbackACK0x91.Text = "Not ACK";
-                        label_i2c_ReadbackACK0x91.ForeColor = Color.Red;
-                    }
-
-                    byte readback0x92 = i2c_read(i2c_addr, 0x92);
-                    if (readback0x92 == 0)
-                    {
-                        label_i2c_ReadbackACK0x92.Text = "ACK";
-                        label_i2c_ReadbackACK0x92.ForeColor = Color.Green;
-                        textBox_i2c_Readback0x92.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
-                    }
-                    else
-                    {
-                        /***** Flush the buffer *****/
-                        I2C_Status = FlushBuffer();
-
-                        textBox_i2c_Readback0x92.Text = "";
-                        label_i2c_ReadbackACK0x92.Text = "Not ACK";
-                        label_i2c_ReadbackACK0x92.ForeColor = Color.Red;
-                    }
-
-                    byte readback0x93 = i2c_read(i2c_addr, 0x93);
-                    if (readback0x93 == 0)
-                    {
-                        label_i2c_ReadbackACK0x93.Text = "ACK";
-                        label_i2c_ReadbackACK0x93.ForeColor = Color.Green;
-                        textBox_i2c_Readback0x93.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
-                    }
-                    else
-                    {
-                        /***** Flush the buffer *****/
-                        I2C_Status = FlushBuffer();
-
-                        textBox_i2c_Readback0x93.Text = "";
-                        label_i2c_ReadbackACK0x93.Text = "Not ACK";
-                        label_i2c_ReadbackACK0x93.ForeColor = Color.Red;
-                    }
-
-                    byte readback0x94 = i2c_read(i2c_addr, 0x94);
-                    if (readback0x94 == 0)
-                    {
-                        label_i2c_ReadbackACK0x94.Text = "ACK";
-                        label_i2c_ReadbackACK0x94.ForeColor = Color.Green;
-                        textBox_i2c_Readback0x94.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
-                    }
-                    else
-                    {
-                        /***** Flush the buffer *****/
-                        I2C_Status = FlushBuffer();
-
-                        textBox_i2c_Readback0x94.Text = "";
-                        label_i2c_ReadbackACK0x94.Text = "Not ACK";
-                        label_i2c_ReadbackACK0x94.ForeColor = Color.Red;
-                    }
-
-                    byte readback0x95 = i2c_read(i2c_addr, 0x95);
-                    if (readback0x95 == 0)
-                    {
-                        label_i2c_ReadbackACK0x95.Text = "ACK";
-                        label_i2c_ReadbackACK0x95.ForeColor = Color.Green;
-                        textBox_i2c_Readback0x95.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
-                    }
-                    else
-                    {
-                        /***** Flush the buffer *****/
-                        I2C_Status = FlushBuffer();
-
-                        textBox_i2c_Readback0x95.Text = "";
-                        label_i2c_ReadbackACK0x95.Text = "Not ACK";
-                        label_i2c_ReadbackACK0x95.ForeColor = Color.Red;
-                    }
-
-                    byte readback0x96 = i2c_read(i2c_addr, 0x96);
-                    if (readback0x96 == 0)
-                    {
-                        label_i2c_ReadbackACK0x96.Text = "ACK";
-                        label_i2c_ReadbackACK0x96.ForeColor = Color.Green;
-                        textBox_i2c_Readback0x96.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
-                    }
-                    else
-                    {
-                        /***** Flush the buffer *****/
-                        I2C_Status = FlushBuffer();
-
-                        textBox_i2c_Readback0x96.Text = "";
-                        label_i2c_ReadbackACK0x96.Text = "Not ACK";
-                        label_i2c_ReadbackACK0x96.ForeColor = Color.Red;
-                    }
-
-                    byte readback0x97 = i2c_read(i2c_addr, 0x97);
-                    if (readback0x97 == 0)
-                    {
-                        label_i2c_ReadbackACK0x97.Text = "ACK";
-                        label_i2c_ReadbackACK0x97.ForeColor = Color.Green;
-                        textBox_i2c_Readback0x97.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
-                    }
-                    else
-                    {
-                        /***** Flush the buffer *****/
-                        I2C_Status = FlushBuffer();
-
-                        textBox_i2c_Readback0x97.Text = "";
-                        label_i2c_ReadbackACK0x97.Text = "Not ACK";
-                        label_i2c_ReadbackACK0x97.ForeColor = Color.Red;
-                    }
-
-                    byte readback0x98 = i2c_read(i2c_addr, 0x98);
-                    if (readback0x98 == 0)
-                    {
-                        label_i2c_ReadbackACK0x98.Text = "ACK";
-                        label_i2c_ReadbackACK0x98.ForeColor = Color.Green;
-                        textBox_i2c_Readback0x98.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
-                    }
-                    else
-                    {
-                        /***** Flush the buffer *****/
-                        I2C_Status = FlushBuffer();
-
-                        textBox_i2c_Readback0x98.Text = "";
-                        label_i2c_ReadbackACK0x98.Text = "Not ACK";
-                        label_i2c_ReadbackACK0x98.ForeColor = Color.Red;
-                    }
-
-                    byte readback0x99 = i2c_read(i2c_addr, 0x99);
-                    if (readback0x99 == 0)
-                    {
-                        label_i2c_ReadbackACK0x99.Text = "ACK";
-                        label_i2c_ReadbackACK0x99.ForeColor = Color.Green;
-                        textBox_i2c_Readback0x99.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
-                    }
-                    else
-                    {
-                        /***** Flush the buffer *****/
-                        I2C_Status = FlushBuffer();
-
-                        textBox_i2c_Readback0x99.Text = "";
-                        label_i2c_ReadbackACK0x99.Text = "Not ACK";
-                        label_i2c_ReadbackACK0x99.ForeColor = Color.Red;
-                    }
-
-                    byte readback0x9a = i2c_read(i2c_addr, 0x9a);
-                    if (readback0x9a == 0)
-                    {
-                        label_i2c_ReadbackACK0x9a.Text = "ACK";
-                        label_i2c_ReadbackACK0x9a.ForeColor = Color.Green;
-                        textBox_i2c_Readback0x9a.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
-                    }
-                    else
-                    {
-                        /***** Flush the buffer *****/
-                        I2C_Status = FlushBuffer();
-
-                        textBox_i2c_Readback0x9a.Text = "";
-                        label_i2c_ReadbackACK0x9a.Text = "Not ACK";
-                        label_i2c_ReadbackACK0x9a.ForeColor = Color.Red;
-                    }
-
-                    byte readback0x9b = i2c_read(i2c_addr, 0x9b);
-                    if (readback0x9b == 0)
-                    {
-                        label_i2c_ReadbackACK0x9b.Text = "ACK";
-                        label_i2c_ReadbackACK0x9b.ForeColor = Color.Green;
-                        textBox_i2c_Readback0x9b.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
-                    }
-                    else
-                    {
-                        /***** Flush the buffer *****/
-                        I2C_Status = FlushBuffer();
-
-                        textBox_i2c_Readback0x9b.Text = "";
-                        label_i2c_ReadbackACK0x9b.Text = "Not ACK";
-                        label_i2c_ReadbackACK0x9b.ForeColor = Color.Red;
-                    }
-
-                    byte readback0x30 = i2c_read(i2c_addr, 0x30);
-                    if (readback0x30 == 0)
-                    {
-                        label_i2c_ReadbackACK0x30.Text = "ACK";
-                        label_i2c_ReadbackACK0x30.ForeColor = Color.Green;
-                        textBox_i2c_Readback0x30.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
-                    }
-                    else
-                    {
-                        /***** Flush the buffer *****/
-                        I2C_Status = FlushBuffer();
-
-                        textBox_i2c_Readback0x30.Text = "";
-                        label_i2c_ReadbackACK0x30.Text = "Not ACK";
-                        label_i2c_ReadbackACK0x30.ForeColor = Color.Red;
-                    }
-
-                    byte readback0x31 = i2c_read(i2c_addr, 0x31);
-                    if (readback0x31 == 0)
-                    {
-                        label_i2c_ReadbackACK0x31.Text = "ACK";
-                        label_i2c_ReadbackACK0x31.ForeColor = Color.Green;
-                        textBox_i2c_Readback0x31.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
-                    }
-                    else
-                    {
-                        /***** Flush the buffer *****/
-                        I2C_Status = FlushBuffer();
-
-                        textBox_i2c_Readback0x31.Text = "";
-                        label_i2c_ReadbackACK0x31.Text = "Not ACK";
-                        label_i2c_ReadbackACK0x31.ForeColor = Color.Red;
-                    }
-                }
-
-
-            }
-            else
-            {
-                /***** Flush the buffer *****/
-                I2C_Status = FlushBuffer();
-
-                label_i2c_WriteACK.Text = "Not ACK";
-                label_i2c_WriteACK.ForeColor = Color.Red;
-
-                label_i2c_ReadbackACK.Text = "---";
-                label_i2c_ReadbackACK.ForeColor = Color.Black;
-                textBox_i2c_Readback.Text = "";
-            }
-
+            label_boardID.Text = "---";
 
 
 
@@ -1199,111 +452,19 @@ namespace Baykeeper_GUI
 
         }
 
-        //###################################################################################################################################
-        // Read button on I2C tab
-        private void button2_Click(object sender, EventArgs e)
-        {
-            byte i2c_addr = 0x00;
-            byte i2c_reg = 0x00;
 
-            try
-            {
-                i2c_addr = Convert.ToByte(textBox_i2c_SlaveAddr.Text, 16);
-                textBox_i2c_SlaveAddr.Text = i2c_addr.ToString("X").PadLeft(2, '0');
-            }
-            catch
-            {
-                // error message
-                MessageBox.Show("Please insert a valid slave address.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                textBox_i2c_SlaveAddr.Text = "00";
-                return;
-            }
-
-            try
-            {
-                i2c_reg = Convert.ToByte(textBox_i2c_ReadReg.Text, 16);
-                textBox_i2c_ReadReg.Text = i2c_reg.ToString("X").PadLeft(2, '0');
-            }
-            catch
-            {
-                // error message
-                MessageBox.Show("Please insert a valid register address.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                textBox_i2c_ReadReg.Text = "00";
-                return;
-            }
-
-
-            //while(true)
-            //{
-            byte ack = i2c_read(i2c_addr, i2c_reg);
-            if (ack == 0)
-            {
-                label_i2c_ReadACK.Text = "ACK";
-                label_i2c_ReadACK.ForeColor = Color.Green;
-                textBox_i2c_ReadData.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
-                //ACKCounter++;
-                label_ACKCounter.Text = "ACK Counter: " + ACKCounter.ToString();
-            }
-            else
-            {
-                /***** Flush the buffer *****/
-                I2C_Status = FlushBuffer();
-
-                label_i2c_ReadACK.Text = "Not ACK";
-                label_i2c_ReadACK.ForeColor = Color.Red;
-                textBox_i2c_ReadData.Text = "";
-                //ACKCounter = 0;
-                //break;
-            }
-            //if (ACKCounter >= 500)
-            ////{
-            ////    ACKCounter = 0;
-            ////    break;
-            ////}
-            //}
-
-        }
-        
-        
-        //###################################################################################################################################
-        // 10 ms timer for FG task
-        private void button_FG_task_Click(object sender, EventArgs e)
-        {
-            byte i2c_addr = Convert.ToByte(textBox_FGtask_addr.Text, 16);
-            byte i2c_reg = Convert.ToByte(textBox_FGtask_reg.Text, 16);
-            byte i2c_data = Convert.ToByte(textBox_FGtask_data.Text, 16);
-
-            byte ack = i2c_write(i2c_addr, i2c_reg, i2c_data);
-            if (ack == 0)
-            {
-                label20.Text = "ACK";
-                label20.ForeColor = Color.Green;
-                timer_FG.Enabled = true;
-            }
-            else
-            {
-                label20.Text = "Not ACK";
-                label20.ForeColor = Color.Red;
-            }
-
-
-        }
-
-
-        private void button_GPIO_Click(object sender, EventArgs e)
-        {
-
-            readGPIO();
-            
-        }
 
         private void button_TS_Click(object sender, EventArgs e)
         {
-            if ((timer_TS_refresh.Enabled == true) || (timer_TS_task.Enabled == true))
+            // If TS is running, stop it
+            //if ((timer_TS_refresh.Enabled == true) || (timer_TS_task.Enabled == true))
+            if (TSon == 1)
             {
+                TSon = 0;
+
                 timer_TS_refresh.Enabled = false;
                 timer_TS_task.Enabled = false;
-                button_TS.Text = "Start";
+                button_TS.Text = "Start Conversion";
 
                 label_TS_ack.Text = "---";
                 label_TS_ack.ForeColor = Color.Black;
@@ -1326,12 +487,14 @@ namespace Baykeeper_GUI
                 //textBox_TS_trim0.Enabled = true;
                 //textBox_TS_trim1.Enabled = true;
 
-                label_TS_temperature.Text = "Temperature: xx.xx°C";
+                label_TS_temperature.Text = "--.--°C";
+
+                //label_boardID.Text = "---";
 
             }
+            // Start TS
             else
             {
-
 
                 /////////////////////////////////////////////////////////////////////////////////////////////
                 ///
@@ -1347,6 +510,7 @@ namespace Baykeeper_GUI
                 try
                 {
                     TS_trim1 = Convert.ToByte(textBox_TS_trim1.Text, 2);
+                    textBox_TS_trim1.Text = Convert.ToString(TS_trim1, 2).PadLeft(8, '0');
                 }
                 catch
                 {
@@ -1356,7 +520,7 @@ namespace Baykeeper_GUI
                     return;
                 }
 
-                byte ack = i2c_write_and_check(i2c_addr, 0x46, TS_trim1);
+                byte ack = i2c_write(i2c_addr, 0x46, TS_trim1);
                 if (ack == 0)
                 {
                     label_TS_trim1.Text = "ACK";
@@ -1364,14 +528,16 @@ namespace Baykeeper_GUI
                 }
                 else
                 {
-                    label_TS_trim1.Text = "Not ACK";
+                    label_TS_trim1.Text = "NACK";
                     label_TS_trim1.ForeColor = Color.Red;
+                    return;
                 }
                 /////////////////////////////////////////////////////////////////////////////////////////////
                 byte TS_trim0 = 0x00;
                 try
                 {
                     TS_trim0 = Convert.ToByte(textBox_TS_trim0.Text, 2);
+                    textBox_TS_trim0.Text = Convert.ToString(TS_trim0, 2).PadLeft(8, '0');
                 }
                 catch
                 {
@@ -1381,7 +547,7 @@ namespace Baykeeper_GUI
                     return;
                 }
 
-                ack = i2c_write_and_check(i2c_addr, 0x45, TS_trim0);
+                ack = i2c_write(i2c_addr, 0x45, TS_trim0);
                 if (ack == 0)
                 {
                     label_TS_trim0.Text = "ACK";
@@ -1389,18 +555,20 @@ namespace Baykeeper_GUI
                 }
                 else
                 {
-                    label_TS_trim0.Text = "Not ACK";
+                    label_TS_trim0.Text = "NACK";
                     label_TS_trim0.ForeColor = Color.Red;
+                    return;
                 }
 
 
+                TSon = 1;
                 timer_TS_refresh.Enabled = true;
-                button_TS.Text = "Stop";
+                button_TS.Text = "Stop Conversion";
             }
 
 
-            
-            
+
+
         }
 
 
@@ -1425,7 +593,7 @@ namespace Baykeeper_GUI
             else
             {
                 button_TS.PerformClick();
-                label_TS_ack.Text = "Not ACK";
+                label_TS_ack.Text = "NACK";
                 label_TS_ack.ForeColor = Color.Red;
             }
         }
@@ -1448,28 +616,15 @@ namespace Baykeeper_GUI
             //else
             //{
             //    button_TS.PerformClick();
-            //    label_TS_ack.Text = "Not ACK";
+            //    label_TS_ack.Text = "NACK";
             //    label_TS_ack.ForeColor = Color.Red;
             //}
 
 
 
             byte MSB = 0x00;
-            byte ack = 0;
-            byte data1 = 0;
-            byte data2 = 0;
-            while (true)
-            {
-                ack = i2c_read(i2c_addr, 0x42); // MSB
-                data1 = i2c_return;
-                ack = i2c_read(i2c_addr, 0x42); // MSB
-                data2 = i2c_return;
-                if(data1 == data2)
-                {
-                    break;
-                }
-            }
-            
+            byte ack = i2c_read(i2c_addr, 0x42); // MSB
+
             if (ack == 0)
             {
                 label_TS_MSB.Text = "ACK";
@@ -1480,16 +635,10 @@ namespace Baykeeper_GUI
             }
             else
             {
-                label_TS_MSB.Text = "Not ACK";
+                label_TS_MSB.Text = "NACK";
                 label_TS_MSB.ForeColor = Color.Red;
                 textBox_TS_MSB.Text = "";
                 button_TS.PerformClick();
-            }
-
-            if (i2c_return == 0)
-            {
-                ZeroCounter++;
-                label_zeroCounter.Text = "Zero Counter: " + ZeroCounter.ToString();
             }
 
 
@@ -1505,7 +654,7 @@ namespace Baykeeper_GUI
             }
             else
             {
-                label_TS_LSB.Text = "Not ACK";
+                label_TS_LSB.Text = "NACK";
                 label_TS_LSB.ForeColor = Color.Red;
                 textBox_TS_LSB.Text = "";
                 button_TS.PerformClick();
@@ -1516,9 +665,9 @@ namespace Baykeeper_GUI
 
             double TEMPSENS_FULL_c2 = 0x0000;
 
-            if (TEMPSENS_FULL > Math.Pow(2,11))
+            if (TEMPSENS_FULL > Math.Pow(2, 11))
             {
-                TEMPSENS_FULL_c2 = (Math.Pow(2, 12) - TEMPSENS_FULL)*(-1);
+                TEMPSENS_FULL_c2 = (Math.Pow(2, 12) - TEMPSENS_FULL) * (-1);
             }
             else
             {
@@ -1526,194 +675,12 @@ namespace Baykeeper_GUI
             }
             double Temp_C = TEMPSENS_FULL_c2 * 0.0625;
 
-            label_TS_temperature.Text = "Temperature: " + Convert.ToString(Temp_C) + "°C";
+            label_TS_temperature.Text = Convert.ToString(Temp_C) + "°C";
 
 
         }
 
-        //###################################################################################################################################
-        // Button to run FG task
-        private void timer_FG_Tick(object sender, EventArgs e)
-        {
-            timer_FG.Enabled = false;
 
-            byte i2c_addr = Convert.ToByte(textBox_FGtask_addr.Text, 16);
-            byte i2c_reg = Convert.ToByte(textBox_mode0MSB_reg.Text, 16);
-            byte ack = i2c_read(i2c_addr, i2c_reg);
-            if (ack == 0)
-            {
-                label_mode0MSB_ack.Text = "ACK";
-                label_mode0MSB_ack.ForeColor = Color.Green;
-                textBox_mode0MSB_data.Text = i2c_return.ToString("X").PadLeft(2, '0');
-            }
-            else
-            {
-                label_mode0MSB_ack.Text = "Not ACK";
-                label_mode0MSB_ack.ForeColor = Color.Red;
-                textBox_mode0MSB_data.Text = "";
-            }
-
-            i2c_addr = Convert.ToByte(textBox_FGtask_addr.Text, 16);
-            i2c_reg = Convert.ToByte(textBox_mode0LSB_reg.Text, 16);
-            ack = i2c_read(i2c_addr, i2c_reg);
-            if (ack == 0)
-            {
-                label_mode0LSB_ack.Text = "ACK";
-                label_mode0LSB_ack.ForeColor = Color.Green;
-                textBox_mode0LSB_data.Text = i2c_return.ToString("X").PadLeft(2, '0');
-            }
-            else
-            {
-                label_mode0LSB_ack.Text = "Not ACK";
-                label_mode0LSB_ack.ForeColor = Color.Red;
-                textBox_mode0LSB_data.Text = "";
-            }
-
-            i2c_addr = Convert.ToByte(textBox_FGtask_addr.Text, 16);
-            i2c_reg = Convert.ToByte(textBox_mode1MSB_reg.Text, 16);
-            ack = i2c_read(i2c_addr, i2c_reg);
-            if (ack == 0)
-            {
-                label_mode1MSB_ack.Text = "ACK";
-                label_mode1MSB_ack.ForeColor = Color.Green;
-                textBox_mode1MSB_data.Text = i2c_return.ToString("X").PadLeft(2, '0');
-            }
-            else
-            {
-                label_mode1MSB_ack.Text = "Not ACK";
-                label_mode1MSB_ack.ForeColor = Color.Red;
-                textBox_mode1MSB_data.Text = "";
-            }
-
-            i2c_addr = Convert.ToByte(textBox_FGtask_addr.Text, 16);
-            i2c_reg = Convert.ToByte(textBox_mode1LSB_reg.Text, 16);
-            ack = i2c_read(i2c_addr, i2c_reg);
-            if (ack == 0)
-            {
-                label_mode1LSB_ack.Text = "ACK";
-                label_mode1LSB_ack.ForeColor = Color.Green;
-                textBox_mode1LSB_data.Text = i2c_return.ToString("X").PadLeft(2, '0');
-            }
-            else
-            {
-                label_mode1LSB_ack.Text = "Not ACK";
-                label_mode1LSB_ack.ForeColor = Color.Red;
-                textBox_mode1LSB_data.Text = "";
-            }
-
-
-            i2c_write(i2c_addr, 0x01, 0x00);
-        }
-
-        //###################################################################################################################################
-        // Run Write button on I2C tab if press enter
-        private void textBox_i2c_WriteData_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                button1.PerformClick();
-
-            }
-        }
-
-        //###################################################################################################################################
-        // Checkbox state
-        private void checkBox_readback_CheckedChanged(object sender, EventArgs e)
-        {
-            textBox_i2c_Readback.Text = "";
-            label_i2c_ReadbackACK.Text = "---";
-            label_i2c_ReadbackACK.ForeColor = Color.Black;
-
-            textBox_i2c_Readback0x90.Text = "";
-            label_i2c_ReadbackACK0x90.Text = "---";
-            label_i2c_ReadbackACK0x90.ForeColor = Color.Black;
-
-
-            textBox_i2c_Readback0x91.Text = "";
-            label_i2c_ReadbackACK0x91.Text = "---";
-            label_i2c_ReadbackACK0x91.ForeColor = Color.Black;
-
-
-            textBox_i2c_Readback0x92.Text = "";
-            label_i2c_ReadbackACK0x92.Text = "---";
-            label_i2c_ReadbackACK0x92.ForeColor = Color.Black;
-
-
-            textBox_i2c_Readback0x93.Text = "";
-            label_i2c_ReadbackACK0x93.Text = "---";
-            label_i2c_ReadbackACK0x93.ForeColor = Color.Black;
-
-
-            textBox_i2c_Readback0x94.Text = "";
-            label_i2c_ReadbackACK0x94.Text = "---";
-            label_i2c_ReadbackACK0x94.ForeColor = Color.Black;
-
-
-            textBox_i2c_Readback0x95.Text = "";
-            label_i2c_ReadbackACK0x95.Text = "---";
-            label_i2c_ReadbackACK0x95.ForeColor = Color.Black;
-
-
-            textBox_i2c_Readback0x96.Text = "";
-            label_i2c_ReadbackACK0x96.Text = "---";
-            label_i2c_ReadbackACK0x96.ForeColor = Color.Black;
-
-
-            textBox_i2c_Readback0x97.Text = "";
-            label_i2c_ReadbackACK0x97.Text = "---";
-            label_i2c_ReadbackACK0x97.ForeColor = Color.Black;
-
-
-            textBox_i2c_Readback0x98.Text = "";
-            label_i2c_ReadbackACK0x98.Text = "---";
-            label_i2c_ReadbackACK0x98.ForeColor = Color.Black;
-
-
-            textBox_i2c_Readback0x99.Text = "";
-            label_i2c_ReadbackACK0x99.Text = "---";
-            label_i2c_ReadbackACK0x99.ForeColor = Color.Black;
-
-
-            textBox_i2c_Readback0x9a.Text = "";
-            label_i2c_ReadbackACK0x9a.Text = "---";
-            label_i2c_ReadbackACK0x9a.ForeColor = Color.Black;
-
-
-            textBox_i2c_Readback0x9b.Text = "";
-            label_i2c_ReadbackACK0x9b.Text = "---";
-            label_i2c_ReadbackACK0x9b.ForeColor = Color.Black;
-
-
-            textBox_i2c_Readback0x30.Text = "";
-            label_i2c_ReadbackACK0x30.Text = "---";
-            label_i2c_ReadbackACK0x30.ForeColor = Color.Black;
-
-
-            textBox_i2c_Readback0x31.Text = "";
-            label_i2c_ReadbackACK0x31.Text = "---";
-            label_i2c_ReadbackACK0x31.ForeColor = Color.Black;
-
-        }
-
-        //###################################################################################################################################
-        // Run Read button on I2C tab if press enter
-        private void textBox_i2c_ReadReg_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                button2.PerformClick();
-            }
-        }
-
-        //###################################################################################################################################
-        // Run Write button on I2C tab if press enter
-        private void textBox_i2c_WriteReg_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                button1.PerformClick();
-            }
-        }
 
 
 
@@ -1724,12 +691,13 @@ namespace Baykeeper_GUI
         {
             if (baykeeperInit() != 0)
             {
-                MessageBox.Show("Oops, Baykeeper could not be initialized.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Oops, Sambaqui could not be initialized.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 myFtdiDevice.Close();
                 DeviceOpen = false;
                 device_disconnected();
                 return 1;
             }
+            loadTrimming();
             timer_disconnect.Enabled = true;
 
             ///////////////////////////////////////////////////////////////////
@@ -1739,66 +707,20 @@ namespace Baykeeper_GUI
             label_serialPortStatus.Text = "Connected";
             label_serialPortStatus.ForeColor = Color.Lime;
 
-            ///////////////////////////////////////////////////////////////////
-            /// TAB "Outputs"
-            ///////////////////////////////////////////////////////////////////
-            button_outputLDO1.Enabled = true;
-            button_outputLDO2.Enabled = true;
-            button_outputLDO3.Enabled = true;
-            button_outputVDCDC1.Enabled = true;
-            button_outputVDCDC2.Enabled = true;
-            button_outputAllOn.Enabled = true;
-            button_outputAllOff.Enabled = true;
-            pictureBox_statusLDO1.Image = Properties.Resources.outputStatusOff;
-            pictureBox_statusLDO2.Image = Properties.Resources.outputStatusOff;
-            pictureBox_statusLDO3.Image = Properties.Resources.outputStatusOff;
-            pictureBox_statusVDCDC1.Image = Properties.Resources.outputStatusOff;
-            pictureBox_statusVDCDC2.Image = Properties.Resources.outputStatusOff;
-
-
-
-            ///////////////////////////////////////////////////////////////////
-            /// TAB "Battery Charger"
-            ///////////////////////////////////////////////////////////////////
-            progressBar1.Value = 50;
-            label_battery.Text = "50%";
-
 
             ///////////////////////////////////////////////////////////////////
             /// TAB "About"
             ///////////////////////////////////////////////////////////////////
             // do nothing
 
-
             ///////////////////////////////////////////////////////////////////
-            /// TAB "ADS112C04"
+            /// TAB "Temperature Sensor"
             ///////////////////////////////////////////////////////////////////
-            textBox_ADS0x40.Text = "00";
-            textBox_ADS0x40.Enabled = true;
-            textBox_ADS0x44.Text = "00";
-            textBox_ADS0x44.Enabled = true;
-            textBox_ADS0x48.Text = "00";
-            textBox_ADS0x48.Enabled = true;
-            textBox_ADS0x4c.Text = "00";
-            textBox_ADS0x4c.Enabled = true;
 
-            button_writeADS.Enabled = true;
-
-
-            textBox4.Text = "00";
-            textBox3.Text = "00";
-            textBox2.Text = "00";
-            textBox1.Text = "00";
-
-            button_readADS.Enabled = true;
-
-            button_readData.Enabled = true;
-
-            textBox5.Text = "XXXXXXXX";
-            textBox6.Text = "XXXXXXXX";
-            textBox7.Text = "128";
-            textBox8.Text = "2,048";
-            label_voltage.Text = "X,XX mV";
+            button_TS.Enabled = true;
+            textBox_TS_trim0.Enabled = true;
+            textBox_TS_trim1.Enabled = true;
+            textBox_TS_i2c_addr.Enabled = true;
 
             return 0;
         }
@@ -1809,14 +731,8 @@ namespace Baykeeper_GUI
             // Due to wrong implementation, the following register must be trimmed before use
             // Start
 
-            if (i2c_write(BKP_ADDRESS, BKP_FG_CTRL0, 0b01010000) != 0) return 1;
             // End
 
-
-
-            if (i2c_write(BKP_ADDRESS, BKP_L1_EN, 0x00) != 0) return 1;
-            if (i2c_write(BKP_ADDRESS, BKP_L2_EN, 0x00) != 0) return 1;
-            if (i2c_write(BKP_ADDRESS, BKP_L3_EN, 0x00) != 0) return 1;
 
             return 0;
         }
@@ -1849,10 +765,83 @@ namespace Baykeeper_GUI
             // InputBuffer2[0] now contains the results
             //ACbusReadVal = (byte)(InputBuffer2[0]);
 
-            label_GPIO.Text = Convert.ToString(InputBuffer2[0], 2).PadLeft(8, '0');
+            //label_GPIO.Text = Convert.ToString(InputBuffer2[0], 2).PadLeft(8, '0');
+            label_boardID.Text = Convert.ToString(InputBuffer2[0], 10).PadLeft(3, '0');
+
+            return InputBuffer2[0];
+        }
+
+
+        private byte loadTrimming()
+        {
+            byte boardID = readGPIO();
+
+
+            switch (boardID)
+            {
+                case 000:
+                    trim_LSB = 0b_11111111; //default
+                    trim_MSB = 0b_00000001; //default
+                    break;
+                case 255:
+                    trim_LSB = 0b_11111111; //default
+                    trim_MSB = 0b_00000001; //default
+                    break;
+                default:
+                    trim_LSB = 0b_11111111; //default
+                    trim_MSB = 0b_00000001; //default
+                    break;
+            }
+
+            textBox_TS_trim1.Text = Convert.ToString(trim_MSB, 2).PadLeft(8, '0');
+            textBox_TS_trim0.Text = Convert.ToString(trim_LSB, 2).PadLeft(8, '0');
 
             return 0;
         }
+
+
+        private void textBox_TS_trim1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Allow backspace, 0 and 1
+            e.Handled = !("\b01".Contains(e.KeyChar));
+        }
+
+        private void textBox_TS_trim0_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Allow backspace, 0 and 1
+            e.Handled = !("\b01".Contains(e.KeyChar));
+        }
+
+        private void textBox_TS_i2c_addr_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Allow backspace, 0 and 1
+            e.Handled = !("\b0123456789abcdefABCDEF".Contains(e.KeyChar));
+        }
+        private void textBox_i2c_SlaveAddr_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Allow backspace, 0 and 1
+            e.Handled = !("\b0123456789abcdefABCDEF".Contains(e.KeyChar));
+        }
+
+        private void textBox_i2c_WriteReg_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Allow backspace, 0 and 1
+            e.Handled = !("\b0123456789abcdefABCDEF".Contains(e.KeyChar));
+        }
+
+        private void textBox_i2c_WriteData_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Allow backspace, 0 and 1
+            e.Handled = !("\b01".Contains(e.KeyChar));
+        }
+
+        private void textBox_i2c_ReadReg_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Allow backspace, 0 and 1
+            e.Handled = !("\b0123456789abcdefABCDEF".Contains(e.KeyChar));
+        }
+
+
 
 
 
@@ -2475,8 +1464,8 @@ namespace Baykeeper_GUI
             //for (Count = 0; Count < 6; Count++)    // Repeat commands to ensure the minimum period of the start setup time ie 600ns is achieved
             for (Count = 0; Count < 18; Count++)    // counter increased to work with Baykeeper - A. Hoffmann
 
-                {
-                    MPSSEbuffer[NumBytesToSend++] = 0x80;	    // ADbus GPIO command
+            {
+                MPSSEbuffer[NumBytesToSend++] = 0x80;	    // ADbus GPIO command
                 MPSSEbuffer[NumBytesToSend++] = ADbusVal;   // Set data value
                 MPSSEbuffer[NumBytesToSend++] = ADbusDir;	// Set direction
             }
@@ -2771,7 +1760,7 @@ namespace Baykeeper_GUI
             uint TotalBytesRead = 0;
             bool QueueTimeoutFlag = false;
             uint NumBytesRxd = 0;
-            
+
             // Keep looping until all requested bytes are received or we've tried 5000 times (value can be chosen as required)
             while ((TotalBytesRead < BytesToRead) && (QueueTimeoutFlag == false))
             {
@@ -2854,7 +1843,6 @@ namespace Baykeeper_GUI
                 return 0;           // there were no bytes to read
             }
         }
-
 
 
 

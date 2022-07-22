@@ -63,6 +63,16 @@ namespace Baykeeper_GUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap boardID {
+            get {
+                object obj = ResourceManager.GetObject("boardID", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap chipusLogo_100x22px {
             get {
                 object obj = ResourceManager.GetObject("chipusLogo_100x22px", resourceCulture);
@@ -106,6 +116,16 @@ namespace Baykeeper_GUI.Properties {
         internal static System.Drawing.Bitmap outputStatusOn {
             get {
                 object obj = ResourceManager.GetObject("outputStatusOn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap temperature {
+            get {
+                object obj = ResourceManager.GetObject("temperature", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

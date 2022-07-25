@@ -141,7 +141,7 @@ namespace Baykeeper_GUI
         //###################################################################################################################################
         // Code for the INITIALISE button...
 
-        private void button_serialPorts_Click(object sender, EventArgs e)
+        private void tryToConnect()
         {
             bool DeviceInit = false;
 
@@ -170,7 +170,7 @@ namespace Baykeeper_GUI
                 {
                     DeviceOpen = false;
                     // error message
-                    MessageBox.Show("No device found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //MessageBox.Show("No device found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
 
@@ -225,42 +225,9 @@ namespace Baykeeper_GUI
             this.linkLabel_tabAbout.LinkVisited = true;
 
             // Navigate to a URL.
-            System.Diagnostics.Process.Start("https://www.chipus-ip.com/");
+            System.Diagnostics.Process.Start("https://www.chipus.com.br/");
         }
 
-
-
-
-
-        private byte outputOn(byte REG)
-        {
-            byte ENABLE = 0x01;
-            // write new register value
-            if (i2c_write(BKP_ADDRESS, REG, ENABLE) != 0) return 1; // example
-
-            // read back to check if it was writen right
-            if (i2c_read(BKP_ADDRESS, REG) != 0) return 1; // example
-
-            // check values
-            if (i2c_return != ENABLE) return 1; // error
-
-            return 0;    // no error
-        }
-
-        private byte outputOff(byte REG)
-        {
-            byte DISABLE = 0x00;
-            // write new register value
-            if (i2c_write(BKP_ADDRESS, REG, DISABLE) != 0) return 1; // example
-
-            // read back to check if it was writen right
-            if (i2c_read(BKP_ADDRESS, REG) != 0) return 1; // example
-
-            // check values
-            if (i2c_return != DISABLE) return 1; // error
-
-            return 0;    // no error
-        }
 
 
 
@@ -369,16 +336,32 @@ namespace Baykeeper_GUI
         // An unused GPIO is read in order to check if FTDI is answering
         private void timer_disconnect_Tick(object sender, EventArgs e)
         {
-            AppStatus = I2C_GetGPIOValuesLow();
 
-            //If write to MPSSE failed (e.g. device unplugged) then stop running
-            if (AppStatus != 0)
+            if (myFtdiDevice.IsOpen)
             {
-                myFtdiDevice.Close();
-                device_disconnected();
-                DeviceOpen = false;
-                MessageBox.Show("Device connection lost.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                AppStatus = I2C_GetGPIOValuesLow();
+
+                //If write to MPSSE failed (e.g. device unplugged) then stop running
+                if (AppStatus != 0)
+                {
+                    myFtdiDevice.Close();
+                    device_disconnected();
+                    DeviceOpen = false;
+                    //MessageBox.Show("Device connection lost.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
+            else // try to connect
+            {
+                try
+                {
+                    tryToConnect();
+                }
+                catch
+                {
+
+                }
+            }
+            
 
         }
 
@@ -388,7 +371,7 @@ namespace Baykeeper_GUI
         private void device_disconnected()
         {
             // Close the FTDI device and then close the window
-            timer_disconnect.Enabled = false;
+            //timer_disconnect.Enabled = false;
 
 
             DeviceOpen = false;
@@ -396,9 +379,9 @@ namespace Baykeeper_GUI
             ///////////////////////////////////////////////////////////////////
             /// TAB "Configuration"
             ///////////////////////////////////////////////////////////////////
-            button_serialPorts.Text = "Connect";
+            //button_serialPorts.Text = "Connect";
             label_serialPortStatus.Text = "Disconnected";
-            label_serialPortStatus.ForeColor = Color.Red;
+            label_serialPortStatus.ForeColor = Color.FromArgb(210, 39, 48);
 
 
             ///////////////////////////////////////////////////////////////////
@@ -527,12 +510,12 @@ namespace Baykeeper_GUI
                 if (ack == 0)
                 {
                     label_TS_trim1.Text = "ACK";
-                    label_TS_trim1.ForeColor = Color.Green;
+                    label_TS_trim1.ForeColor = Color.LimeGreen;
                 }
                 else
                 {
                     label_TS_trim1.Text = "NACK";
-                    label_TS_trim1.ForeColor = Color.Red;
+                    label_TS_trim1.ForeColor = Color.FromArgb(210, 39, 48);
                     return;
                 }
                 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -554,12 +537,12 @@ namespace Baykeeper_GUI
                 if (ack == 0)
                 {
                     label_TS_trim0.Text = "ACK";
-                    label_TS_trim0.ForeColor = Color.Green;
+                    label_TS_trim0.ForeColor = Color.LimeGreen;
                 }
                 else
                 {
                     label_TS_trim0.Text = "NACK";
-                    label_TS_trim0.ForeColor = Color.Red;
+                    label_TS_trim0.ForeColor = Color.FromArgb(210, 39, 48);
                     return;
                 }
 
@@ -592,14 +575,14 @@ namespace Baykeeper_GUI
             if (ack == 0)
             {
                 label_TS_ack.Text = "ACK";
-                label_TS_ack.ForeColor = Color.Green;
+                label_TS_ack.ForeColor = Color.LimeGreen;
                 timer_TS_task.Enabled = true;
             }
             else
             {
                 button_TS.PerformClick();
                 label_TS_ack.Text = "NACK";
-                label_TS_ack.ForeColor = Color.Red;
+                label_TS_ack.ForeColor = Color.FromArgb(210, 39, 48);
             }
         }
 
@@ -615,14 +598,14 @@ namespace Baykeeper_GUI
             //if (ack == 0)
             //{
             //    label_TS_ack.Text = "ACK";
-            //    label_TS_ack.ForeColor = Color.Green;
+            //    label_TS_ack.ForeColor = Color.LimeGreen;
             //    timer_TS_refresh.Enabled = true;
             //}
             //else
             //{
             //    button_TS.PerformClick();
             //    label_TS_ack.Text = "NACK";
-            //    label_TS_ack.ForeColor = Color.Red;
+            //    label_TS_ack.ForeColor = Color.FromArgb(210, 39, 48);
             //}
 
 
@@ -633,7 +616,7 @@ namespace Baykeeper_GUI
             if (ack == 0)
             {
                 label_TS_MSB.Text = "ACK";
-                label_TS_MSB.ForeColor = Color.Green;
+                label_TS_MSB.ForeColor = Color.LimeGreen;
                 textBox_TS_MSB.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
                 MSB = i2c_return;
                 timer_TS_refresh.Enabled = true;
@@ -641,7 +624,7 @@ namespace Baykeeper_GUI
             else
             {
                 label_TS_MSB.Text = "NACK";
-                label_TS_MSB.ForeColor = Color.Red;
+                label_TS_MSB.ForeColor = Color.FromArgb(210, 39, 48);
                 textBox_TS_MSB.Text = "";
                 button_TS.PerformClick();
             }
@@ -653,14 +636,14 @@ namespace Baykeeper_GUI
             if (ack == 0)
             {
                 label_TS_LSB.Text = "ACK";
-                label_TS_LSB.ForeColor = Color.Green;
+                label_TS_LSB.ForeColor = Color.LimeGreen;
                 textBox_TS_LSB.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
                 LSB = i2c_return;
             }
             else
             {
                 label_TS_LSB.Text = "NACK";
-                label_TS_LSB.ForeColor = Color.Red;
+                label_TS_LSB.ForeColor = Color.FromArgb(210, 39, 48);
                 textBox_TS_LSB.Text = "";
                 button_TS.PerformClick();
             }
@@ -709,9 +692,9 @@ namespace Baykeeper_GUI
             ///////////////////////////////////////////////////////////////////
             /// TAB "Configuration"
             ///////////////////////////////////////////////////////////////////
-            button_serialPorts.Text = "Disconnect";
+            //button_serialPorts.Text = "Disconnect";
             label_serialPortStatus.Text = "Connected";
-            label_serialPortStatus.ForeColor = Color.Lime;
+            label_serialPortStatus.ForeColor = Color.LimeGreen;
 
 
             ///////////////////////////////////////////////////////////////////
@@ -811,13 +794,11 @@ namespace Baykeeper_GUI
             // Allow backspace, 0 and 1
             e.Handled = !("\b01".Contains(e.KeyChar));
         }
-
         private void textBox_TS_trim0_KeyPress(object sender, KeyPressEventArgs e)
         {
             // Allow backspace, 0 and 1
             e.Handled = !("\b01".Contains(e.KeyChar));
         }
-
         private void textBox_TS_i2c_addr_KeyPress(object sender, KeyPressEventArgs e)
         {
             // Allow backspace, 0 and 1
@@ -828,19 +809,16 @@ namespace Baykeeper_GUI
             // Allow backspace, 0 and 1
             e.Handled = !("\b0123456789abcdefABCDEF".Contains(e.KeyChar));
         }
-
         private void textBox_i2c_WriteReg_KeyPress(object sender, KeyPressEventArgs e)
         {
             // Allow backspace, 0 and 1
             e.Handled = !("\b0123456789abcdefABCDEF".Contains(e.KeyChar));
         }
-
         private void textBox_i2c_WriteData_KeyPress(object sender, KeyPressEventArgs e)
         {
             // Allow backspace, 0 and 1
             e.Handled = !("\b01".Contains(e.KeyChar));
         }
-
         private void textBox_i2c_ReadReg_KeyPress(object sender, KeyPressEventArgs e)
         {
             // Allow backspace, 0 and 1
@@ -1852,7 +1830,7 @@ namespace Baykeeper_GUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Bits <7..3> = Fine adjustment of B coefficent of equation" + System.Environment.NewLine + "Bits <2..0> = MSB bits of the Temperature trimming", "MSB Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Bits <7..3> = Fine adjustment of B coefficent of equation (See tab \"Trimming Equation\")" + System.Environment.NewLine + "Bits <2..0> = MSB bits of the Temperature trimming", "MSB Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
 

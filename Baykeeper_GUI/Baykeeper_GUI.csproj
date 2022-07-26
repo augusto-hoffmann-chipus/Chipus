@@ -23,13 +23,13 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <SupportUrl>https://www.chipus-ip.com/</SupportUrl>
+    <SupportUrl>https://www.chipus.com.br/</SupportUrl>
     <TargetCulture>en</TargetCulture>
-    <ProductName>Baykeeper GUI</ProductName>
+    <ProductName>Sambaqui GUI</ProductName>
     <PublisherName>Chipus Microelectronics</PublisherName>
     <SuiteName>Chipus Microelectronics</SuiteName>
-    <ApplicationRevision>16</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>

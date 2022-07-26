@@ -142,4 +142,58 @@
   <data name="equation" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\imgs\equation.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Raleway_Black" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\imgs\Raleway-Black.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Raleway_BlackItalic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\imgs\Raleway-BlackItalic.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Raleway_Bold" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\imgs\Raleway-Bold.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Raleway_BoldItalic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\imgs\Raleway-BoldItalic.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Raleway_ExtraBold" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\imgs\Raleway-ExtraBold.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Raleway_ExtraBoldItalic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\imgs\Raleway-ExtraBoldItalic.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Raleway_ExtraLight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\imgs\Raleway-ExtraLight.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Raleway_ExtraLightItalic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\imgs\Raleway-ExtraLightItalic.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Raleway_Italic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\imgs\Raleway-Italic.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Raleway_Light" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\imgs\Raleway-Light.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Raleway_LightItalic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\imgs\Raleway-LightItalic.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Raleway_Medium" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\imgs\Raleway-Medium.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Raleway_MediumItalic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\imgs\Raleway-MediumItalic.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Raleway_Regular" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\imgs\Raleway-Regular.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Raleway_SemiBold" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\imgs\Raleway-SemiBold.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Raleway_SemiBoldItalic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\imgs\Raleway-SemiBoldItalic.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Raleway_Thin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\imgs\Raleway-Thin.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Raleway_ThinItalic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\imgs\Raleway-ThinItalic.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

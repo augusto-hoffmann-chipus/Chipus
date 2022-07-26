@@ -125,6 +125,24 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Baykeeper_GUI_TemporaryKey.pfx" />
+    <None Include="imgs\Raleway-Black.ttf" />
+    <None Include="imgs\Raleway-BlackItalic.ttf" />
+    <None Include="imgs\Raleway-Bold.ttf" />
+    <None Include="imgs\Raleway-BoldItalic.ttf" />
+    <None Include="imgs\Raleway-ExtraBold.ttf" />
+    <None Include="imgs\Raleway-ExtraBoldItalic.ttf" />
+    <None Include="imgs\Raleway-ExtraLight.ttf" />
+    <None Include="imgs\Raleway-ExtraLightItalic.ttf" />
+    <None Include="imgs\Raleway-Italic.ttf" />
+    <None Include="imgs\Raleway-Light.ttf" />
+    <None Include="imgs\Raleway-LightItalic.ttf" />
+    <None Include="imgs\Raleway-Medium.ttf" />
+    <None Include="imgs\Raleway-MediumItalic.ttf" />
+    <None Include="imgs\Raleway-Regular.ttf" />
+    <None Include="imgs\Raleway-SemiBold.ttf" />
+    <None Include="imgs\Raleway-SemiBoldItalic.ttf" />
+    <None Include="imgs\Raleway-Thin.ttf" />
+    <None Include="imgs\Raleway-ThinItalic.ttf" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">

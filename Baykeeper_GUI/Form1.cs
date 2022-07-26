@@ -662,8 +662,9 @@ namespace Baykeeper_GUI
                 TEMPSENS_FULL_c2 = TEMPSENS_FULL;
             }
             double Temp_C = TEMPSENS_FULL_c2 * 0.0625;
-            
-            label_TS_temperature.Text = Convert.ToString(Temp_C);
+
+            //label_TS_temperature.Text = Convert.ToString(Temp_C);
+            label_TS_temperature.Text = Temp_C.ToString("0.0000");
 
 
 

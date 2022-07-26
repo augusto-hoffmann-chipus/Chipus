@@ -57,30 +57,30 @@ namespace Baykeeper_GUI
             this.label42 = new System.Windows.Forms.Label();
             this.label57 = new System.Windows.Forms.Label();
             this.label58 = new System.Windows.Forms.Label();
-            this.pictureBox_temperature = new System.Windows.Forms.PictureBox();
-            this.pictureBox_boardID = new System.Windows.Forms.PictureBox();
             this.tabPage_trimmingEq = new System.Windows.Forms.TabPage();
-            this.pictureBox_equation = new System.Windows.Forms.PictureBox();
             this.tabPage_about = new System.Windows.Forms.TabPage();
             this.label10 = new System.Windows.Forms.Label();
             this.linkLabel_tabAbout = new System.Windows.Forms.LinkLabel();
             this.label_tabAbout = new System.Windows.Forms.Label();
-            this.pictureBox_tabAbout = new System.Windows.Forms.PictureBox();
             this.timer_disconnect = new System.Windows.Forms.Timer(this.components);
             this.timer_TS_refresh = new System.Windows.Forms.Timer(this.components);
             this.timer_TS_task = new System.Windows.Forms.Timer(this.components);
-            this.pictureBox_chipusLogo = new System.Windows.Forms.PictureBox();
             this.label_serialPortStatus = new System.Windows.Forms.Label();
             this.label_status = new System.Windows.Forms.Label();
+            this.pictureBox_chipusLogo = new System.Windows.Forms.PictureBox();
+            this.pictureBox_temperature = new System.Windows.Forms.PictureBox();
+            this.pictureBox_boardID = new System.Windows.Forms.PictureBox();
+            this.pictureBox_equation = new System.Windows.Forms.PictureBox();
+            this.pictureBox_tabAbout = new System.Windows.Forms.PictureBox();
             this.tabControl1.SuspendLayout();
             this.tabPage_TS.SuspendLayout();
+            this.tabPage_trimmingEq.SuspendLayout();
+            this.tabPage_about.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_chipusLogo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_temperature)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_boardID)).BeginInit();
-            this.tabPage_trimmingEq.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_equation)).BeginInit();
-            this.tabPage_about.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_tabAbout)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_chipusLogo)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -132,6 +132,7 @@ namespace Baykeeper_GUI
             // 
             // button_TS_MSB_help
             // 
+            this.button_TS_MSB_help.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button_TS_MSB_help.Location = new System.Drawing.Point(90, 152);
             this.button_TS_MSB_help.Name = "button_TS_MSB_help";
             this.button_TS_MSB_help.Size = new System.Drawing.Size(20, 23);
@@ -142,6 +143,7 @@ namespace Baykeeper_GUI
             // 
             // label_TS_temperature
             // 
+            this.label_TS_temperature.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label_TS_temperature.Font = new System.Drawing.Font("Raleway SemiBold", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_TS_temperature.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(46)))), ((int)(((byte)(44)))));
             this.label_TS_temperature.Location = new System.Drawing.Point(522, 182);
@@ -153,6 +155,7 @@ namespace Baykeeper_GUI
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.Font = new System.Drawing.Font("Raleway SemiBold", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(46)))), ((int)(((byte)(44)))));
             this.label1.Location = new System.Drawing.Point(651, 182);
@@ -175,6 +178,7 @@ namespace Baykeeper_GUI
             // 
             // label_TS_LSB
             // 
+            this.label_TS_LSB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label_TS_LSB.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(39)))), ((int)(((byte)(48)))));
             this.label_TS_LSB.Location = new System.Drawing.Point(335, 202);
             this.label_TS_LSB.Name = "label_TS_LSB";
@@ -185,6 +189,7 @@ namespace Baykeeper_GUI
             // 
             // textBox_TS_LSB
             // 
+            this.textBox_TS_LSB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.textBox_TS_LSB.Enabled = false;
             this.textBox_TS_LSB.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox_TS_LSB.Location = new System.Drawing.Point(292, 179);
@@ -196,6 +201,7 @@ namespace Baykeeper_GUI
             // 
             // label17
             // 
+            this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label17.Location = new System.Drawing.Point(231, 186);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(55, 13);
@@ -205,6 +211,7 @@ namespace Baykeeper_GUI
             // 
             // label_TS_MSB
             // 
+            this.label_TS_MSB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label_TS_MSB.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(39)))), ((int)(((byte)(48)))));
             this.label_TS_MSB.Location = new System.Drawing.Point(163, 202);
             this.label_TS_MSB.Name = "label_TS_MSB";
@@ -215,6 +222,7 @@ namespace Baykeeper_GUI
             // 
             // textBox_TS_MSB
             // 
+            this.textBox_TS_MSB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.textBox_TS_MSB.Enabled = false;
             this.textBox_TS_MSB.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox_TS_MSB.Location = new System.Drawing.Point(120, 179);
@@ -226,6 +234,7 @@ namespace Baykeeper_GUI
             // 
             // label31
             // 
+            this.label31.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label31.Location = new System.Drawing.Point(42, 186);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(72, 13);
@@ -235,6 +244,7 @@ namespace Baykeeper_GUI
             // 
             // label_TS_trim0
             // 
+            this.label_TS_trim0.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label_TS_trim0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(39)))), ((int)(((byte)(48)))));
             this.label_TS_trim0.Location = new System.Drawing.Point(335, 155);
             this.label_TS_trim0.Name = "label_TS_trim0";
@@ -245,6 +255,7 @@ namespace Baykeeper_GUI
             // 
             // textBox_TS_trim0
             // 
+            this.textBox_TS_trim0.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.textBox_TS_trim0.Enabled = false;
             this.textBox_TS_trim0.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox_TS_trim0.Location = new System.Drawing.Point(292, 132);
@@ -257,6 +268,7 @@ namespace Baykeeper_GUI
             // 
             // label36
             // 
+            this.label36.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label36.Location = new System.Drawing.Point(226, 139);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(60, 13);
@@ -266,6 +278,7 @@ namespace Baykeeper_GUI
             // 
             // label_TS_trim1
             // 
+            this.label_TS_trim1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label_TS_trim1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(39)))), ((int)(((byte)(48)))));
             this.label_TS_trim1.Location = new System.Drawing.Point(163, 155);
             this.label_TS_trim1.Name = "label_TS_trim1";
@@ -286,6 +299,7 @@ namespace Baykeeper_GUI
             // 
             // textBox_TS_trim1
             // 
+            this.textBox_TS_trim1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.textBox_TS_trim1.Enabled = false;
             this.textBox_TS_trim1.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox_TS_trim1.Location = new System.Drawing.Point(120, 132);
@@ -342,6 +356,7 @@ namespace Baykeeper_GUI
             // 
             // label40
             // 
+            this.label40.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label40.Location = new System.Drawing.Point(30, 139);
             this.label40.Name = "label40";
             this.label40.Size = new System.Drawing.Size(84, 13);
@@ -376,24 +391,6 @@ namespace Baykeeper_GUI
             this.label58.TabIndex = 51;
             this.label58.Text = "Slave Address (0x):";
             // 
-            // pictureBox_temperature
-            // 
-            this.pictureBox_temperature.Image = global::Baykeeper_GUI.Properties.Resources.temperature;
-            this.pictureBox_temperature.Location = new System.Drawing.Point(439, 132);
-            this.pictureBox_temperature.Name = "pictureBox_temperature";
-            this.pictureBox_temperature.Size = new System.Drawing.Size(270, 90);
-            this.pictureBox_temperature.TabIndex = 84;
-            this.pictureBox_temperature.TabStop = false;
-            // 
-            // pictureBox_boardID
-            // 
-            this.pictureBox_boardID.Image = global::Baykeeper_GUI.Properties.Resources.boardID;
-            this.pictureBox_boardID.Location = new System.Drawing.Point(529, 18);
-            this.pictureBox_boardID.Name = "pictureBox_boardID";
-            this.pictureBox_boardID.Size = new System.Drawing.Size(180, 90);
-            this.pictureBox_boardID.TabIndex = 83;
-            this.pictureBox_boardID.TabStop = false;
-            // 
             // tabPage_trimmingEq
             // 
             this.tabPage_trimmingEq.Controls.Add(this.pictureBox_equation);
@@ -403,15 +400,6 @@ namespace Baykeeper_GUI
             this.tabPage_trimmingEq.TabIndex = 8;
             this.tabPage_trimmingEq.Text = "Trimming Equation";
             this.tabPage_trimmingEq.UseVisualStyleBackColor = true;
-            // 
-            // pictureBox_equation
-            // 
-            this.pictureBox_equation.Image = global::Baykeeper_GUI.Properties.Resources.equation;
-            this.pictureBox_equation.Location = new System.Drawing.Point(36, 82);
-            this.pictureBox_equation.Name = "pictureBox_equation";
-            this.pictureBox_equation.Size = new System.Drawing.Size(650, 70);
-            this.pictureBox_equation.TabIndex = 0;
-            this.pictureBox_equation.TabStop = false;
             // 
             // tabPage_about
             // 
@@ -428,7 +416,9 @@ namespace Baykeeper_GUI
             // 
             // label10
             // 
-            this.label10.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Raleway SemiBold", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.Location = new System.Drawing.Point(288, 194);
@@ -440,6 +430,9 @@ namespace Baykeeper_GUI
             // 
             // linkLabel_tabAbout
             // 
+            this.linkLabel_tabAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.linkLabel_tabAbout.AutoSize = true;
             this.linkLabel_tabAbout.Font = new System.Drawing.Font("Raleway SemiBold", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkLabel_tabAbout.Location = new System.Drawing.Point(284, 166);
@@ -453,6 +446,9 @@ namespace Baykeeper_GUI
             // 
             // label_tabAbout
             // 
+            this.label_tabAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label_tabAbout.AutoSize = true;
             this.label_tabAbout.Font = new System.Drawing.Font("Raleway SemiBold", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_tabAbout.Location = new System.Drawing.Point(210, 125);
@@ -462,17 +458,6 @@ namespace Baykeeper_GUI
             this.label_tabAbout.Text = "This is a GUI developed to be used with Sambaqui EVM.\r\n© 2022 Chipus Microelectro" +
     "nics. All Rights Reserved.";
             this.label_tabAbout.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // pictureBox_tabAbout
-            // 
-            this.pictureBox_tabAbout.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pictureBox_tabAbout.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox_tabAbout.Image")));
-            this.pictureBox_tabAbout.Location = new System.Drawing.Point(205, 30);
-            this.pictureBox_tabAbout.Margin = new System.Windows.Forms.Padding(0);
-            this.pictureBox_tabAbout.Name = "pictureBox_tabAbout";
-            this.pictureBox_tabAbout.Size = new System.Drawing.Size(313, 80);
-            this.pictureBox_tabAbout.TabIndex = 0;
-            this.pictureBox_tabAbout.TabStop = false;
             // 
             // timer_disconnect
             // 
@@ -489,16 +474,6 @@ namespace Baykeeper_GUI
             // 
             this.timer_TS_task.Interval = 500;
             this.timer_TS_task.Tick += new System.EventHandler(this.timer_TS_task_Tick);
-            // 
-            // pictureBox_chipusLogo
-            // 
-            this.pictureBox_chipusLogo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.pictureBox_chipusLogo.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox_chipusLogo.Image")));
-            this.pictureBox_chipusLogo.Location = new System.Drawing.Point(6, 262);
-            this.pictureBox_chipusLogo.Name = "pictureBox_chipusLogo";
-            this.pictureBox_chipusLogo.Size = new System.Drawing.Size(100, 26);
-            this.pictureBox_chipusLogo.TabIndex = 3;
-            this.pictureBox_chipusLogo.TabStop = false;
             // 
             // label_serialPortStatus
             // 
@@ -525,6 +500,60 @@ namespace Baykeeper_GUI
             this.label_status.Text = "Status:";
             this.label_status.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // pictureBox_chipusLogo
+            // 
+            this.pictureBox_chipusLogo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.pictureBox_chipusLogo.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox_chipusLogo.Image")));
+            this.pictureBox_chipusLogo.Location = new System.Drawing.Point(6, 262);
+            this.pictureBox_chipusLogo.Name = "pictureBox_chipusLogo";
+            this.pictureBox_chipusLogo.Size = new System.Drawing.Size(100, 26);
+            this.pictureBox_chipusLogo.TabIndex = 3;
+            this.pictureBox_chipusLogo.TabStop = false;
+            // 
+            // pictureBox_temperature
+            // 
+            this.pictureBox_temperature.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox_temperature.Image = global::Baykeeper_GUI.Properties.Resources.temperature;
+            this.pictureBox_temperature.Location = new System.Drawing.Point(439, 132);
+            this.pictureBox_temperature.Name = "pictureBox_temperature";
+            this.pictureBox_temperature.Size = new System.Drawing.Size(270, 90);
+            this.pictureBox_temperature.TabIndex = 84;
+            this.pictureBox_temperature.TabStop = false;
+            // 
+            // pictureBox_boardID
+            // 
+            this.pictureBox_boardID.Image = global::Baykeeper_GUI.Properties.Resources.boardID;
+            this.pictureBox_boardID.Location = new System.Drawing.Point(529, 18);
+            this.pictureBox_boardID.Name = "pictureBox_boardID";
+            this.pictureBox_boardID.Size = new System.Drawing.Size(180, 90);
+            this.pictureBox_boardID.TabIndex = 83;
+            this.pictureBox_boardID.TabStop = false;
+            // 
+            // pictureBox_equation
+            // 
+            this.pictureBox_equation.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox_equation.Image = global::Baykeeper_GUI.Properties.Resources.equation;
+            this.pictureBox_equation.Location = new System.Drawing.Point(56, 90);
+            this.pictureBox_equation.Name = "pictureBox_equation";
+            this.pictureBox_equation.Size = new System.Drawing.Size(610, 55);
+            this.pictureBox_equation.TabIndex = 0;
+            this.pictureBox_equation.TabStop = false;
+            // 
+            // pictureBox_tabAbout
+            // 
+            this.pictureBox_tabAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox_tabAbout.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox_tabAbout.Image")));
+            this.pictureBox_tabAbout.Location = new System.Drawing.Point(205, 30);
+            this.pictureBox_tabAbout.Margin = new System.Windows.Forms.Padding(0);
+            this.pictureBox_tabAbout.Name = "pictureBox_tabAbout";
+            this.pictureBox_tabAbout.Size = new System.Drawing.Size(313, 80);
+            this.pictureBox_tabAbout.TabIndex = 0;
+            this.pictureBox_tabAbout.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -543,14 +572,14 @@ namespace Baykeeper_GUI
             this.tabControl1.ResumeLayout(false);
             this.tabPage_TS.ResumeLayout(false);
             this.tabPage_TS.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_temperature)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_boardID)).EndInit();
             this.tabPage_trimmingEq.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_equation)).EndInit();
             this.tabPage_about.ResumeLayout(false);
             this.tabPage_about.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_tabAbout)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_chipusLogo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_temperature)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_boardID)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_equation)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_tabAbout)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

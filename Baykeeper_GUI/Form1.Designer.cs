@@ -406,6 +406,7 @@ namespace Baykeeper_GUI
             // pictureBox_temperature
             // 
             this.pictureBox_temperature.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox_temperature.Image = global::Baykeeper_GUI.Properties.Resources.temperature;
             this.pictureBox_temperature.Location = new System.Drawing.Point(439, 131);
             this.pictureBox_temperature.Name = "pictureBox_temperature";
             this.pictureBox_temperature.Size = new System.Drawing.Size(270, 90);
@@ -414,6 +415,7 @@ namespace Baykeeper_GUI
             // 
             // pictureBox_boardID
             // 
+            this.pictureBox_boardID.Image = global::Baykeeper_GUI.Properties.Resources.boardID;
             this.pictureBox_boardID.Location = new System.Drawing.Point(529, 18);
             this.pictureBox_boardID.Name = "pictureBox_boardID";
             this.pictureBox_boardID.Size = new System.Drawing.Size(180, 90);
@@ -435,6 +437,7 @@ namespace Baykeeper_GUI
             this.pictureBox_equation.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox_equation.Image = global::Baykeeper_GUI.Properties.Resources.equation;
             this.pictureBox_equation.Location = new System.Drawing.Point(56, 90);
             this.pictureBox_equation.Name = "pictureBox_equation";
             this.pictureBox_equation.Size = new System.Drawing.Size(610, 54);

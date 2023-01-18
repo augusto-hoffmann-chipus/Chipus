@@ -63,6 +63,16 @@ namespace Baykeeper_GUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _Reference_Temp {
+            get {
+                object obj = ResourceManager.GetObject("_Reference_Temp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap boardID {
             get {
                 object obj = ResourceManager.GetObject("boardID", resourceCulture);
@@ -126,6 +136,26 @@ namespace Baykeeper_GUI.Properties {
         internal static System.Drawing.Bitmap outputStatusOn {
             get {
                 object obj = ResourceManager.GetObject("outputStatusOn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap refreshOFF {
+            get {
+                object obj = ResourceManager.GetObject("refreshOFF", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap refreshON {
+            get {
+                object obj = ResourceManager.GetObject("refreshON", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

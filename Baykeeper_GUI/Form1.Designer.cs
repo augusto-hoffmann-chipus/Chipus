@@ -33,7 +33,18 @@ namespace Baykeeper_GUI
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage_TS = new System.Windows.Forms.TabPage();
-            this.button_TS_MSB_help = new System.Windows.Forms.Button();
+            this.pictureBox_refresh = new System.Windows.Forms.PictureBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label_ref_temp = new System.Windows.Forms.Label();
+            this.pictureBox_ref_temp = new System.Windows.Forms.PictureBox();
+            this.textBox_RS_reg = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.textBox_RS_i2c_addr = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBox_RS_temp = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.label_TS_temperature = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label_boardID = new System.Windows.Forms.Label();
@@ -72,8 +83,11 @@ namespace Baykeeper_GUI
             this.label_serialPortStatus = new System.Windows.Forms.Label();
             this.label_status = new System.Windows.Forms.Label();
             this.pictureBox_chipusLogo = new System.Windows.Forms.PictureBox();
+            this.timer_led = new System.Windows.Forms.Timer(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage_TS.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_refresh)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_ref_temp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_temperature)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_boardID)).BeginInit();
             this.tabPage_trimmingEq.SuspendLayout();
@@ -85,6 +99,9 @@ namespace Baykeeper_GUI
             // 
             // tabControl1
             // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage_TS);
             this.tabControl1.Controls.Add(this.tabPage_trimmingEq);
             this.tabControl1.Controls.Add(this.tabPage_about);
@@ -92,12 +109,23 @@ namespace Baykeeper_GUI
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(731, 260);
+            this.tabControl1.Size = new System.Drawing.Size(1042, 260);
             this.tabControl1.TabIndex = 1;
             // 
             // tabPage_TS
             // 
-            this.tabPage_TS.Controls.Add(this.button_TS_MSB_help);
+            this.tabPage_TS.Controls.Add(this.pictureBox_refresh);
+            this.tabPage_TS.Controls.Add(this.button1);
+            this.tabPage_TS.Controls.Add(this.label6);
+            this.tabPage_TS.Controls.Add(this.label_ref_temp);
+            this.tabPage_TS.Controls.Add(this.pictureBox_ref_temp);
+            this.tabPage_TS.Controls.Add(this.textBox_RS_reg);
+            this.tabPage_TS.Controls.Add(this.label5);
+            this.tabPage_TS.Controls.Add(this.label4);
+            this.tabPage_TS.Controls.Add(this.textBox_RS_i2c_addr);
+            this.tabPage_TS.Controls.Add(this.label3);
+            this.tabPage_TS.Controls.Add(this.textBox_RS_temp);
+            this.tabPage_TS.Controls.Add(this.label2);
             this.tabPage_TS.Controls.Add(this.label_TS_temperature);
             this.tabPage_TS.Controls.Add(this.label1);
             this.tabPage_TS.Controls.Add(this.label_boardID);
@@ -125,25 +153,159 @@ namespace Baykeeper_GUI
             this.tabPage_TS.Controls.Add(this.pictureBox_boardID);
             this.tabPage_TS.Location = new System.Drawing.Point(4, 23);
             this.tabPage_TS.Name = "tabPage_TS";
-            this.tabPage_TS.Size = new System.Drawing.Size(723, 233);
+            this.tabPage_TS.Size = new System.Drawing.Size(1034, 233);
             this.tabPage_TS.TabIndex = 7;
             this.tabPage_TS.Text = "Temperature Sensor";
             this.tabPage_TS.UseVisualStyleBackColor = true;
             // 
-            // button_TS_MSB_help
+            // pictureBox_refresh
             // 
-            this.button_TS_MSB_help.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button_TS_MSB_help.Location = new System.Drawing.Point(90, 151);
-            this.button_TS_MSB_help.Name = "button_TS_MSB_help";
-            this.button_TS_MSB_help.Size = new System.Drawing.Size(20, 23);
-            this.button_TS_MSB_help.TabIndex = 86;
-            this.button_TS_MSB_help.Text = "?";
-            this.button_TS_MSB_help.UseVisualStyleBackColor = true;
-            this.button_TS_MSB_help.Click += new System.EventHandler(this.button1_Click);
+            this.pictureBox_refresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.pictureBox_refresh.Image = global::Baykeeper_GUI.Properties.Resources.refreshOFF;
+            this.pictureBox_refresh.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox_refresh.InitialImage")));
+            this.pictureBox_refresh.Location = new System.Drawing.Point(413, 201);
+            this.pictureBox_refresh.Name = "pictureBox_refresh";
+            this.pictureBox_refresh.Size = new System.Drawing.Size(20, 20);
+            this.pictureBox_refresh.TabIndex = 98;
+            this.pictureBox_refresh.TabStop = false;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(90, 151);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(25, 23);
+            this.button1.TabIndex = 97;
+            this.button1.Text = "?";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label6
+            // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label6.Font = new System.Drawing.Font("Arial", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(46)))), ((int)(((byte)(44)))));
+            this.label6.Location = new System.Drawing.Point(969, 181);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(48, 30);
+            this.label6.TabIndex = 96;
+            this.label6.Text = "°C";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label6.Visible = false;
+            // 
+            // label_ref_temp
+            // 
+            this.label_ref_temp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label_ref_temp.Font = new System.Drawing.Font("Arial", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_ref_temp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(46)))), ((int)(((byte)(44)))));
+            this.label_ref_temp.Location = new System.Drawing.Point(828, 181);
+            this.label_ref_temp.Name = "label_ref_temp";
+            this.label_ref_temp.Size = new System.Drawing.Size(126, 30);
+            this.label_ref_temp.TabIndex = 94;
+            this.label_ref_temp.Text = "XXX.XXXX";
+            this.label_ref_temp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label_ref_temp.Visible = false;
+            // 
+            // pictureBox_ref_temp
+            // 
+            this.pictureBox_ref_temp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox_ref_temp.Image = global::Baykeeper_GUI.Properties.Resources._Reference_Temp;
+            this.pictureBox_ref_temp.Location = new System.Drawing.Point(754, 131);
+            this.pictureBox_ref_temp.Name = "pictureBox_ref_temp";
+            this.pictureBox_ref_temp.Size = new System.Drawing.Size(270, 90);
+            this.pictureBox_ref_temp.TabIndex = 95;
+            this.pictureBox_ref_temp.TabStop = false;
+            this.pictureBox_ref_temp.Visible = false;
+            // 
+            // textBox_RS_reg
+            // 
+            this.textBox_RS_reg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox_RS_reg.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_RS_reg.Location = new System.Drawing.Point(920, 99);
+            this.textBox_RS_reg.MaxLength = 2;
+            this.textBox_RS_reg.Name = "textBox_RS_reg";
+            this.textBox_RS_reg.Size = new System.Drawing.Size(100, 20);
+            this.textBox_RS_reg.TabIndex = 93;
+            this.textBox_RS_reg.Text = "44";
+            this.textBox_RS_reg.Visible = false;
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(815, 102);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(98, 14);
+            this.label5.TabIndex = 92;
+            this.label5.Text = "Temp register (0b):";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.label5.Visible = false;
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(815, 18);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(202, 16);
+            this.label4.TabIndex = 91;
+            this.label4.Text = "Reference temperature Sensor";
+            this.label4.Visible = false;
+            // 
+            // textBox_RS_i2c_addr
+            // 
+            this.textBox_RS_i2c_addr.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox_RS_i2c_addr.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_RS_i2c_addr.Location = new System.Drawing.Point(920, 73);
+            this.textBox_RS_i2c_addr.MaxLength = 2;
+            this.textBox_RS_i2c_addr.Name = "textBox_RS_i2c_addr";
+            this.textBox_RS_i2c_addr.Size = new System.Drawing.Size(100, 20);
+            this.textBox_RS_i2c_addr.TabIndex = 90;
+            this.textBox_RS_i2c_addr.Text = "44";
+            this.textBox_RS_i2c_addr.Visible = false;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(815, 76);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(104, 14);
+            this.label3.TabIndex = 89;
+            this.label3.Text = "Slave Address (0b):";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.label3.Visible = false;
+            // 
+            // textBox_RS_temp
+            // 
+            this.textBox_RS_temp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox_RS_temp.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_RS_temp.Location = new System.Drawing.Point(920, 44);
+            this.textBox_RS_temp.MaxLength = 2;
+            this.textBox_RS_temp.Name = "textBox_RS_temp";
+            this.textBox_RS_temp.Size = new System.Drawing.Size(100, 20);
+            this.textBox_RS_temp.TabIndex = 88;
+            this.textBox_RS_temp.Text = "44";
+            this.textBox_RS_temp.Visible = false;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(797, 47);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(122, 14);
+            this.label2.TabIndex = 87;
+            this.label2.Text = "Reference temperature:";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.label2.Visible = false;
             // 
             // label_TS_temperature
             // 
-            this.label_TS_temperature.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label_TS_temperature.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label_TS_temperature.Font = new System.Drawing.Font("Arial", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_TS_temperature.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(46)))), ((int)(((byte)(44)))));
             this.label_TS_temperature.Location = new System.Drawing.Point(522, 181);
@@ -155,7 +317,7 @@ namespace Baykeeper_GUI
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.Font = new System.Drawing.Font("Arial", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(46)))), ((int)(((byte)(44)))));
             this.label1.Location = new System.Drawing.Point(651, 181);
@@ -346,6 +508,7 @@ namespace Baykeeper_GUI
             this.textBox_TS_i2c_addr.Location = new System.Drawing.Point(120, 21);
             this.textBox_TS_i2c_addr.MaxLength = 2;
             this.textBox_TS_i2c_addr.Name = "textBox_TS_i2c_addr";
+            this.textBox_TS_i2c_addr.ReadOnly = true;
             this.textBox_TS_i2c_addr.Size = new System.Drawing.Size(100, 20);
             this.textBox_TS_i2c_addr.TabIndex = 57;
             this.textBox_TS_i2c_addr.Text = "44";
@@ -405,7 +568,8 @@ namespace Baykeeper_GUI
             // 
             // pictureBox_temperature
             // 
-            this.pictureBox_temperature.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox_temperature.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.pictureBox_temperature.Image = global::Baykeeper_GUI.Properties.Resources.temperature;
             this.pictureBox_temperature.Location = new System.Drawing.Point(439, 131);
             this.pictureBox_temperature.Name = "pictureBox_temperature";
             this.pictureBox_temperature.Size = new System.Drawing.Size(270, 90);
@@ -414,6 +578,7 @@ namespace Baykeeper_GUI
             // 
             // pictureBox_boardID
             // 
+            this.pictureBox_boardID.Image = global::Baykeeper_GUI.Properties.Resources.boardID;
             this.pictureBox_boardID.Location = new System.Drawing.Point(529, 18);
             this.pictureBox_boardID.Name = "pictureBox_boardID";
             this.pictureBox_boardID.Size = new System.Drawing.Size(180, 90);
@@ -425,19 +590,18 @@ namespace Baykeeper_GUI
             this.tabPage_trimmingEq.Controls.Add(this.pictureBox_equation);
             this.tabPage_trimmingEq.Location = new System.Drawing.Point(4, 23);
             this.tabPage_trimmingEq.Name = "tabPage_trimmingEq";
-            this.tabPage_trimmingEq.Size = new System.Drawing.Size(723, 233);
+            this.tabPage_trimmingEq.Size = new System.Drawing.Size(1034, 233);
             this.tabPage_trimmingEq.TabIndex = 8;
             this.tabPage_trimmingEq.Text = "Trimming Equation";
             this.tabPage_trimmingEq.UseVisualStyleBackColor = true;
             // 
             // pictureBox_equation
             // 
-            this.pictureBox_equation.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox_equation.Image = global::Baykeeper_GUI.Properties.Resources.equation;
             this.pictureBox_equation.Location = new System.Drawing.Point(56, 90);
             this.pictureBox_equation.Name = "pictureBox_equation";
-            this.pictureBox_equation.Size = new System.Drawing.Size(610, 54);
+            this.pictureBox_equation.Size = new System.Drawing.Size(610, 55);
+            this.pictureBox_equation.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox_equation.TabIndex = 0;
             this.pictureBox_equation.TabStop = false;
             // 
@@ -449,7 +613,7 @@ namespace Baykeeper_GUI
             this.tabPage_about.Controls.Add(this.pictureBox_tabAbout);
             this.tabPage_about.Location = new System.Drawing.Point(4, 23);
             this.tabPage_about.Name = "tabPage_about";
-            this.tabPage_about.Size = new System.Drawing.Size(723, 233);
+            this.tabPage_about.Size = new System.Drawing.Size(1034, 233);
             this.tabPage_about.TabIndex = 2;
             this.tabPage_about.Text = "About";
             this.tabPage_about.UseVisualStyleBackColor = true;
@@ -495,7 +659,7 @@ namespace Baykeeper_GUI
             this.label_tabAbout.Name = "label_tabAbout";
             this.label_tabAbout.Size = new System.Drawing.Size(276, 28);
             this.label_tabAbout.TabIndex = 1;
-            this.label_tabAbout.Text = "This is a GUI developed to be used with Sambaqui EVM.\r\n© 2022 Chipus Microelectro" +
+            this.label_tabAbout.Text = "This is a GUI developed to be used with Sambaqui EVM.\r\n© 2023 Chipus Microelectro" +
     "nics. All Rights Reserved.";
             this.label_tabAbout.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -508,7 +672,8 @@ namespace Baykeeper_GUI
             this.pictureBox_tabAbout.Location = new System.Drawing.Point(205, 30);
             this.pictureBox_tabAbout.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox_tabAbout.Name = "pictureBox_tabAbout";
-            this.pictureBox_tabAbout.Size = new System.Drawing.Size(313, 79);
+            this.pictureBox_tabAbout.Size = new System.Drawing.Size(300, 79);
+            this.pictureBox_tabAbout.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox_tabAbout.TabIndex = 0;
             this.pictureBox_tabAbout.TabStop = false;
             // 
@@ -533,7 +698,7 @@ namespace Baykeeper_GUI
             this.label_serialPortStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label_serialPortStatus.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_serialPortStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(39)))), ((int)(((byte)(48)))));
-            this.label_serialPortStatus.Location = new System.Drawing.Point(609, 263);
+            this.label_serialPortStatus.Location = new System.Drawing.Point(920, 263);
             this.label_serialPortStatus.Name = "label_serialPortStatus";
             this.label_serialPortStatus.Size = new System.Drawing.Size(118, 20);
             this.label_serialPortStatus.TabIndex = 4;
@@ -544,7 +709,7 @@ namespace Baykeeper_GUI
             // 
             this.label_status.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label_status.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_status.Location = new System.Drawing.Point(542, 264);
+            this.label_status.Location = new System.Drawing.Point(853, 264);
             this.label_status.Name = "label_status";
             this.label_status.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.label_status.Size = new System.Drawing.Size(70, 19);
@@ -562,11 +727,15 @@ namespace Baykeeper_GUI
             this.pictureBox_chipusLogo.TabIndex = 3;
             this.pictureBox_chipusLogo.TabStop = false;
             // 
+            // timer_led
+            // 
+            this.timer_led.Tick += new System.EventHandler(this.timer_led_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(729, 291);
+            this.ClientSize = new System.Drawing.Size(1040, 291);
             this.Controls.Add(this.label_status);
             this.Controls.Add(this.label_serialPortStatus);
             this.Controls.Add(this.pictureBox_chipusLogo);
@@ -580,9 +749,12 @@ namespace Baykeeper_GUI
             this.tabControl1.ResumeLayout(false);
             this.tabPage_TS.ResumeLayout(false);
             this.tabPage_TS.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_refresh)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_ref_temp)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_temperature)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_boardID)).EndInit();
             this.tabPage_trimmingEq.ResumeLayout(false);
+            this.tabPage_trimmingEq.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_equation)).EndInit();
             this.tabPage_about.ResumeLayout(false);
             this.tabPage_about.PerformLayout();
@@ -629,11 +801,23 @@ namespace Baykeeper_GUI
         private System.Windows.Forms.PictureBox pictureBox_boardID;
         private System.Windows.Forms.PictureBox pictureBox_temperature;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button_TS_MSB_help;
         private System.Windows.Forms.TabPage tabPage_trimmingEq;
         private System.Windows.Forms.PictureBox pictureBox_equation;
         private System.Windows.Forms.Label label_serialPortStatus;
         private System.Windows.Forms.Label label_status;
+        private System.Windows.Forms.TextBox textBox_RS_temp;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBox_RS_i2c_addr;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textBox_RS_reg;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label_ref_temp;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.PictureBox pictureBox_ref_temp;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.PictureBox pictureBox_refresh;
+        private System.Windows.Forms.Timer timer_led;
     }
 }
 

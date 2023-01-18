@@ -57,7 +57,7 @@ namespace Baykeeper_GUI
         const uint ClockDivisor = 199;  // for 100 kHz
         // Sending and receiving
         static uint NumBytesToSend = 0;
-        static uint NumBytesToRead = 0;
+        //static uint NumBytesToRead = 0;
         uint NumBytesSent = 0;
         static uint NumBytesRead = 0;
         static byte[] MPSSEbuffer = new byte[500];
@@ -76,8 +76,7 @@ namespace Baykeeper_GUI
         static byte ACbusReadVal = 0;
 
         static byte[] ADCData = new byte[500];
-        static byte i2c_return = 0x00;
-        //static Int16 ADCvalue = 0;
+        static byte[] i2c_return = new byte[500];
 
 
         // ###### Sambaqui defines ######
@@ -88,7 +87,7 @@ namespace Baykeeper_GUI
         static byte trim_MSB = 0b_00000001; //default
 
 
-        const byte BKP_ADDRESS = 0x44;
+        /*const byte BKP_ADDRESS = 0x44;
 
         // COMMAND
         const byte BKP_TASK0 = 0X00;
@@ -103,14 +102,22 @@ namespace Baykeeper_GUI
         const byte BKP_TEMP_LSB = 0X43;
         const byte BKP_TS_DBEN = 0X44;
         const byte BKP_TS_TRIM0 = 0X45;
-        const byte BKP_TS_TRIM1 = 0X46;
+        const byte BKP_TS_TRIM1 = 0X46;*/
 
 
-        //public const byte reg = 0x29; // add registers here
         uint devcount = 0;
 
         // Create new instance of the FTDI device class
         FTDI myFtdiDevice = new FTDI();
+
+        //calibrations vars
+        //byte CalDevStatus = 0;
+        //byte StatusCont = 0;
+        const int extendSize = 320;
+        State ActualState = 0;
+        //static int sizeDebug = 0;
+        public enum State {SmallWin, BigWin}
+        private System.Windows.Forms.Label label_TMP = new System.Windows.Forms.Label();
 
 
 
@@ -125,12 +132,34 @@ namespace Baykeeper_GUI
                     ApplicationDeployment.CurrentDeployment.CurrentVersion) + ")";
             }
 
+            small_size_and_hide();
 
-            
+            int actualX = pictureBox_equation.Location.X;
+            int actualY = pictureBox_equation.Location.Y;
+            pictureBox_equation.Location = new Point(actualX + extendSize / 2, actualY);
+
+            actualX = pictureBox_tabAbout.Location.X;
+            actualY = pictureBox_tabAbout.Location.Y;
+            pictureBox_tabAbout.Location = new Point(actualX + extendSize / 2, actualY);
+
+            actualX = label10.Location.X;
+            actualY = label10.Location.Y;
+            label10.Location = new Point(actualX + extendSize / 2, actualY);
+
+            actualX = linkLabel_tabAbout.Location.X;
+            actualY = linkLabel_tabAbout.Location.Y;
+            linkLabel_tabAbout.Location = new Point(actualX + extendSize / 2, actualY);
+
+            actualX = label_tabAbout.Location.X;
+            actualY = label_tabAbout.Location.Y;
+            label_tabAbout.Location = new Point(actualX + extendSize / 2, actualY);
+
+
+
 
             device_disconnected();
         }
-
+        
 
         ///////////////////////////////////// Form Events /////////////////////////////////////////
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -202,11 +231,6 @@ namespace Baykeeper_GUI
                 else
                 {
                     // allow re-init or exit
-                    //buttonInit.Enabled = true;
-                    //buttonStart.Enabled = false;
-                    //buttonClose.Enabled = true;
-
-
                 }
             }
             else // if DeviceOpen == true
@@ -215,7 +239,8 @@ namespace Baykeeper_GUI
                 device_disconnected();
             }
 
-
+            tep117Init();
+            label_ref_temp.Text = "--.--";
         }
 
         private void linkLabel_tabAbout_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -268,7 +293,7 @@ namespace Baykeeper_GUI
             {
                 i2c_write(ADDR, REG, DATA);
                 i2c_read(ADDR, REG);
-                if (i2c_return == DATA)
+                if (i2c_return[0] == DATA)
                 {
                     status = 0;
                     break;
@@ -312,10 +337,10 @@ namespace Baykeeper_GUI
             if (AppStatus != 0) return 1;
             if (I2C_Ack != true) { I2C_SetStop(); return 1; }                                 // if sensor NAKs then send stop and return
 
-            AppStatus = I2C_ReadByte(false);                                                 // I2C READ (send Ack)
+            AppStatus = I2C_ReadByte(false, 1);                                                 // I2C READ (send Ack)
             if (AppStatus != 0) return 1;
 
-            i2c_return = InputBuffer2[0];                                              // Get the byte read
+            i2c_return[0] = InputBuffer2[0];                                              // Get the byte read
 
             AppStatus = I2C_SetStop();                                                      // I2C STOP
             if (AppStatus != 0) return 1;
@@ -325,6 +350,58 @@ namespace Baykeeper_GUI
         }
 
 
+
+        //###################################################################################################################################
+        // Read I2C (2 byte) and refresh i2c_return static byte
+        // Not tested yet
+        private byte i2c_read_word(byte ADDR, ushort REG)
+        {
+            return i2c_read_Nbytes(ADDR, REG, 2);
+        }
+
+        private byte i2c_read_Nbytes(byte ADDR, ushort REG, ushort NumBytes)
+        {
+            ushort i;
+
+            AppStatus = I2C_SetStart();                                             // I2C START
+            if (AppStatus != 0) return 1;
+
+            AppStatus = I2C_SendDeviceAddrAndCheckACK((byte)(ADDR), false);         // I2C ADDRESS (for write)
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                       // if sensor NAKs then send stop and return
+
+            AppStatus = I2C_SendByteAndCheckACK((byte)(REG));                       // SEND REGISTER ID
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                       // if sensor NAKs then send stop and return
+
+            AppStatus = I2C_SetStart();                                             // REPEAT START
+            if (AppStatus != 0) return 1;
+
+            AppStatus = I2C_SendDeviceAddrAndCheckACK((byte)(ADDR), true);          // I2C ADDRESS (for read)
+            if (AppStatus != 0) return 1;
+            if (I2C_Ack != true) { I2C_SetStop(); return 1; }                       // if sensor NAKs then send stop and return
+
+
+            for (i = 0; i < NumBytes - 1; i++)
+            {
+                AppStatus = I2C_ReadByte(true, 1);                                  // I2C READ (send Ack)
+                if (AppStatus != 0) return 1;
+                i2c_return[i] = InputBuffer2[0];                                    // Get the byte read from input buffer to i2c buffer
+            }
+            
+            AppStatus = I2C_ReadByte(false, 1);                                     // I2C READ (send Ack)
+            if (AppStatus != 0) return 1;
+
+            i2c_return[i] = InputBuffer2[0];
+
+
+            AppStatus = I2C_SetStop();                                              // I2C STOP
+            if (AppStatus != 0) return 1;
+
+
+            return 0;
+
+        }
 
 
         //###################################################################################################################################
@@ -347,7 +424,7 @@ namespace Baykeeper_GUI
                     myFtdiDevice.Close();
                     device_disconnected();
                     DeviceOpen = false;
-                    //MessageBox.Show("Device connection lost.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Device connection lost.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else // try to connect
@@ -429,6 +506,8 @@ namespace Baykeeper_GUI
 
             label_TS_temperature.Text = "--.--";
 
+            label_ref_temp.Text = "--.--";
+
             label_boardID.Text = "---";
 
 
@@ -442,6 +521,10 @@ namespace Baykeeper_GUI
 
         private void button_TS_Click(object sender, EventArgs e)
         {
+
+
+
+
             // If TS is running, stop it
             //if ((timer_TS_refresh.Enabled == true) || (timer_TS_task.Enabled == true))
             if (TSon == 1)
@@ -470,6 +553,8 @@ namespace Baykeeper_GUI
                 label_TS_MSB.Text = "---";
                 label_TS_MSB.ForeColor = Color.Black;
                 textBox_TS_MSB.Text = "";
+
+                label_ref_temp.Text = "--.--";
 
 
                 //textBox_TS_trim0.Enabled = true;
@@ -617,8 +702,8 @@ namespace Baykeeper_GUI
             {
                 label_TS_MSB.Text = "ACK";
                 label_TS_MSB.ForeColor = Color.LimeGreen;
-                textBox_TS_MSB.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
-                MSB = i2c_return;
+                textBox_TS_MSB.Text = Convert.ToString(i2c_return[0], 2).PadLeft(8, '0');
+                MSB = i2c_return[0];
                 timer_TS_refresh.Enabled = true;
             }
             else
@@ -637,8 +722,8 @@ namespace Baykeeper_GUI
             {
                 label_TS_LSB.Text = "ACK";
                 label_TS_LSB.ForeColor = Color.LimeGreen;
-                textBox_TS_LSB.Text = Convert.ToString(i2c_return, 2).PadLeft(8, '0');
-                LSB = i2c_return;
+                textBox_TS_LSB.Text = Convert.ToString(i2c_return[0], 2).PadLeft(8, '0');
+                LSB = i2c_return[0];
             }
             else
             {
@@ -650,9 +735,9 @@ namespace Baykeeper_GUI
 
             UInt32 TEMPSENS_FULL = 0X0000;
             TEMPSENS_FULL = (Convert.ToUInt32(MSB) * 16) + Convert.ToUInt32(LSB);
-            
+
             double TEMPSENS_FULL_c2 = 0x0000;
-            
+
             if (TEMPSENS_FULL > Math.Pow(2, 11))
             {
                 TEMPSENS_FULL_c2 = (Math.Pow(2, 12) - TEMPSENS_FULL) * (-1);
@@ -666,19 +751,194 @@ namespace Baykeeper_GUI
             //label_TS_temperature.Text = Convert.ToString(Temp_C);
             label_TS_temperature.Text = Temp_C.ToString("0.0000");
 
+            timer_led.Enabled = true;
+            pictureBox_refresh.Image = Properties.Resources.refreshON;
 
+
+
+            //conect calibration device
+
+            //byte address = 0b1001000;
+            //byte DeviceStatus = i2c_read_word(address, 0b10101010);           //read temp register
+            tep117Init();
+            Console.WriteLine("\ntryng to connect");
+            /*
+            CalDevStatus = (byte) tep117Init();
+            StatusCont++;
+            if (CalDevStatus == 0)
+            {
+                MessageBox.Show("Calibration device not found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                StatusCont++;
+                StatusCont = (byte) (StatusCont % 20);
+            }
+            else
+            {
+
+                MessageBox.Show("Uhul, connected ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            */
 
         }
 
 
 
+        private byte tep117Init()
+        {
+            
+            //possible adress for TMP117: 1001000 or 1001001 or 1001010 or 1001011
+            byte[] address = { 0b1001000, 0b1001001, 0b1001010, 0b1001011};
+            byte DeviceStatus = 0xff;
+            int i = 0;
+            for (i = 0; i < 4 && DeviceStatus != 0; i++)
+            {
 
+                DeviceStatus = i2c_read_word(address[i], 0x00);           //read temp register
+            }
+            short DeviceTemp = 0;
+            DeviceTemp = (short)((i2c_return[0] << 8) | i2c_return[1]);
 
+            switch (ActualState)
+            {
+                case State.SmallWin:
+                    if(DeviceStatus == 0)
+                    {
+                        ActualState = State.BigWin;
+                        // MessageBox.Show("TEMP117 device sucesscfull conected", "TMP information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //expande window
+                        big_size_and_show();
+                        convert_and_show_RS_temp(DeviceTemp, address[i-1]);
+
+                        //...Code to add the control to the form...
+                    }
+                    break;
+                case State.BigWin:
+                    if(DeviceStatus != 0) //dosent head temp
+                    {
+                        ActualState = State.SmallWin;
+                        small_size_and_hide();
+
+                    }
+                    else //if head temp
+                    {
+                        convert_and_show_RS_temp(DeviceTemp, address[i - 1]);                                                     //and 
+                    }
+                    break;
+
+            }
+           
+            return DeviceStatus;
+
+        }
+        void convert_and_show_RS_temp(short DeviceTemp, byte address)
+        {
+
+            this.textBox_RS_temp.Text = Convert.ToString(i2c_return[0], 2).PadLeft(8, '0');
+            this.textBox_RS_reg.Text = Convert.ToString(i2c_return[1], 2).PadLeft(8, '0');
+            this.textBox_RS_i2c_addr.Text = Convert.ToString(address, 2).PadLeft(1, '0');
+            this.label_ref_temp.Text = (DeviceTemp * 0.0078125).ToString("0.0000");
+        }
+        void big_size_and_show()
+        {
+            int actualWidth = this.Size.Width;
+            int actualHeight = this.Size.Height;
+            this.Size = new Size(actualWidth + extendSize, actualHeight);
+
+            int actualX = pictureBox_equation.Location.X;
+            int actualY = pictureBox_equation.Location.Y;
+            pictureBox_equation.Location = new Point(actualX + extendSize / 2, actualY);
+
+            actualX = pictureBox_tabAbout.Location.X;
+            actualY = pictureBox_tabAbout.Location.Y;
+            pictureBox_tabAbout.Location = new Point(actualX + extendSize / 2, actualY);
+
+            actualX = label10.Location.X;
+            actualY = label10.Location.Y;
+            label10.Location = new Point(actualX + extendSize / 2, actualY);
+
+            actualX = linkLabel_tabAbout.Location.X;
+            actualY = linkLabel_tabAbout.Location.Y;
+            linkLabel_tabAbout.Location = new Point(actualX + extendSize / 2, actualY);
+
+            actualX = label_tabAbout.Location.X;
+            actualY = label_tabAbout.Location.Y;
+            label_tabAbout.Location = new Point(actualX + extendSize / 2, actualY);
+
+            /*
+            actualWidth = tabControl1.Size.Width;
+            actualHeight = tabControl1.Size.Height;
+            tabControl1.Size = new Size(actualWidth + 150, actualHeight);
+            */
+            //MessageBox.Show("Bits <7..3> = Fine adjustment of B coefficent of equation (See tab \"Trimming Equation\")" + System.Environment.NewLine + "Bits <2..0> = MSB bits of the Temperature trimming", "MSB Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            //trun visible
+            /*this.label2.Visible = true;
+            this.label4.Visible = true;
+            this.label5.Visible = true;
+            */
+            this.textBox_RS_temp.Visible = false;
+            this.textBox_RS_reg.Visible = false;
+            this.label3.Visible = false;
+            this.textBox_RS_i2c_addr.Visible = false;
+            this.label_ref_temp.Visible = true;
+            this.label6.Visible = true;
+            this.pictureBox_ref_temp.Visible = true;
+        }
+         void small_size_and_hide()
+        {
+            //retract window
+            int actualWidth = this.Size.Width;
+            int actualHeight = this.Size.Height;
+            this.Size = new Size(actualWidth - extendSize, actualHeight);
+
+            int actualX = pictureBox_equation.Location.X;
+            int actualY = pictureBox_equation.Location.Y;
+            pictureBox_equation.Location = new Point(actualX - extendSize / 2, actualY);
+
+            actualX = pictureBox_tabAbout.Location.X;
+            actualY = pictureBox_tabAbout.Location.Y;
+            pictureBox_tabAbout.Location = new Point(actualX - extendSize / 2, actualY);
+
+            actualX = label10.Location.X;
+            actualY = label10.Location.Y;
+            label10.Location = new Point(actualX - extendSize / 2, actualY);
+
+            actualX = linkLabel_tabAbout.Location.X;
+            actualY = linkLabel_tabAbout.Location.Y;
+            linkLabel_tabAbout.Location = new Point(actualX - extendSize / 2, actualY);
+
+            actualX = label_tabAbout.Location.X;
+            actualY = label_tabAbout.Location.Y;
+            label_tabAbout.Location = new Point(actualX - extendSize / 2, actualY);
+
+            //label_tabAbout
+            //linkLabel_tabAbout
+            //label10
+            /*
+            actualWidth = tabControl1.Size.Width;
+            actualHeight = tabControl1.Size.Height;
+            tabControl1.Size = new Size(actualWidth - 150, actualHeight);
+            */
+
+            //trun invisible
+            this.label2.Visible = false;
+            this.label3.Visible = false;
+            this.label4.Visible = false;
+            this.label5.Visible = false;
+            this.textBox_RS_i2c_addr.Visible = false;
+            this.textBox_RS_temp.Visible = false;
+            this.textBox_RS_reg.Visible = false;
+            this.pictureBox_ref_temp.Visible = false;
+            this.label6.Visible = false;
+            this.label_ref_temp.Visible = false;
+        }
 
         //###################################################################################################################################
         // Configure itens in all tabs when device is connected
         private byte device_connected()
         {
+            
+
+
             if (baykeeperInit() != 0)
             {
                 MessageBox.Show("Oops, Sambaqui could not be initialized.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -765,23 +1025,28 @@ namespace Baykeeper_GUI
         private byte loadTrimming()
         {
             byte boardID = readGPIO();
-
+           //Sheets_Baykeeper baykeeper = new Sheets_Baykeeper();
+           //IList<object> values = baykeeper.getSheetInfo(boardID + "");
 
             switch (boardID)
             {
-                case 000:
-                    trim_LSB = 0b_11111111; //default
-                    trim_MSB = 0b_00000001; //default
-                    break;
-                case 255:
-                    trim_LSB = 0b_11111111; //default
-                    trim_MSB = 0b_00000001; //default
-                    break;
-                default:
-                    trim_LSB = 0b_11111111; //default
-                    trim_MSB = 0b_00000001; //default
-                    break;
+            	case 000:
+            		trim_LSB = 0b_11111111; //default
+            		trim_MSB = 0b_00000001; //default
+            		break;
+            	case 255:
+            		trim_LSB = 0b_11111111; //default
+            		trim_MSB = 0b_00000001; //default
+                             break;
+            	default:
+            		trim_LSB = 0b_11111111; //default
+            		trim_MSB = 0b_00000001; //default
+            		break;
             }
+
+
+            //trim_MSB = Convert.ToByte((string)values[1], 2);
+            //trim_LSB = Convert.ToByte((string)values[2], 2);
 
             textBox_TS_trim1.Text = Convert.ToString(trim_MSB, 2).PadLeft(8, '0');
             textBox_TS_trim0.Text = Convert.ToString(trim_LSB, 2).PadLeft(8, '0');
@@ -827,6 +1092,28 @@ namespace Baykeeper_GUI
         }
 
 
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            //if (sizeDebug == 1)
+            //{
+            //    small_size_and_hide();
+            //    sizeDebug = 0;
+            //}
+            //else
+            //{
+            //    big_size_and_show();
+            //    sizeDebug = 1;
+            //}
+            MessageBox.Show("Bits <7..3> = Fine adjustment of B coefficent of equation (See tab \"Trimming Equation\")" + System.Environment.NewLine + "Bits <2..0> = MSB bits of the Temperature trimming", "MSB Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void timer_led_Tick(object sender, EventArgs e)
+        {
+            pictureBox_refresh.Image = Properties.Resources.refreshOFF;
+            timer_led.Enabled = false;
+        }
 
 
 
@@ -878,7 +1165,7 @@ namespace Baykeeper_GUI
             MPSSEbuffer[NumBytesToSend++] = 0xAA;
             I2C_Status = Send_Data(NumBytesToSend);
             if (I2C_Status != 0) return 1; // error();
-            NumBytesToRead = 2;
+            //NumBytesToRead = 2;
             I2C_Status = Receive_Data(2);
             if (I2C_Status != 0) return 1; //error();
 
@@ -896,7 +1183,7 @@ namespace Baykeeper_GUI
             MPSSEbuffer[NumBytesToSend++] = 0xAB;
             I2C_Status = Send_Data(NumBytesToSend);
             if (I2C_Status != 0) return 1; // error();
-            NumBytesToRead = 2;
+            //NumBytesToRead = 2;
             I2C_Status = Receive_Data(2);
             if (I2C_Status != 0) return 1; //error();
 
@@ -950,10 +1237,11 @@ namespace Baykeeper_GUI
             }
         }
 
+        
         //###################################################################################################################################
         // Reads a byte over I2C 
 
-        public byte I2C_ReadByte(bool ACK)
+        public byte I2C_ReadByte(bool ACK, ushort NumBytes)
         {
             byte ADbusVal = 0;
             byte ADbusDir = 0;
@@ -962,8 +1250,8 @@ namespace Baykeeper_GUI
 #if (FT232H)
             // Clock in one data byte
             MPSSEbuffer[NumBytesToSend++] = MSB_RISING_EDGE_CLOCK_BYTE_IN;      // Clock data byte in
-            MPSSEbuffer[NumBytesToSend++] = 0x00;
-            MPSSEbuffer[NumBytesToSend++] = 0x00;                               // Data length of 0x0000 means 1 byte data to clock in
+            MPSSEbuffer[NumBytesToSend++] = (byte)(NumBytes - 1);
+            MPSSEbuffer[NumBytesToSend++] = (byte) ((NumBytes - 1) >> 8);                               // Data length of 0x0000 means 1 byte data to clock in
 
             // clock out one bit as ack/nak bit
             MPSSEbuffer[NumBytesToSend++] = MSB_FALLING_EDGE_CLOCK_BIT_OUT;     // Clock data bit out
@@ -1029,7 +1317,7 @@ namespace Baykeeper_GUI
             }
 
             // get the byte which has been read from the driver's receive buffer
-            I2C_Status = Receive_Data(1);
+            I2C_Status = Receive_Data(NumBytes);
             if (I2C_Status != 0)
             {
                 return 1;
@@ -1828,12 +2116,6 @@ namespace Baykeeper_GUI
                 return 0;           // there were no bytes to read
             }
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Bits <7..3> = Fine adjustment of B coefficent of equation (See tab \"Trimming Equation\")" + System.Environment.NewLine + "Bits <2..0> = MSB bits of the Temperature trimming", "MSB Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
 
 
 

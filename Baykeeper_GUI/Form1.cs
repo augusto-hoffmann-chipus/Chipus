@@ -970,7 +970,7 @@ namespace Baykeeper_GUI
             button_TS.Enabled = true;
             textBox_TS_trim0.Enabled = true;
             textBox_TS_trim1.Enabled = true;
-            textBox_TS_i2c_addr.Enabled = true;
+            //textBox_TS_i2c_addr.Enabled = true;
 
             return 0;
         }

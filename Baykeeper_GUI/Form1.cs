@@ -86,6 +86,8 @@ namespace Baykeeper_GUI
         static byte trim_LSB = 0b_11111111; //default
         static byte trim_MSB = 0b_00000001; //default
 
+        static byte MSB_old = 0x00;
+        static byte LSB_old = 0x00;
 
         /*const byte BKP_ADDRESS = 0x44;
 
@@ -697,14 +699,30 @@ namespace Baykeeper_GUI
 
             byte MSB = 0x00;
             byte ack = i2c_read(i2c_addr, 0x42); // MSB
+           // byte ack = i2c_read(i2c_addr, 0x46); // MSB
 
             if (ack == 0)
             {
                 label_TS_MSB.Text = "ACK";
                 label_TS_MSB.ForeColor = Color.LimeGreen;
-                textBox_TS_MSB.Text = Convert.ToString(i2c_return[0], 2).PadLeft(8, '0');
-                MSB = i2c_return[0];
-                timer_TS_refresh.Enabled = true;
+
+                //code added to solve i2c issues
+                if (i2c_return[0] == 0xff)
+                {
+                    MSB = MSB_old;
+                }
+                else
+                {
+                    MSB = i2c_return[0];
+                    MSB_old = MSB;
+                }
+                textBox_TS_MSB.Text = Convert.ToString(MSB, 2).PadLeft(8, '0');
+
+
+
+                // end code
+
+                //MSB = i2c_return[0];
             }
             else
             {
@@ -722,8 +740,24 @@ namespace Baykeeper_GUI
             {
                 label_TS_LSB.Text = "ACK";
                 label_TS_LSB.ForeColor = Color.LimeGreen;
-                textBox_TS_LSB.Text = Convert.ToString(i2c_return[0], 2).PadLeft(8, '0');
-                LSB = i2c_return[0];
+
+                //code added to solve i2c issues
+                if (i2c_return[0] > 0x0f)
+                {
+                    LSB = LSB_old;
+                }
+                else
+                {
+                    LSB = i2c_return[0];
+                    LSB_old = LSB;
+                }
+                textBox_TS_LSB.Text = Convert.ToString(LSB, 2).PadLeft(8, '0');
+
+
+
+                // end code
+                timer_TS_refresh.Enabled = true;
+
             }
             else
             {

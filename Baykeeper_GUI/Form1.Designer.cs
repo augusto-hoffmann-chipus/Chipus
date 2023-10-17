@@ -32,69 +32,41 @@ namespace Baykeeper_GUI
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage_TS = new System.Windows.Forms.TabPage();
-            this.pictureBox_refresh = new System.Windows.Forms.PictureBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label_ref_temp = new System.Windows.Forms.Label();
-            this.pictureBox_ref_temp = new System.Windows.Forms.PictureBox();
-            this.textBox_RS_reg = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.textBox_RS_i2c_addr = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBox_RS_temp = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label_TS_temperature = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label_boardID = new System.Windows.Forms.Label();
-            this.label_TS_LSB = new System.Windows.Forms.Label();
-            this.textBox_TS_LSB = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label_TS_MSB = new System.Windows.Forms.Label();
-            this.textBox_TS_MSB = new System.Windows.Forms.TextBox();
-            this.label31 = new System.Windows.Forms.Label();
-            this.label_TS_trim0 = new System.Windows.Forms.Label();
-            this.textBox_TS_trim0 = new System.Windows.Forms.TextBox();
-            this.label36 = new System.Windows.Forms.Label();
-            this.label_TS_trim1 = new System.Windows.Forms.Label();
-            this.label_TS_ack = new System.Windows.Forms.Label();
-            this.textBox_TS_trim1 = new System.Windows.Forms.TextBox();
-            this.textBox17 = new System.Windows.Forms.TextBox();
-            this.textBox18 = new System.Windows.Forms.TextBox();
-            this.textBox_TS_i2c_addr = new System.Windows.Forms.TextBox();
-            this.button_TS = new System.Windows.Forms.Button();
-            this.label40 = new System.Windows.Forms.Label();
+            this.tabPage_I2C = new System.Windows.Forms.TabPage();
+            this.label_Write_ack = new System.Windows.Forms.Label();
+            this.textBox_i2cDataWrite = new System.Windows.Forms.TextBox();
+            this.textBox_i2cRegWrite = new System.Windows.Forms.TextBox();
+            this.textBox_i2c_SlaveAddr = new System.Windows.Forms.TextBox();
+            this.buttonWrite = new System.Windows.Forms.Button();
             this.label42 = new System.Windows.Forms.Label();
             this.label57 = new System.Windows.Forms.Label();
             this.label58 = new System.Windows.Forms.Label();
-            this.pictureBox_temperature = new System.Windows.Forms.PictureBox();
-            this.pictureBox_boardID = new System.Windows.Forms.PictureBox();
-            this.tabPage_trimmingEq = new System.Windows.Forms.TabPage();
-            this.pictureBox_equation = new System.Windows.Forms.PictureBox();
             this.tabPage_about = new System.Windows.Forms.TabPage();
             this.label10 = new System.Windows.Forms.Label();
             this.linkLabel_tabAbout = new System.Windows.Forms.LinkLabel();
             this.label_tabAbout = new System.Windows.Forms.Label();
             this.pictureBox_tabAbout = new System.Windows.Forms.PictureBox();
             this.timer_disconnect = new System.Windows.Forms.Timer(this.components);
-            this.timer_TS_refresh = new System.Windows.Forms.Timer(this.components);
-            this.timer_TS_task = new System.Windows.Forms.Timer(this.components);
             this.label_serialPortStatus = new System.Windows.Forms.Label();
             this.label_status = new System.Windows.Forms.Label();
             this.pictureBox_chipusLogo = new System.Windows.Forms.PictureBox();
-            this.timer_led = new System.Windows.Forms.Timer(this.components);
+            this.label_Read_ack = new System.Windows.Forms.Label();
+            this.textBox_dataRead = new System.Windows.Forms.TextBox();
+            this.textBox_i2cRegRead = new System.Windows.Forms.TextBox();
+            this.buttonRead = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tabPage_commands = new System.Windows.Forms.TabPage();
+            this.button_testMode = new System.Windows.Forms.Button();
+            this.label_testMode = new System.Windows.Forms.Label();
+            this.label_maskTSD = new System.Windows.Forms.Label();
+            this.button_maskTSD = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
-            this.tabPage_TS.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_refresh)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_ref_temp)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_temperature)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_boardID)).BeginInit();
-            this.tabPage_trimmingEq.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_equation)).BeginInit();
+            this.tabPage_I2C.SuspendLayout();
             this.tabPage_about.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_tabAbout)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_chipusLogo)).BeginInit();
+            this.tabPage_commands.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -102,439 +74,94 @@ namespace Baykeeper_GUI
             this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl1.Controls.Add(this.tabPage_TS);
-            this.tabControl1.Controls.Add(this.tabPage_trimmingEq);
+            this.tabControl1.Controls.Add(this.tabPage_I2C);
+            this.tabControl1.Controls.Add(this.tabPage_commands);
             this.tabControl1.Controls.Add(this.tabPage_about);
             this.tabControl1.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1042, 260);
+            this.tabControl1.Size = new System.Drawing.Size(810, 151);
             this.tabControl1.TabIndex = 1;
             // 
-            // tabPage_TS
-            // 
-            this.tabPage_TS.Controls.Add(this.pictureBox_refresh);
-            this.tabPage_TS.Controls.Add(this.button1);
-            this.tabPage_TS.Controls.Add(this.label6);
-            this.tabPage_TS.Controls.Add(this.label_ref_temp);
-            this.tabPage_TS.Controls.Add(this.pictureBox_ref_temp);
-            this.tabPage_TS.Controls.Add(this.textBox_RS_reg);
-            this.tabPage_TS.Controls.Add(this.label5);
-            this.tabPage_TS.Controls.Add(this.label4);
-            this.tabPage_TS.Controls.Add(this.textBox_RS_i2c_addr);
-            this.tabPage_TS.Controls.Add(this.label3);
-            this.tabPage_TS.Controls.Add(this.textBox_RS_temp);
-            this.tabPage_TS.Controls.Add(this.label2);
-            this.tabPage_TS.Controls.Add(this.label_TS_temperature);
-            this.tabPage_TS.Controls.Add(this.label1);
-            this.tabPage_TS.Controls.Add(this.label_boardID);
-            this.tabPage_TS.Controls.Add(this.label_TS_LSB);
-            this.tabPage_TS.Controls.Add(this.textBox_TS_LSB);
-            this.tabPage_TS.Controls.Add(this.label17);
-            this.tabPage_TS.Controls.Add(this.label_TS_MSB);
-            this.tabPage_TS.Controls.Add(this.textBox_TS_MSB);
-            this.tabPage_TS.Controls.Add(this.label31);
-            this.tabPage_TS.Controls.Add(this.label_TS_trim0);
-            this.tabPage_TS.Controls.Add(this.textBox_TS_trim0);
-            this.tabPage_TS.Controls.Add(this.label36);
-            this.tabPage_TS.Controls.Add(this.label_TS_trim1);
-            this.tabPage_TS.Controls.Add(this.label_TS_ack);
-            this.tabPage_TS.Controls.Add(this.textBox_TS_trim1);
-            this.tabPage_TS.Controls.Add(this.textBox17);
-            this.tabPage_TS.Controls.Add(this.textBox18);
-            this.tabPage_TS.Controls.Add(this.textBox_TS_i2c_addr);
-            this.tabPage_TS.Controls.Add(this.button_TS);
-            this.tabPage_TS.Controls.Add(this.label40);
-            this.tabPage_TS.Controls.Add(this.label42);
-            this.tabPage_TS.Controls.Add(this.label57);
-            this.tabPage_TS.Controls.Add(this.label58);
-            this.tabPage_TS.Controls.Add(this.pictureBox_temperature);
-            this.tabPage_TS.Controls.Add(this.pictureBox_boardID);
-            this.tabPage_TS.Location = new System.Drawing.Point(4, 23);
-            this.tabPage_TS.Name = "tabPage_TS";
-            this.tabPage_TS.Size = new System.Drawing.Size(1034, 233);
-            this.tabPage_TS.TabIndex = 7;
-            this.tabPage_TS.Text = "Temperature Sensor";
-            this.tabPage_TS.UseVisualStyleBackColor = true;
-            // 
-            // pictureBox_refresh
-            // 
-            this.pictureBox_refresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.pictureBox_refresh.Image = global::Baykeeper_GUI.Properties.Resources.refreshOFF;
-            this.pictureBox_refresh.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox_refresh.InitialImage")));
-            this.pictureBox_refresh.Location = new System.Drawing.Point(413, 201);
-            this.pictureBox_refresh.Name = "pictureBox_refresh";
-            this.pictureBox_refresh.Size = new System.Drawing.Size(20, 20);
-            this.pictureBox_refresh.TabIndex = 98;
-            this.pictureBox_refresh.TabStop = false;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(90, 151);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(25, 23);
-            this.button1.TabIndex = 97;
-            this.button1.Text = "?";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // label6
-            // 
-            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label6.Font = new System.Drawing.Font("Arial", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(46)))), ((int)(((byte)(44)))));
-            this.label6.Location = new System.Drawing.Point(969, 181);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(48, 30);
-            this.label6.TabIndex = 96;
-            this.label6.Text = "°C";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.label6.Visible = false;
-            // 
-            // label_ref_temp
-            // 
-            this.label_ref_temp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label_ref_temp.Font = new System.Drawing.Font("Arial", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_ref_temp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(46)))), ((int)(((byte)(44)))));
-            this.label_ref_temp.Location = new System.Drawing.Point(828, 181);
-            this.label_ref_temp.Name = "label_ref_temp";
-            this.label_ref_temp.Size = new System.Drawing.Size(126, 30);
-            this.label_ref_temp.TabIndex = 94;
-            this.label_ref_temp.Text = "XXX.XXXX";
-            this.label_ref_temp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label_ref_temp.Visible = false;
-            // 
-            // pictureBox_ref_temp
-            // 
-            this.pictureBox_ref_temp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox_ref_temp.Image = global::Baykeeper_GUI.Properties.Resources._Reference_Temp;
-            this.pictureBox_ref_temp.Location = new System.Drawing.Point(754, 131);
-            this.pictureBox_ref_temp.Name = "pictureBox_ref_temp";
-            this.pictureBox_ref_temp.Size = new System.Drawing.Size(270, 90);
-            this.pictureBox_ref_temp.TabIndex = 95;
-            this.pictureBox_ref_temp.TabStop = false;
-            this.pictureBox_ref_temp.Visible = false;
-            // 
-            // textBox_RS_reg
-            // 
-            this.textBox_RS_reg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox_RS_reg.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_RS_reg.Location = new System.Drawing.Point(920, 99);
-            this.textBox_RS_reg.MaxLength = 2;
-            this.textBox_RS_reg.Name = "textBox_RS_reg";
-            this.textBox_RS_reg.Size = new System.Drawing.Size(100, 20);
-            this.textBox_RS_reg.TabIndex = 93;
-            this.textBox_RS_reg.Text = "44";
-            this.textBox_RS_reg.Visible = false;
-            // 
-            // label5
-            // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(815, 102);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(98, 14);
-            this.label5.TabIndex = 92;
-            this.label5.Text = "Temp register (0b):";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.label5.Visible = false;
-            // 
-            // label4
-            // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(815, 18);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(202, 16);
-            this.label4.TabIndex = 91;
-            this.label4.Text = "Reference temperature Sensor";
-            this.label4.Visible = false;
-            // 
-            // textBox_RS_i2c_addr
-            // 
-            this.textBox_RS_i2c_addr.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox_RS_i2c_addr.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_RS_i2c_addr.Location = new System.Drawing.Point(920, 73);
-            this.textBox_RS_i2c_addr.MaxLength = 2;
-            this.textBox_RS_i2c_addr.Name = "textBox_RS_i2c_addr";
-            this.textBox_RS_i2c_addr.Size = new System.Drawing.Size(100, 20);
-            this.textBox_RS_i2c_addr.TabIndex = 90;
-            this.textBox_RS_i2c_addr.Text = "44";
-            this.textBox_RS_i2c_addr.Visible = false;
-            // 
-            // label3
-            // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(815, 76);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(104, 14);
-            this.label3.TabIndex = 89;
-            this.label3.Text = "Slave Address (0b):";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.label3.Visible = false;
-            // 
-            // textBox_RS_temp
-            // 
-            this.textBox_RS_temp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox_RS_temp.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_RS_temp.Location = new System.Drawing.Point(920, 44);
-            this.textBox_RS_temp.MaxLength = 2;
-            this.textBox_RS_temp.Name = "textBox_RS_temp";
-            this.textBox_RS_temp.Size = new System.Drawing.Size(100, 20);
-            this.textBox_RS_temp.TabIndex = 88;
-            this.textBox_RS_temp.Text = "44";
-            this.textBox_RS_temp.Visible = false;
-            // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(797, 47);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(122, 14);
-            this.label2.TabIndex = 87;
-            this.label2.Text = "Reference temperature:";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.label2.Visible = false;
-            // 
-            // label_TS_temperature
-            // 
-            this.label_TS_temperature.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label_TS_temperature.Font = new System.Drawing.Font("Arial", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_TS_temperature.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(46)))), ((int)(((byte)(44)))));
-            this.label_TS_temperature.Location = new System.Drawing.Point(522, 181);
-            this.label_TS_temperature.Name = "label_TS_temperature";
-            this.label_TS_temperature.Size = new System.Drawing.Size(139, 30);
-            this.label_TS_temperature.TabIndex = 79;
-            this.label_TS_temperature.Text = "XXX.XXXX";
-            this.label_TS_temperature.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label1
-            // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label1.Font = new System.Drawing.Font("Arial", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(46)))), ((int)(((byte)(44)))));
-            this.label1.Location = new System.Drawing.Point(651, 181);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(48, 30);
-            this.label1.TabIndex = 85;
-            this.label1.Text = "°C";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label_boardID
-            // 
-            this.label_boardID.Font = new System.Drawing.Font("Arial", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_boardID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(46)))), ((int)(((byte)(44)))));
-            this.label_boardID.Location = new System.Drawing.Point(580, 66);
-            this.label_boardID.Name = "label_boardID";
-            this.label_boardID.Size = new System.Drawing.Size(80, 30);
-            this.label_boardID.TabIndex = 81;
-            this.label_boardID.Text = "---";
-            this.label_boardID.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label_TS_LSB
-            // 
-            this.label_TS_LSB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label_TS_LSB.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_TS_LSB.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(39)))), ((int)(((byte)(48)))));
-            this.label_TS_LSB.Location = new System.Drawing.Point(335, 201);
-            this.label_TS_LSB.Name = "label_TS_LSB";
-            this.label_TS_LSB.Size = new System.Drawing.Size(57, 13);
-            this.label_TS_LSB.TabIndex = 78;
-            this.label_TS_LSB.Text = "Not ACK";
-            this.label_TS_LSB.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // textBox_TS_LSB
-            // 
-            this.textBox_TS_LSB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBox_TS_LSB.Enabled = false;
-            this.textBox_TS_LSB.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_TS_LSB.Location = new System.Drawing.Point(292, 178);
-            this.textBox_TS_LSB.MaxLength = 8;
-            this.textBox_TS_LSB.Name = "textBox_TS_LSB";
-            this.textBox_TS_LSB.ReadOnly = true;
-            this.textBox_TS_LSB.Size = new System.Drawing.Size(100, 20);
-            this.textBox_TS_LSB.TabIndex = 77;
-            // 
-            // label17
-            // 
-            this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label17.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(236, 181);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(55, 13);
-            this.label17.TabIndex = 75;
-            this.label17.Text = "LSB (0b):";
-            this.label17.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // label_TS_MSB
-            // 
-            this.label_TS_MSB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label_TS_MSB.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_TS_MSB.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(39)))), ((int)(((byte)(48)))));
-            this.label_TS_MSB.Location = new System.Drawing.Point(163, 201);
-            this.label_TS_MSB.Name = "label_TS_MSB";
-            this.label_TS_MSB.Size = new System.Drawing.Size(57, 13);
-            this.label_TS_MSB.TabIndex = 73;
-            this.label_TS_MSB.Text = "Not ACK";
-            this.label_TS_MSB.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // textBox_TS_MSB
-            // 
-            this.textBox_TS_MSB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBox_TS_MSB.Enabled = false;
-            this.textBox_TS_MSB.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_TS_MSB.Location = new System.Drawing.Point(120, 178);
-            this.textBox_TS_MSB.MaxLength = 8;
-            this.textBox_TS_MSB.Name = "textBox_TS_MSB";
-            this.textBox_TS_MSB.ReadOnly = true;
-            this.textBox_TS_MSB.Size = new System.Drawing.Size(100, 20);
-            this.textBox_TS_MSB.TabIndex = 72;
-            // 
-            // label31
-            // 
-            this.label31.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label31.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label31.Location = new System.Drawing.Point(47, 181);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(72, 13);
-            this.label31.TabIndex = 70;
-            this.label31.Text = "MSB (0b):";
-            this.label31.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // label_TS_trim0
-            // 
-            this.label_TS_trim0.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label_TS_trim0.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_TS_trim0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(39)))), ((int)(((byte)(48)))));
-            this.label_TS_trim0.Location = new System.Drawing.Point(335, 154);
-            this.label_TS_trim0.Name = "label_TS_trim0";
-            this.label_TS_trim0.Size = new System.Drawing.Size(57, 13);
-            this.label_TS_trim0.TabIndex = 68;
-            this.label_TS_trim0.Text = "Not ACK";
-            this.label_TS_trim0.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // textBox_TS_trim0
-            // 
-            this.textBox_TS_trim0.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBox_TS_trim0.Enabled = false;
-            this.textBox_TS_trim0.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_TS_trim0.Location = new System.Drawing.Point(292, 131);
-            this.textBox_TS_trim0.MaxLength = 8;
-            this.textBox_TS_trim0.Name = "textBox_TS_trim0";
-            this.textBox_TS_trim0.Size = new System.Drawing.Size(100, 20);
-            this.textBox_TS_trim0.TabIndex = 67;
-            this.textBox_TS_trim0.Text = "11111111";
-            this.textBox_TS_trim0.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_TS_trim0_KeyPress);
-            // 
-            // label36
-            // 
-            this.label36.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label36.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label36.Location = new System.Drawing.Point(231, 134);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(60, 13);
-            this.label36.TabIndex = 65;
-            this.label36.Text = "Trim0 (0b):";
-            this.label36.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // label_TS_trim1
-            // 
-            this.label_TS_trim1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label_TS_trim1.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_TS_trim1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(39)))), ((int)(((byte)(48)))));
-            this.label_TS_trim1.Location = new System.Drawing.Point(163, 154);
-            this.label_TS_trim1.Name = "label_TS_trim1";
-            this.label_TS_trim1.Size = new System.Drawing.Size(57, 13);
-            this.label_TS_trim1.TabIndex = 63;
-            this.label_TS_trim1.Text = "Not ACK";
-            this.label_TS_trim1.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // label_TS_ack
-            // 
-            this.label_TS_ack.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_TS_ack.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(39)))), ((int)(((byte)(48)))));
-            this.label_TS_ack.Location = new System.Drawing.Point(146, 96);
-            this.label_TS_ack.Name = "label_TS_ack";
-            this.label_TS_ack.Size = new System.Drawing.Size(74, 13);
-            this.label_TS_ack.TabIndex = 62;
-            this.label_TS_ack.Text = "Not ACK";
-            this.label_TS_ack.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // textBox_TS_trim1
-            // 
-            this.textBox_TS_trim1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBox_TS_trim1.Enabled = false;
-            this.textBox_TS_trim1.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_TS_trim1.Location = new System.Drawing.Point(120, 131);
-            this.textBox_TS_trim1.MaxLength = 8;
-            this.textBox_TS_trim1.Name = "textBox_TS_trim1";
-            this.textBox_TS_trim1.Size = new System.Drawing.Size(100, 20);
-            this.textBox_TS_trim1.TabIndex = 61;
-            this.textBox_TS_trim1.Text = "00110001";
-            this.textBox_TS_trim1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_TS_trim1_KeyPress);
-            // 
-            // textBox17
-            // 
-            this.textBox17.Enabled = false;
-            this.textBox17.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox17.Location = new System.Drawing.Point(120, 73);
-            this.textBox17.Name = "textBox17";
-            this.textBox17.ReadOnly = true;
-            this.textBox17.Size = new System.Drawing.Size(100, 20);
-            this.textBox17.TabIndex = 59;
-            this.textBox17.Text = "FF";
-            // 
-            // textBox18
-            // 
-            this.textBox18.Enabled = false;
-            this.textBox18.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox18.Location = new System.Drawing.Point(120, 47);
-            this.textBox18.Name = "textBox18";
-            this.textBox18.ReadOnly = true;
-            this.textBox18.Size = new System.Drawing.Size(100, 20);
-            this.textBox18.TabIndex = 58;
-            this.textBox18.Text = "00";
-            // 
-            // textBox_TS_i2c_addr
-            // 
-            this.textBox_TS_i2c_addr.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_TS_i2c_addr.Location = new System.Drawing.Point(120, 21);
-            this.textBox_TS_i2c_addr.MaxLength = 2;
-            this.textBox_TS_i2c_addr.Name = "textBox_TS_i2c_addr";
-            this.textBox_TS_i2c_addr.ReadOnly = true;
-            this.textBox_TS_i2c_addr.Size = new System.Drawing.Size(100, 20);
-            this.textBox_TS_i2c_addr.TabIndex = 57;
-            this.textBox_TS_i2c_addr.Text = "44";
-            this.textBox_TS_i2c_addr.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_TS_i2c_addr_KeyPress);
-            // 
-            // button_TS
-            // 
-            this.button_TS.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_TS.Location = new System.Drawing.Point(242, 21);
-            this.button_TS.Name = "button_TS";
-            this.button_TS.Size = new System.Drawing.Size(150, 75);
-            this.button_TS.TabIndex = 56;
-            this.button_TS.Text = "Start Conversion";
-            this.button_TS.UseVisualStyleBackColor = true;
-            this.button_TS.Click += new System.EventHandler(this.button_TS_Click);
-            // 
-            // label40
-            // 
-            this.label40.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label40.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label40.Location = new System.Drawing.Point(35, 134);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(84, 13);
-            this.label40.TabIndex = 55;
-            this.label40.Text = "Trim1 (0b):";
-            this.label40.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // tabPage_I2C
+            // 
+            this.tabPage_I2C.Controls.Add(this.label_Read_ack);
+            this.tabPage_I2C.Controls.Add(this.textBox_dataRead);
+            this.tabPage_I2C.Controls.Add(this.textBox_i2cRegRead);
+            this.tabPage_I2C.Controls.Add(this.buttonRead);
+            this.tabPage_I2C.Controls.Add(this.label2);
+            this.tabPage_I2C.Controls.Add(this.label3);
+            this.tabPage_I2C.Controls.Add(this.label_Write_ack);
+            this.tabPage_I2C.Controls.Add(this.textBox_i2cDataWrite);
+            this.tabPage_I2C.Controls.Add(this.textBox_i2cRegWrite);
+            this.tabPage_I2C.Controls.Add(this.textBox_i2c_SlaveAddr);
+            this.tabPage_I2C.Controls.Add(this.buttonWrite);
+            this.tabPage_I2C.Controls.Add(this.label42);
+            this.tabPage_I2C.Controls.Add(this.label57);
+            this.tabPage_I2C.Controls.Add(this.label58);
+            this.tabPage_I2C.Location = new System.Drawing.Point(4, 23);
+            this.tabPage_I2C.Name = "tabPage_I2C";
+            this.tabPage_I2C.Size = new System.Drawing.Size(802, 124);
+            this.tabPage_I2C.TabIndex = 7;
+            this.tabPage_I2C.Text = "I2C";
+            this.tabPage_I2C.UseVisualStyleBackColor = true;
+            // 
+            // label_Write_ack
+            // 
+            this.label_Write_ack.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Write_ack.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(39)))), ((int)(((byte)(48)))));
+            this.label_Write_ack.Location = new System.Drawing.Point(146, 96);
+            this.label_Write_ack.Name = "label_Write_ack";
+            this.label_Write_ack.Size = new System.Drawing.Size(74, 13);
+            this.label_Write_ack.TabIndex = 62;
+            this.label_Write_ack.Text = "Not ACK";
+            this.label_Write_ack.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // textBox_i2cDataWrite
+            // 
+            this.textBox_i2cDataWrite.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_i2cDataWrite.Location = new System.Drawing.Point(120, 73);
+            this.textBox_i2cDataWrite.MaxLength = 8;
+            this.textBox_i2cDataWrite.Name = "textBox_i2cDataWrite";
+            this.textBox_i2cDataWrite.Size = new System.Drawing.Size(100, 20);
+            this.textBox_i2cDataWrite.TabIndex = 59;
+            this.textBox_i2cDataWrite.Text = "00000000";
+            this.textBox_i2cDataWrite.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_i2cDataWrite_KeyPress);
+            // 
+            // textBox_i2cRegWrite
+            // 
+            this.textBox_i2cRegWrite.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_i2cRegWrite.Location = new System.Drawing.Point(120, 47);
+            this.textBox_i2cRegWrite.MaxLength = 2;
+            this.textBox_i2cRegWrite.Name = "textBox_i2cRegWrite";
+            this.textBox_i2cRegWrite.Size = new System.Drawing.Size(100, 20);
+            this.textBox_i2cRegWrite.TabIndex = 58;
+            this.textBox_i2cRegWrite.Text = "00";
+            this.textBox_i2cRegWrite.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_i2cRegWrite_KeyPress);
+            // 
+            // textBox_i2c_SlaveAddr
+            // 
+            this.textBox_i2c_SlaveAddr.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_i2c_SlaveAddr.Location = new System.Drawing.Point(120, 21);
+            this.textBox_i2c_SlaveAddr.MaxLength = 7;
+            this.textBox_i2c_SlaveAddr.Name = "textBox_i2c_SlaveAddr";
+            this.textBox_i2c_SlaveAddr.Size = new System.Drawing.Size(100, 20);
+            this.textBox_i2c_SlaveAddr.TabIndex = 57;
+            this.textBox_i2c_SlaveAddr.Text = "1110000";
+            this.textBox_i2c_SlaveAddr.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_TS_i2c_addr_KeyPress);
+            // 
+            // buttonWrite
+            // 
+            this.buttonWrite.Enabled = false;
+            this.buttonWrite.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonWrite.Location = new System.Drawing.Point(242, 21);
+            this.buttonWrite.Name = "buttonWrite";
+            this.buttonWrite.Size = new System.Drawing.Size(150, 75);
+            this.buttonWrite.TabIndex = 56;
+            this.buttonWrite.Text = "Write";
+            this.buttonWrite.UseVisualStyleBackColor = true;
+            this.buttonWrite.Click += new System.EventHandler(this.button_TS_Click);
             // 
             // label42
             // 
@@ -544,7 +171,7 @@ namespace Baykeeper_GUI
             this.label42.Name = "label42";
             this.label42.Size = new System.Drawing.Size(55, 14);
             this.label42.TabIndex = 53;
-            this.label42.Text = "Data (0x):";
+            this.label42.Text = "Data (0b):";
             // 
             // label57
             // 
@@ -564,46 +191,7 @@ namespace Baykeeper_GUI
             this.label58.Name = "label58";
             this.label58.Size = new System.Drawing.Size(104, 14);
             this.label58.TabIndex = 51;
-            this.label58.Text = "Slave Address (0x):";
-            // 
-            // pictureBox_temperature
-            // 
-            this.pictureBox_temperature.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.pictureBox_temperature.Image = global::Baykeeper_GUI.Properties.Resources.temperature;
-            this.pictureBox_temperature.Location = new System.Drawing.Point(439, 131);
-            this.pictureBox_temperature.Name = "pictureBox_temperature";
-            this.pictureBox_temperature.Size = new System.Drawing.Size(270, 90);
-            this.pictureBox_temperature.TabIndex = 84;
-            this.pictureBox_temperature.TabStop = false;
-            // 
-            // pictureBox_boardID
-            // 
-            this.pictureBox_boardID.Image = global::Baykeeper_GUI.Properties.Resources.boardID;
-            this.pictureBox_boardID.Location = new System.Drawing.Point(529, 18);
-            this.pictureBox_boardID.Name = "pictureBox_boardID";
-            this.pictureBox_boardID.Size = new System.Drawing.Size(180, 90);
-            this.pictureBox_boardID.TabIndex = 83;
-            this.pictureBox_boardID.TabStop = false;
-            // 
-            // tabPage_trimmingEq
-            // 
-            this.tabPage_trimmingEq.Controls.Add(this.pictureBox_equation);
-            this.tabPage_trimmingEq.Location = new System.Drawing.Point(4, 23);
-            this.tabPage_trimmingEq.Name = "tabPage_trimmingEq";
-            this.tabPage_trimmingEq.Size = new System.Drawing.Size(1034, 233);
-            this.tabPage_trimmingEq.TabIndex = 8;
-            this.tabPage_trimmingEq.Text = "Trimming Equation";
-            this.tabPage_trimmingEq.UseVisualStyleBackColor = true;
-            // 
-            // pictureBox_equation
-            // 
-            this.pictureBox_equation.Image = global::Baykeeper_GUI.Properties.Resources.equation;
-            this.pictureBox_equation.Location = new System.Drawing.Point(56, 90);
-            this.pictureBox_equation.Name = "pictureBox_equation";
-            this.pictureBox_equation.Size = new System.Drawing.Size(610, 55);
-            this.pictureBox_equation.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox_equation.TabIndex = 0;
-            this.pictureBox_equation.TabStop = false;
+            this.label58.Text = "Slave Address (0b):";
             // 
             // tabPage_about
             // 
@@ -613,7 +201,7 @@ namespace Baykeeper_GUI
             this.tabPage_about.Controls.Add(this.pictureBox_tabAbout);
             this.tabPage_about.Location = new System.Drawing.Point(4, 23);
             this.tabPage_about.Name = "tabPage_about";
-            this.tabPage_about.Size = new System.Drawing.Size(1034, 233);
+            this.tabPage_about.Size = new System.Drawing.Size(802, 124);
             this.tabPage_about.TabIndex = 2;
             this.tabPage_about.Text = "About";
             this.tabPage_about.UseVisualStyleBackColor = true;
@@ -625,7 +213,7 @@ namespace Baykeeper_GUI
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(293, 194);
+            this.label10.Location = new System.Drawing.Point(516, 88);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(136, 14);
             this.label10.TabIndex = 3;
@@ -639,7 +227,7 @@ namespace Baykeeper_GUI
             | System.Windows.Forms.AnchorStyles.Right)));
             this.linkLabel_tabAbout.AutoSize = true;
             this.linkLabel_tabAbout.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabel_tabAbout.Location = new System.Drawing.Point(290, 166);
+            this.linkLabel_tabAbout.Location = new System.Drawing.Point(513, 62);
             this.linkLabel_tabAbout.Name = "linkLabel_tabAbout";
             this.linkLabel_tabAbout.Size = new System.Drawing.Size(143, 14);
             this.linkLabel_tabAbout.TabIndex = 2;
@@ -655,7 +243,7 @@ namespace Baykeeper_GUI
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label_tabAbout.AutoSize = true;
             this.label_tabAbout.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_tabAbout.Location = new System.Drawing.Point(223, 125);
+            this.label_tabAbout.Location = new System.Drawing.Point(446, 22);
             this.label_tabAbout.Name = "label_tabAbout";
             this.label_tabAbout.Size = new System.Drawing.Size(276, 28);
             this.label_tabAbout.TabIndex = 1;
@@ -669,10 +257,10 @@ namespace Baykeeper_GUI
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox_tabAbout.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox_tabAbout.Image")));
-            this.pictureBox_tabAbout.Location = new System.Drawing.Point(205, 30);
+            this.pictureBox_tabAbout.Location = new System.Drawing.Point(80, 22);
             this.pictureBox_tabAbout.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox_tabAbout.Name = "pictureBox_tabAbout";
-            this.pictureBox_tabAbout.Size = new System.Drawing.Size(300, 79);
+            this.pictureBox_tabAbout.Size = new System.Drawing.Size(310, 80);
             this.pictureBox_tabAbout.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox_tabAbout.TabIndex = 0;
             this.pictureBox_tabAbout.TabStop = false;
@@ -683,22 +271,12 @@ namespace Baykeeper_GUI
             this.timer_disconnect.Interval = 1000;
             this.timer_disconnect.Tick += new System.EventHandler(this.timer_disconnect_Tick);
             // 
-            // timer_TS_refresh
-            // 
-            this.timer_TS_refresh.Interval = 500;
-            this.timer_TS_refresh.Tick += new System.EventHandler(this.timer_TS_refresh_Tick);
-            // 
-            // timer_TS_task
-            // 
-            this.timer_TS_task.Interval = 500;
-            this.timer_TS_task.Tick += new System.EventHandler(this.timer_TS_task_Tick);
-            // 
             // label_serialPortStatus
             // 
             this.label_serialPortStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label_serialPortStatus.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_serialPortStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(39)))), ((int)(((byte)(48)))));
-            this.label_serialPortStatus.Location = new System.Drawing.Point(920, 263);
+            this.label_serialPortStatus.Location = new System.Drawing.Point(688, 154);
             this.label_serialPortStatus.Name = "label_serialPortStatus";
             this.label_serialPortStatus.Size = new System.Drawing.Size(118, 20);
             this.label_serialPortStatus.TabIndex = 4;
@@ -709,7 +287,7 @@ namespace Baykeeper_GUI
             // 
             this.label_status.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label_status.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_status.Location = new System.Drawing.Point(853, 264);
+            this.label_status.Location = new System.Drawing.Point(621, 155);
             this.label_status.Name = "label_status";
             this.label_status.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.label_status.Size = new System.Drawing.Size(70, 19);
@@ -721,21 +299,136 @@ namespace Baykeeper_GUI
             // 
             this.pictureBox_chipusLogo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.pictureBox_chipusLogo.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox_chipusLogo.Image")));
-            this.pictureBox_chipusLogo.Location = new System.Drawing.Point(6, 262);
+            this.pictureBox_chipusLogo.Location = new System.Drawing.Point(6, 153);
             this.pictureBox_chipusLogo.Name = "pictureBox_chipusLogo";
             this.pictureBox_chipusLogo.Size = new System.Drawing.Size(100, 26);
             this.pictureBox_chipusLogo.TabIndex = 3;
             this.pictureBox_chipusLogo.TabStop = false;
             // 
-            // timer_led
+            // label_Read_ack
             // 
-            this.timer_led.Tick += new System.EventHandler(this.timer_led_Tick);
+            this.label_Read_ack.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Read_ack.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(39)))), ((int)(((byte)(48)))));
+            this.label_Read_ack.Location = new System.Drawing.Point(533, 96);
+            this.label_Read_ack.Name = "label_Read_ack";
+            this.label_Read_ack.Size = new System.Drawing.Size(74, 13);
+            this.label_Read_ack.TabIndex = 69;
+            this.label_Read_ack.Text = "Not ACK";
+            this.label_Read_ack.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // textBox_dataRead
+            // 
+            this.textBox_dataRead.Enabled = false;
+            this.textBox_dataRead.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_dataRead.Location = new System.Drawing.Point(507, 73);
+            this.textBox_dataRead.MaxLength = 8;
+            this.textBox_dataRead.Name = "textBox_dataRead";
+            this.textBox_dataRead.ReadOnly = true;
+            this.textBox_dataRead.Size = new System.Drawing.Size(100, 20);
+            this.textBox_dataRead.TabIndex = 68;
+            this.textBox_dataRead.Text = "00000000";
+            // 
+            // textBox_i2cRegRead
+            // 
+            this.textBox_i2cRegRead.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_i2cRegRead.Location = new System.Drawing.Point(507, 47);
+            this.textBox_i2cRegRead.MaxLength = 2;
+            this.textBox_i2cRegRead.Name = "textBox_i2cRegRead";
+            this.textBox_i2cRegRead.Size = new System.Drawing.Size(100, 20);
+            this.textBox_i2cRegRead.TabIndex = 67;
+            this.textBox_i2cRegRead.Text = "00";
+            this.textBox_i2cRegRead.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_i2cRegRead_KeyPress);
+            // 
+            // buttonRead
+            // 
+            this.buttonRead.Enabled = false;
+            this.buttonRead.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonRead.Location = new System.Drawing.Point(629, 21);
+            this.buttonRead.Name = "buttonRead";
+            this.buttonRead.Size = new System.Drawing.Size(150, 75);
+            this.buttonRead.TabIndex = 66;
+            this.buttonRead.Text = "Read";
+            this.buttonRead.UseVisualStyleBackColor = true;
+            this.buttonRead.Click += new System.EventHandler(this.buttonRead_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(451, 76);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(55, 14);
+            this.label2.TabIndex = 65;
+            this.label2.Text = "Data (0b):";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(433, 50);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(73, 14);
+            this.label3.TabIndex = 64;
+            this.label3.Text = "Register (0x):";
+            // 
+            // tabPage_commands
+            // 
+            this.tabPage_commands.Controls.Add(this.label_maskTSD);
+            this.tabPage_commands.Controls.Add(this.button_maskTSD);
+            this.tabPage_commands.Controls.Add(this.label_testMode);
+            this.tabPage_commands.Controls.Add(this.button_testMode);
+            this.tabPage_commands.Location = new System.Drawing.Point(4, 23);
+            this.tabPage_commands.Name = "tabPage_commands";
+            this.tabPage_commands.Size = new System.Drawing.Size(802, 124);
+            this.tabPage_commands.TabIndex = 8;
+            this.tabPage_commands.Text = "Commands";
+            this.tabPage_commands.UseVisualStyleBackColor = true;
+            // 
+            // button_testMode
+            // 
+            this.button_testMode.Location = new System.Drawing.Point(8, 8);
+            this.button_testMode.Name = "button_testMode";
+            this.button_testMode.Size = new System.Drawing.Size(118, 23);
+            this.button_testMode.TabIndex = 0;
+            this.button_testMode.Text = "Enter test mode";
+            this.button_testMode.UseVisualStyleBackColor = true;
+            this.button_testMode.Click += new System.EventHandler(this.button_testMode_Click);
+            // 
+            // label_testMode
+            // 
+            this.label_testMode.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_testMode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(39)))), ((int)(((byte)(48)))));
+            this.label_testMode.Location = new System.Drawing.Point(132, 12);
+            this.label_testMode.Name = "label_testMode";
+            this.label_testMode.Size = new System.Drawing.Size(74, 13);
+            this.label_testMode.TabIndex = 63;
+            this.label_testMode.Text = "Not ACK";
+            // 
+            // label_maskTSD
+            // 
+            this.label_maskTSD.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_maskTSD.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(39)))), ((int)(((byte)(48)))));
+            this.label_maskTSD.Location = new System.Drawing.Point(132, 41);
+            this.label_maskTSD.Name = "label_maskTSD";
+            this.label_maskTSD.Size = new System.Drawing.Size(74, 13);
+            this.label_maskTSD.TabIndex = 65;
+            this.label_maskTSD.Text = "Not ACK";
+            // 
+            // button_maskTSD
+            // 
+            this.button_maskTSD.Location = new System.Drawing.Point(8, 37);
+            this.button_maskTSD.Name = "button_maskTSD";
+            this.button_maskTSD.Size = new System.Drawing.Size(118, 23);
+            this.button_maskTSD.TabIndex = 64;
+            this.button_maskTSD.Text = "Mask TSD";
+            this.button_maskTSD.UseVisualStyleBackColor = true;
+            this.button_maskTSD.Click += new System.EventHandler(this.button_maskTSD_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1040, 291);
+            this.ClientSize = new System.Drawing.Size(808, 182);
             this.Controls.Add(this.label_status);
             this.Controls.Add(this.label_serialPortStatus);
             this.Controls.Add(this.pictureBox_chipusLogo);
@@ -744,22 +437,16 @@ namespace Baykeeper_GUI
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = "Chipus - Sambaqui GUI (x.x.x.x)";
+            this.Text = "Chipus - I2C R/W (x.x.x.x)";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.tabControl1.ResumeLayout(false);
-            this.tabPage_TS.ResumeLayout(false);
-            this.tabPage_TS.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_refresh)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_ref_temp)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_temperature)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_boardID)).EndInit();
-            this.tabPage_trimmingEq.ResumeLayout(false);
-            this.tabPage_trimmingEq.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_equation)).EndInit();
+            this.tabPage_I2C.ResumeLayout(false);
+            this.tabPage_I2C.PerformLayout();
             this.tabPage_about.ResumeLayout(false);
             this.tabPage_about.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_tabAbout)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_chipusLogo)).EndInit();
+            this.tabPage_commands.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -773,51 +460,28 @@ namespace Baykeeper_GUI
         private System.Windows.Forms.PictureBox pictureBox_tabAbout;
         private System.Windows.Forms.Timer timer_disconnect;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TabPage tabPage_TS;
-        private System.Windows.Forms.Label label_TS_LSB;
-        private System.Windows.Forms.TextBox textBox_TS_LSB;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label_TS_MSB;
-        private System.Windows.Forms.TextBox textBox_TS_MSB;
-        private System.Windows.Forms.Label label31;
-        private System.Windows.Forms.Label label_TS_trim0;
-        private System.Windows.Forms.TextBox textBox_TS_trim0;
-        private System.Windows.Forms.Label label36;
-        private System.Windows.Forms.Label label_TS_trim1;
-        private System.Windows.Forms.Label label_TS_ack;
-        private System.Windows.Forms.TextBox textBox_TS_trim1;
-        private System.Windows.Forms.TextBox textBox17;
-        private System.Windows.Forms.TextBox textBox18;
-        private System.Windows.Forms.TextBox textBox_TS_i2c_addr;
-        private System.Windows.Forms.Button button_TS;
-        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.TabPage tabPage_I2C;
+        private System.Windows.Forms.Label label_Write_ack;
+        private System.Windows.Forms.TextBox textBox_i2cDataWrite;
+        private System.Windows.Forms.TextBox textBox_i2cRegWrite;
+        private System.Windows.Forms.TextBox textBox_i2c_SlaveAddr;
+        private System.Windows.Forms.Button buttonWrite;
         private System.Windows.Forms.Label label42;
         private System.Windows.Forms.Label label57;
         private System.Windows.Forms.Label label58;
-        private System.Windows.Forms.Timer timer_TS_refresh;
-        private System.Windows.Forms.Timer timer_TS_task;
-        private System.Windows.Forms.Label label_TS_temperature;
-        private System.Windows.Forms.Label label_boardID;
-        private System.Windows.Forms.PictureBox pictureBox_boardID;
-        private System.Windows.Forms.PictureBox pictureBox_temperature;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TabPage tabPage_trimmingEq;
-        private System.Windows.Forms.PictureBox pictureBox_equation;
         private System.Windows.Forms.Label label_serialPortStatus;
         private System.Windows.Forms.Label label_status;
-        private System.Windows.Forms.TextBox textBox_RS_temp;
+        private System.Windows.Forms.Label label_Read_ack;
+        private System.Windows.Forms.TextBox textBox_dataRead;
+        private System.Windows.Forms.TextBox textBox_i2cRegRead;
+        private System.Windows.Forms.Button buttonRead;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox_RS_i2c_addr;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox_RS_reg;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label_ref_temp;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.PictureBox pictureBox_ref_temp;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.PictureBox pictureBox_refresh;
-        private System.Windows.Forms.Timer timer_led;
+        private System.Windows.Forms.TabPage tabPage_commands;
+        private System.Windows.Forms.Label label_testMode;
+        private System.Windows.Forms.Button button_testMode;
+        private System.Windows.Forms.Label label_maskTSD;
+        private System.Windows.Forms.Button button_maskTSD;
     }
 }
 

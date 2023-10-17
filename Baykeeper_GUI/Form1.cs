@@ -54,7 +54,7 @@ namespace Baykeeper_GUI
         const byte MSB_FALLING_EDGE_CLOCK_BIT_OUT = 0x13;
         // Clock
         //const uint ClockDivisor = 49;  // for 400 kHz // frequency clock divider
-        const uint ClockDivisor = 199;  // for 100 kHz
+        const uint ClockDivisor = 2*199;  // for 100 kHz
         // Sending and receiving
         static uint NumBytesToSend = 0;
         //static uint NumBytesToRead = 0;
@@ -133,28 +133,6 @@ namespace Baykeeper_GUI
                 this.Text = string.Format("Chipus - Sambaqui GUI (" +
                     ApplicationDeployment.CurrentDeployment.CurrentVersion) + ")";
             }
-
-            small_size_and_hide();
-
-            int actualX = pictureBox_equation.Location.X;
-            int actualY = pictureBox_equation.Location.Y;
-            pictureBox_equation.Location = new Point(actualX + extendSize / 2, actualY);
-
-            actualX = pictureBox_tabAbout.Location.X;
-            actualY = pictureBox_tabAbout.Location.Y;
-            pictureBox_tabAbout.Location = new Point(actualX + extendSize / 2, actualY);
-
-            actualX = label10.Location.X;
-            actualY = label10.Location.Y;
-            label10.Location = new Point(actualX + extendSize / 2, actualY);
-
-            actualX = linkLabel_tabAbout.Location.X;
-            actualY = linkLabel_tabAbout.Location.Y;
-            linkLabel_tabAbout.Location = new Point(actualX + extendSize / 2, actualY);
-
-            actualX = label_tabAbout.Location.X;
-            actualY = label_tabAbout.Location.Y;
-            label_tabAbout.Location = new Point(actualX + extendSize / 2, actualY);
 
 
 
@@ -241,8 +219,6 @@ namespace Baykeeper_GUI
                 device_disconnected();
             }
 
-            tep117Init();
-            label_ref_temp.Text = "--.--";
         }
 
         private void linkLabel_tabAbout_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -472,50 +448,22 @@ namespace Baykeeper_GUI
             ///////////////////////////////////////////////////////////////////
             /// TAB "Temperature Sensor"
             ///////////////////////////////////////////////////////////////////
-            TSon = 0;
+            buttonWrite.Enabled = false;
+            buttonRead.Enabled = false;
+            button_testMode.Enabled = false;
+            button_maskTSD.Enabled = false;
 
-            timer_TS_refresh.Enabled = false;
-            timer_TS_task.Enabled = false;
-            button_TS.Text = "Start Conversion";
-            button_TS.Enabled = false;
-            textBox_TS_trim0.Enabled = true;
-            textBox_TS_trim1.Enabled = true;
+            label_Write_ack.Text = "---";
+            label_Write_ack.ForeColor = Color.Black;
 
-            label_TS_ack.Text = "---";
-            label_TS_ack.ForeColor = Color.Black;
+            label_Read_ack.Text = "---";
+            label_Read_ack.ForeColor = Color.Black;
 
-            label_TS_trim0.Text = "---";
-            label_TS_trim0.ForeColor = Color.Black;
-            textBox_TS_trim0.Enabled = false;
+            label_testMode.Text = "---";
+            label_testMode.ForeColor = Color.Black;
 
-            label_TS_trim1.Text = "---";
-            label_TS_trim1.ForeColor = Color.Black;
-            textBox_TS_trim1.Enabled = false;
-
-            label_TS_LSB.Text = "---";
-            label_TS_LSB.ForeColor = Color.Black;
-            textBox_TS_LSB.Text = "";
-
-            label_TS_MSB.Text = "---";
-            label_TS_MSB.ForeColor = Color.Black;
-            textBox_TS_MSB.Text = "";
-
-
-            //textBox_TS_trim0.Enabled = true;
-            //textBox_TS_trim1.Enabled = true;
-
-            textBox_TS_i2c_addr.Enabled = false;
-
-            label_TS_temperature.Text = "--.--";
-
-            label_ref_temp.Text = "--.--";
-
-            label_boardID.Text = "---";
-
-
-
-
-
+            label_maskTSD.Text = "---";
+            label_maskTSD.ForeColor = Color.Black;
 
         }
 
@@ -523,447 +471,111 @@ namespace Baykeeper_GUI
 
         private void button_TS_Click(object sender, EventArgs e)
         {
-
-
-
-
-            // If TS is running, stop it
-            //if ((timer_TS_refresh.Enabled == true) || (timer_TS_task.Enabled == true))
-            if (TSon == 1)
+            /////////////////////////////////////////////////////////////////////////////////////////////
+            byte i2c_dataWrite = 0x00;
+            try
             {
-                TSon = 0;
-
-                timer_TS_refresh.Enabled = false;
-                timer_TS_task.Enabled = false;
-                button_TS.Text = "Start Conversion";
-                textBox_TS_trim0.Enabled = true;
-                textBox_TS_trim1.Enabled = true;
-
-                label_TS_ack.Text = "---";
-                label_TS_ack.ForeColor = Color.Black;
-
-                label_TS_trim0.Text = "---";
-                label_TS_trim0.ForeColor = Color.Black;
-
-                label_TS_trim1.Text = "---";
-                label_TS_trim1.ForeColor = Color.Black;
-
-                label_TS_LSB.Text = "---";
-                label_TS_LSB.ForeColor = Color.Black;
-                textBox_TS_LSB.Text = "";
-
-                label_TS_MSB.Text = "---";
-                label_TS_MSB.ForeColor = Color.Black;
-                textBox_TS_MSB.Text = "";
-
-                label_ref_temp.Text = "--.--";
-
-
-                //textBox_TS_trim0.Enabled = true;
-                //textBox_TS_trim1.Enabled = true;
-
-                label_TS_temperature.Text = "--.--";
-
-                //label_boardID.Text = "---";
-
+                i2c_dataWrite = Convert.ToByte(textBox_i2cDataWrite.Text, 2);
+                textBox_i2cDataWrite.Text = Convert.ToString(i2c_dataWrite, 2).PadLeft(8, '0');
             }
-            // Start TS
-            else
+            catch
             {
-
-                /////////////////////////////////////////////////////////////////////////////////////////////
-                ///
-
-
-                byte i2c_addr = Convert.ToByte(textBox_TS_i2c_addr.Text, 16);
-
-
-                /////////////////////////////////////////////////////////////////////////////////////////////
-                byte TS_trim1 = 0x00;
-                try
-                {
-                    TS_trim1 = Convert.ToByte(textBox_TS_trim1.Text, 2);
-                    textBox_TS_trim1.Text = Convert.ToString(TS_trim1, 2).PadLeft(8, '0');
-                }
-                catch
-                {
-                    // error message
-                    MessageBox.Show("Please insert a valid trim1.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    textBox_TS_trim1.Text = "00000000";
-                    return;
-                }
-
-                byte ack = i2c_write(i2c_addr, 0x46, TS_trim1);
-                if (ack == 0)
-                {
-                    label_TS_trim1.Text = "ACK";
-                    label_TS_trim1.ForeColor = Color.LimeGreen;
-                }
-                else
-                {
-                    label_TS_trim1.Text = "NACK";
-                    label_TS_trim1.ForeColor = Color.FromArgb(210, 39, 48);
-                    return;
-                }
-                /////////////////////////////////////////////////////////////////////////////////////////////
-                byte TS_trim0 = 0x00;
-                try
-                {
-                    TS_trim0 = Convert.ToByte(textBox_TS_trim0.Text, 2);
-                    textBox_TS_trim0.Text = Convert.ToString(TS_trim0, 2).PadLeft(8, '0');
-                }
-                catch
-                {
-                    // error message
-                    MessageBox.Show("Please insert a valid trim0.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    textBox_TS_trim0.Text = "00000000";
-                    return;
-                }
-
-                ack = i2c_write(i2c_addr, 0x45, TS_trim0);
-                if (ack == 0)
-                {
-                    label_TS_trim0.Text = "ACK";
-                    label_TS_trim0.ForeColor = Color.LimeGreen;
-                }
-                else
-                {
-                    label_TS_trim0.Text = "NACK";
-                    label_TS_trim0.ForeColor = Color.FromArgb(210, 39, 48);
-                    return;
-                }
-
-
-                TSon = 1;
-                timer_TS_refresh.Enabled = true;
-                button_TS.Text = "Stop Conversion";
-                textBox_TS_trim0.Enabled = false;
-                textBox_TS_trim1.Enabled = false;
+                // error message
+                MessageBox.Show("Please insert a valid data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                textBox_i2cDataWrite.Text = "00000000";
+                return;
             }
 
+            byte i2c_regWrite = 0x00;
+            try
+            {
+                i2c_regWrite = Convert.ToByte(textBox_i2cRegWrite.Text, 16);
+                textBox_i2cRegWrite.Text = Convert.ToString(i2c_regWrite, 16).PadLeft(2, '0');
+            }
+            catch
+            {
+                // error message
+                MessageBox.Show("Please insert a valid register.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                textBox_i2cRegWrite.Text = "00";
+                return;
+            }
 
+            byte i2c_SlaveAddr = 0x00;
+            try
+            {
+                i2c_SlaveAddr = Convert.ToByte(textBox_i2c_SlaveAddr.Text, 2);
+                textBox_i2c_SlaveAddr.Text = Convert.ToString(i2c_SlaveAddr, 2).PadLeft(7, '0');
+            }
+            catch
+            {
+                // error message
+                MessageBox.Show("Please insert a valid slave address.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                textBox_i2c_SlaveAddr.Text = "0000000";
+                return;
+            }
 
-
-        }
-
-
-        private void timer_TS_refresh_Tick(object sender, EventArgs e)
-        {
-            timer_TS_refresh.Enabled = false;
-
-            byte i2c_addr = Convert.ToByte(textBox_TS_i2c_addr.Text, 16);
-
-
-
-
-
-            //////
-            byte ack = i2c_write(i2c_addr, 0x00, 0xff);
+            byte ack = i2c_write(i2c_SlaveAddr, i2c_regWrite, i2c_dataWrite);
             if (ack == 0)
             {
-                label_TS_ack.Text = "ACK";
-                label_TS_ack.ForeColor = Color.LimeGreen;
-                timer_TS_task.Enabled = true;
+                label_Write_ack.Text = "ACK";
+                label_Write_ack.ForeColor = Color.LimeGreen;
             }
             else
             {
-                button_TS.PerformClick();
-                label_TS_ack.Text = "NACK";
-                label_TS_ack.ForeColor = Color.FromArgb(210, 39, 48);
+                label_Write_ack.Text = "NACK";
+                label_Write_ack.ForeColor = Color.FromArgb(210, 39, 48);
+                return;
             }
         }
 
-
-        private void timer_TS_task_Tick(object sender, EventArgs e)
+        private void buttonRead_Click(object sender, EventArgs e)
         {
-            timer_TS_task.Enabled = false;
+            byte i2c_regRead = 0x00;
+            try
+            {
+                i2c_regRead = Convert.ToByte(textBox_i2cRegRead.Text, 16);
+                textBox_i2cRegRead.Text = Convert.ToString(i2c_regRead, 16).PadLeft(2, '0');
+            }
+            catch
+            {
+                // error message
+                MessageBox.Show("Please insert a valid register.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                textBox_i2cRegRead.Text = "00";
+                return;
+            }
 
-            byte i2c_addr = Convert.ToByte(textBox_TS_i2c_addr.Text, 16);
-            //byte ack = i2c_write(i2c_addr, 0x00, 0x00);
+            byte i2c_SlaveAddr = 0x00;
+            try
+            {
+                i2c_SlaveAddr = Convert.ToByte(textBox_i2c_SlaveAddr.Text, 2);
+                textBox_i2c_SlaveAddr.Text = Convert.ToString(i2c_SlaveAddr, 2).PadLeft(7, '0');
+            }
+            catch
+            {
+                // error message
+                MessageBox.Show("Please insert a valid slave address.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                textBox_i2cDataWrite.Text = "0000000";
+                return;
+            }
 
-
-            //if (ack == 0)
-            //{
-            //    label_TS_ack.Text = "ACK";
-            //    label_TS_ack.ForeColor = Color.LimeGreen;
-            //    timer_TS_refresh.Enabled = true;
-            //}
-            //else
-            //{
-            //    button_TS.PerformClick();
-            //    label_TS_ack.Text = "NACK";
-            //    label_TS_ack.ForeColor = Color.FromArgb(210, 39, 48);
-            //}
-
-
-
-            byte MSB = 0x00;
-            byte ack = i2c_read(i2c_addr, 0x42); // MSB
-           // byte ack = i2c_read(i2c_addr, 0x46); // MSB
+            byte dataRead = 0x00;
+            byte ack = i2c_read(i2c_SlaveAddr, i2c_regRead);
 
             if (ack == 0)
             {
-                label_TS_MSB.Text = "ACK";
-                label_TS_MSB.ForeColor = Color.LimeGreen;
-
-                //code added to solve i2c issues
-                if (i2c_return[0] == 0xff)
-                {
-                    MSB = MSB_old;
-                }
-                else
-                {
-                    MSB = i2c_return[0];
-                    MSB_old = MSB;
-                }
-                textBox_TS_MSB.Text = Convert.ToString(MSB, 2).PadLeft(8, '0');
-
-
-
-                // end code
-
-                //MSB = i2c_return[0];
-            }
-            else
-            {
-                label_TS_MSB.Text = "NACK";
-                label_TS_MSB.ForeColor = Color.FromArgb(210, 39, 48);
-                textBox_TS_MSB.Text = "";
-                button_TS.PerformClick();
-            }
-
-
-
-            byte LSB = 0x00;
-            ack = i2c_read(i2c_addr, 0x43); // LSB
-            if (ack == 0)
-            {
-                label_TS_LSB.Text = "ACK";
-                label_TS_LSB.ForeColor = Color.LimeGreen;
-
-                //code added to solve i2c issues
-                if (i2c_return[0] > 0x0f)
-                {
-                    LSB = LSB_old;
-                }
-                else
-                {
-                    LSB = i2c_return[0];
-                    LSB_old = LSB;
-                }
-                textBox_TS_LSB.Text = Convert.ToString(LSB, 2).PadLeft(8, '0');
-
-
-
-                // end code
-                timer_TS_refresh.Enabled = true;
+                label_Read_ack.Text = "ACK";
+                label_Read_ack.ForeColor = Color.LimeGreen;
+                dataRead = i2c_return[0];
+                textBox_dataRead.Text = Convert.ToString(dataRead, 2).PadLeft(8, '0');
 
             }
             else
             {
-                label_TS_LSB.Text = "NACK";
-                label_TS_LSB.ForeColor = Color.FromArgb(210, 39, 48);
-                textBox_TS_LSB.Text = "";
-                button_TS.PerformClick();
+                //Console.WriteLine("\npintando de preto");
+                label_Read_ack.Text = "NACK";
+                label_Read_ack.ForeColor = Color.FromArgb(210, 39, 48);
+                textBox_dataRead.Text = "";
             }
-
-            UInt32 TEMPSENS_FULL = 0X0000;
-            TEMPSENS_FULL = (Convert.ToUInt32(MSB) * 16) + Convert.ToUInt32(LSB);
-
-            double TEMPSENS_FULL_c2 = 0x0000;
-
-            if (TEMPSENS_FULL > Math.Pow(2, 11))
-            {
-                TEMPSENS_FULL_c2 = (Math.Pow(2, 12) - TEMPSENS_FULL) * (-1);
-            }
-            else
-            {
-                TEMPSENS_FULL_c2 = TEMPSENS_FULL;
-            }
-            double Temp_C = TEMPSENS_FULL_c2 * 0.0625;
-
-            //label_TS_temperature.Text = Convert.ToString(Temp_C);
-            label_TS_temperature.Text = Temp_C.ToString("0.0000");
-
-            timer_led.Enabled = true;
-            pictureBox_refresh.Image = Properties.Resources.refreshON;
-
-
-
-            //conect calibration device
-
-            //byte address = 0b1001000;
-            //byte DeviceStatus = i2c_read_word(address, 0b10101010);           //read temp register
-            tep117Init();
-            Console.WriteLine("\ntryng to connect");
-            /*
-            CalDevStatus = (byte) tep117Init();
-            StatusCont++;
-            if (CalDevStatus == 0)
-            {
-                MessageBox.Show("Calibration device not found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                StatusCont++;
-                StatusCont = (byte) (StatusCont % 20);
-            }
-            else
-            {
-
-                MessageBox.Show("Uhul, connected ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            */
-
-        }
-
-
-
-        private byte tep117Init()
-        {
-            
-            //possible adress for TMP117: 1001000 or 1001001 or 1001010 or 1001011
-            byte[] address = { 0b1001000, 0b1001001, 0b1001010, 0b1001011};
-            byte DeviceStatus = 0xff;
-            int i = 0;
-            for (i = 0; i < 4 && DeviceStatus != 0; i++)
-            {
-
-                DeviceStatus = i2c_read_word(address[i], 0x00);           //read temp register
-            }
-            short DeviceTemp = 0;
-            DeviceTemp = (short)((i2c_return[0] << 8) | i2c_return[1]);
-
-            switch (ActualState)
-            {
-                case State.SmallWin:
-                    if(DeviceStatus == 0)
-                    {
-                        ActualState = State.BigWin;
-                        // MessageBox.Show("TEMP117 device sucesscfull conected", "TMP information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        //expande window
-                        big_size_and_show();
-                        convert_and_show_RS_temp(DeviceTemp, address[i-1]);
-
-                        //...Code to add the control to the form...
-                    }
-                    break;
-                case State.BigWin:
-                    if(DeviceStatus != 0) //dosent head temp
-                    {
-                        ActualState = State.SmallWin;
-                        small_size_and_hide();
-
-                    }
-                    else //if head temp
-                    {
-                        convert_and_show_RS_temp(DeviceTemp, address[i - 1]);                                                     //and 
-                    }
-                    break;
-
-            }
-           
-            return DeviceStatus;
-
-        }
-        void convert_and_show_RS_temp(short DeviceTemp, byte address)
-        {
-
-            this.textBox_RS_temp.Text = Convert.ToString(i2c_return[0], 2).PadLeft(8, '0');
-            this.textBox_RS_reg.Text = Convert.ToString(i2c_return[1], 2).PadLeft(8, '0');
-            this.textBox_RS_i2c_addr.Text = Convert.ToString(address, 2).PadLeft(1, '0');
-            this.label_ref_temp.Text = (DeviceTemp * 0.0078125).ToString("0.0000");
-        }
-        void big_size_and_show()
-        {
-            int actualWidth = this.Size.Width;
-            int actualHeight = this.Size.Height;
-            this.Size = new Size(actualWidth + extendSize, actualHeight);
-
-            int actualX = pictureBox_equation.Location.X;
-            int actualY = pictureBox_equation.Location.Y;
-            pictureBox_equation.Location = new Point(actualX + extendSize / 2, actualY);
-
-            actualX = pictureBox_tabAbout.Location.X;
-            actualY = pictureBox_tabAbout.Location.Y;
-            pictureBox_tabAbout.Location = new Point(actualX + extendSize / 2, actualY);
-
-            actualX = label10.Location.X;
-            actualY = label10.Location.Y;
-            label10.Location = new Point(actualX + extendSize / 2, actualY);
-
-            actualX = linkLabel_tabAbout.Location.X;
-            actualY = linkLabel_tabAbout.Location.Y;
-            linkLabel_tabAbout.Location = new Point(actualX + extendSize / 2, actualY);
-
-            actualX = label_tabAbout.Location.X;
-            actualY = label_tabAbout.Location.Y;
-            label_tabAbout.Location = new Point(actualX + extendSize / 2, actualY);
-
-            /*
-            actualWidth = tabControl1.Size.Width;
-            actualHeight = tabControl1.Size.Height;
-            tabControl1.Size = new Size(actualWidth + 150, actualHeight);
-            */
-            //MessageBox.Show("Bits <7..3> = Fine adjustment of B coefficent of equation (See tab \"Trimming Equation\")" + System.Environment.NewLine + "Bits <2..0> = MSB bits of the Temperature trimming", "MSB Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            //trun visible
-            /*this.label2.Visible = true;
-            this.label4.Visible = true;
-            this.label5.Visible = true;
-            */
-            this.textBox_RS_temp.Visible = false;
-            this.textBox_RS_reg.Visible = false;
-            this.label3.Visible = false;
-            this.textBox_RS_i2c_addr.Visible = false;
-            this.label_ref_temp.Visible = true;
-            this.label6.Visible = true;
-            this.pictureBox_ref_temp.Visible = true;
-        }
-         void small_size_and_hide()
-        {
-            //retract window
-            int actualWidth = this.Size.Width;
-            int actualHeight = this.Size.Height;
-            this.Size = new Size(actualWidth - extendSize, actualHeight);
-
-            int actualX = pictureBox_equation.Location.X;
-            int actualY = pictureBox_equation.Location.Y;
-            pictureBox_equation.Location = new Point(actualX - extendSize / 2, actualY);
-
-            actualX = pictureBox_tabAbout.Location.X;
-            actualY = pictureBox_tabAbout.Location.Y;
-            pictureBox_tabAbout.Location = new Point(actualX - extendSize / 2, actualY);
-
-            actualX = label10.Location.X;
-            actualY = label10.Location.Y;
-            label10.Location = new Point(actualX - extendSize / 2, actualY);
-
-            actualX = linkLabel_tabAbout.Location.X;
-            actualY = linkLabel_tabAbout.Location.Y;
-            linkLabel_tabAbout.Location = new Point(actualX - extendSize / 2, actualY);
-
-            actualX = label_tabAbout.Location.X;
-            actualY = label_tabAbout.Location.Y;
-            label_tabAbout.Location = new Point(actualX - extendSize / 2, actualY);
-
-            //label_tabAbout
-            //linkLabel_tabAbout
-            //label10
-            /*
-            actualWidth = tabControl1.Size.Width;
-            actualHeight = tabControl1.Size.Height;
-            tabControl1.Size = new Size(actualWidth - 150, actualHeight);
-            */
-
-            //trun invisible
-            this.label2.Visible = false;
-            this.label3.Visible = false;
-            this.label4.Visible = false;
-            this.label5.Visible = false;
-            this.textBox_RS_i2c_addr.Visible = false;
-            this.textBox_RS_temp.Visible = false;
-            this.textBox_RS_reg.Visible = false;
-            this.pictureBox_ref_temp.Visible = false;
-            this.label6.Visible = false;
-            this.label_ref_temp.Visible = false;
         }
 
         //###################################################################################################################################
@@ -975,13 +587,12 @@ namespace Baykeeper_GUI
 
             if (baykeeperInit() != 0)
             {
-                MessageBox.Show("Oops, Sambaqui could not be initialized.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Oops, I2C interface could not be initialized.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 myFtdiDevice.Close();
                 DeviceOpen = false;
                 device_disconnected();
                 return 1;
             }
-            loadTrimming();
             timer_disconnect.Enabled = true;
 
             ///////////////////////////////////////////////////////////////////
@@ -1001,10 +612,10 @@ namespace Baykeeper_GUI
             /// TAB "Temperature Sensor"
             ///////////////////////////////////////////////////////////////////
 
-            button_TS.Enabled = true;
-            textBox_TS_trim0.Enabled = true;
-            textBox_TS_trim1.Enabled = true;
-            //textBox_TS_i2c_addr.Enabled = true;
+            buttonWrite.Enabled = true;
+            buttonRead.Enabled = true;
+            button_testMode.Enabled = true;
+            button_maskTSD.Enabled = true;
 
             return 0;
         }
@@ -1021,133 +632,30 @@ namespace Baykeeper_GUI
             return 0;
         }
 
-        private byte readGPIO()
-        {
-            NumBytesToSend = 0;
 
-
-
-            MPSSEbuffer[NumBytesToSend++] = 0x83;                               //       ' Command - read high byte
-
-            // This command then tells the MPSSE to send any results gathered back immediately
-            MPSSEbuffer[NumBytesToSend++] = 0x87;                                  //    ' Send answer back immediate command
-
-            // send commands to chip
-            I2C_Status = Send_Data(NumBytesToSend);
-            if (I2C_Status != 0)
-            {
-                return 1;
-            }
-
-            // get the byte which has been read from the driver's receive buffer
-            I2C_Status = Receive_Data(1);
-            if (I2C_Status != 0)
-            {
-                return 1;
-            }
-
-            // InputBuffer2[0] now contains the results
-            //ACbusReadVal = (byte)(InputBuffer2[0]);
-
-            //label_GPIO.Text = Convert.ToString(InputBuffer2[0], 2).PadLeft(8, '0');
-            label_boardID.Text = Convert.ToString(InputBuffer2[0], 10).PadLeft(3, '0');
-
-            return InputBuffer2[0];
-        }
-
-
-        private byte loadTrimming()
-        {
-            byte boardID = readGPIO();
-           //Sheets_Baykeeper baykeeper = new Sheets_Baykeeper();
-           //IList<object> values = baykeeper.getSheetInfo(boardID + "");
-
-            switch (boardID)
-            {
-            	case 000:
-            		trim_LSB = 0b_11111111; //default
-            		trim_MSB = 0b_00000001; //default
-            		break;
-            	case 255:
-            		trim_LSB = 0b_11111111; //default
-            		trim_MSB = 0b_00000001; //default
-                             break;
-            	default:
-            		trim_LSB = 0b_11111111; //default
-            		trim_MSB = 0b_00000001; //default
-            		break;
-            }
-
-
-            //trim_MSB = Convert.ToByte((string)values[1], 2);
-            //trim_LSB = Convert.ToByte((string)values[2], 2);
-
-            textBox_TS_trim1.Text = Convert.ToString(trim_MSB, 2).PadLeft(8, '0');
-            textBox_TS_trim0.Text = Convert.ToString(trim_LSB, 2).PadLeft(8, '0');
-
-            return 0;
-        }
-
-
-        private void textBox_TS_trim1_KeyPress(object sender, KeyPressEventArgs e)
+        private void textBox_i2cDataWrite_KeyPress(object sender, KeyPressEventArgs e)
         {
             // Allow backspace, 0 and 1
             e.Handled = !("\b01".Contains(e.KeyChar));
         }
-        private void textBox_TS_trim0_KeyPress(object sender, KeyPressEventArgs e)
+
+        private void textBox_i2cRegWrite_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Allow backspace, 0 and 1
-            e.Handled = !("\b01".Contains(e.KeyChar));
+            // Allow backspace, and hexadecimals
+            e.Handled = !("\b0123456789abcdefABCDEF".Contains(e.KeyChar));
         }
+
         private void textBox_TS_i2c_addr_KeyPress(object sender, KeyPressEventArgs e)
         {
             // Allow backspace, 0 and 1
-            e.Handled = !("\b0123456789abcdefABCDEF".Contains(e.KeyChar));
-        }
-        private void textBox_i2c_SlaveAddr_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            // Allow backspace, 0 and 1
-            e.Handled = !("\b0123456789abcdefABCDEF".Contains(e.KeyChar));
-        }
-        private void textBox_i2c_WriteReg_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            // Allow backspace, 0 and 1
-            e.Handled = !("\b0123456789abcdefABCDEF".Contains(e.KeyChar));
-        }
-        private void textBox_i2c_WriteData_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            // Allow backspace, 0 and 1
             e.Handled = !("\b01".Contains(e.KeyChar));
         }
-        private void textBox_i2c_ReadReg_KeyPress(object sender, KeyPressEventArgs e)
+        private void textBox_i2cRegRead_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Allow backspace, 0 and 1
+            // Allow backspace, and hexadecimals
             e.Handled = !("\b0123456789abcdefABCDEF".Contains(e.KeyChar));
         }
 
-
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-            //if (sizeDebug == 1)
-            //{
-            //    small_size_and_hide();
-            //    sizeDebug = 0;
-            //}
-            //else
-            //{
-            //    big_size_and_show();
-            //    sizeDebug = 1;
-            //}
-            MessageBox.Show("Bits <7..3> = Fine adjustment of B coefficent of equation (See tab \"Trimming Equation\")" + System.Environment.NewLine + "Bits <2..0> = MSB bits of the Temperature trimming", "MSB Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void timer_led_Tick(object sender, EventArgs e)
-        {
-            pictureBox_refresh.Image = Properties.Resources.refreshOFF;
-            timer_led.Enabled = false;
-        }
 
 
 
@@ -2150,6 +1658,69 @@ namespace Baykeeper_GUI
                 return 0;           // there were no bytes to read
             }
         }
+
+        private void button_testMode_Click(object sender, EventArgs e)
+        {
+            byte i2c_SlaveAddr = 0x00;
+            try
+            {
+                i2c_SlaveAddr = Convert.ToByte(textBox_i2c_SlaveAddr.Text, 2);
+                textBox_i2c_SlaveAddr.Text = Convert.ToString(i2c_SlaveAddr, 2).PadLeft(7, '0');
+            }
+            catch
+            {
+                // error message
+                MessageBox.Show("Please insert a valid slave address.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                textBox_i2c_SlaveAddr.Text = "0000000";
+                return;
+            }
+
+            byte ack = i2c_write(i2c_SlaveAddr, 0x0f, 0xfa);
+            if (ack == 0)
+            {
+                label_testMode.Text = "ACK";
+                label_testMode.ForeColor = Color.LimeGreen;
+            }
+            else
+            {
+                label_testMode.Text = "NACK";
+                label_testMode.ForeColor = Color.FromArgb(210, 39, 48);
+                return;
+            }
+        }
+
+        private void button_maskTSD_Click(object sender, EventArgs e)
+        {
+            byte i2c_SlaveAddr = 0x00;
+            try
+            {
+                i2c_SlaveAddr = Convert.ToByte(textBox_i2c_SlaveAddr.Text, 2);
+                textBox_i2c_SlaveAddr.Text = Convert.ToString(i2c_SlaveAddr, 2).PadLeft(7, '0');
+            }
+            catch
+            {
+                // error message
+                MessageBox.Show("Please insert a valid slave address.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                textBox_i2c_SlaveAddr.Text = "0000000";
+                return;
+            }
+
+            byte ack = i2c_write(i2c_SlaveAddr, 0x80, 0x0f);
+            if (ack == 0)
+            {
+                label_maskTSD.Text = "ACK";
+                label_maskTSD.ForeColor = Color.LimeGreen;
+            }
+            else
+            {
+                label_maskTSD.Text = "NACK";
+                label_maskTSD.ForeColor = Color.FromArgb(210, 39, 48);
+                return;
+            }
+        }
+
+
+
 
 
 
